@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+:root { --ink:#10251f; --muted:#66756f; --paper:#f7f4ed; --card:#fffdf8; --accent:#d9a441; --green:#183d32; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; background:var(--paper); color:var(--ink); font-family:Arial, Helvetica, sans-serif; }
+::selection { background:#d9a441; color:#10251f; }
+.hero-grid { background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px); background-size:42px 42px; }
