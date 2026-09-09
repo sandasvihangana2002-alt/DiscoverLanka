@@ -4,7 +4,7 @@ import { neon } from "@neondatabase/serverless";
 const baseUrl = "https://discover-lanka.vercel.app";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticRoutes = ["", "/experiences", "/plan", "/stories", "/my-trip"].map((path) => ({
+  const staticRoutes = ["", "/experiences", "/plan", "/stories", "/events", "/my-trip"].map((path) => ({
     url: `${baseUrl}${path}`,
     lastModified: new Date(),
     changeFrequency: path === "" ? "weekly" as const : "monthly" as const,
