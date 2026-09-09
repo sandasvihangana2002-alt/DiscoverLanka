@@ -1,0 +1,2 @@
+DiscoverLanka deployment trigger test.
+No application code or runtime behavior is changed by this file.
