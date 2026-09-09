@@ -3,17 +3,39 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     if (!process.env.DATABASE_URL) return NextResponse.json({ error: "DATABASE_URL is not configured" }, { status: 500 });
+    const tripId = new URL(request.url).searchParams.get("tripId");
+    if (!tripId) return NextResponse.json({ error: "tripId is required" }, { status: 400 });
     const sql = neon(process.env.DATABASE_URL);
-    const rows = await sql`
-      SELECT id, slug, title, summary, duration_days, budget_level, content, created_at, updated_at
-      FROM itineraries ORDER BY updated_at DESC LIMIT 50
-    `;
-    return NextResponse.json({ itineraries: rows });
+    const rows = await sql`SELECT id, title, summary, duration_days, budget_level, content, created_at, updated_at FROM itineraries WHERE content->>'tripId' = ${tripId} ORDER BY updated_at DESC LIMIT 1`;
+    return NextResponse.json({ itinerary: rows[0] ?? null });
   } catch (error) {
     console.error("Itineraries GET error", error);
-    return NextResponse.json({ error: "Unable to load itineraries" }, { status: 500 });
+    return NextResponse.json({ error: "Unable to load itinerary" }, { status: 500 });
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    if (!process.env.DATABASE_URL) return NextResponse.json({ error: "DATABASE_URL is not configured" }, { status: 500 });
+    const body = await request.json();
+    const tripId = typeof body.tripId === "string" ? body.tripId : "";
+    const title = typeof body.title === "string" ? body.title.slice(0, 160) : "Sri Lanka itinerary";
+    const summary = typeof body.summary === "string" ? body.summary.slice(0, 500) : null;
+    const durationDays = Math.max(1, Math.min(30, Number(body.durationDays) || 1));
+    const budgetLevel = typeof body.budgetLevel === "string" ? body.budgetLevel.slice(0, 40) : "Comfort";
+    const content = body.content && typeof body.content === "object" ? { ...body.content, tripId } : { tripId, days: [] };
+    if (!tripId) return NextResponse.json({ error: "tripId is required" }, { status: 400 });
+    const sql = neon(process.env.DATABASE_URL);
+    const existing = await sql`SELECT id FROM itineraries WHERE content->>'tripId' = ${tripId} ORDER BY updated_at DESC LIMIT 1`;
+    const rows = existing.length
+      ? await sql`UPDATE itineraries SET title=${title}, summary=${summary}, duration_days=${durationDays}, budget_level=${budgetLevel}, content=${JSON.stringify(content)}::jsonb, updated_at=NOW() WHERE id=${existing[0].id} RETURNING id, title, summary, duration_days, budget_level, content, created_at, updated_at`
+      : await sql`INSERT INTO itineraries (slug, title, summary, duration_days, budget_level, content) VALUES (${`trip-${tripId}`}, ${title}, ${summary}, ${durationDays}, ${budgetLevel}, ${JSON.stringify(content)}::jsonb) RETURNING id, title, summary, duration_days, budget_level, content, created_at, updated_at`;
+    return NextResponse.json({ itinerary: rows[0] }, { status: existing.length ? 200 : 201 });
+  } catch (error) {
+    console.error("Itineraries POST error", error);
+    return NextResponse.json({ error: "Unable to save itinerary" }, { status: 500 });
   }
 }
