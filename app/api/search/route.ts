@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     const [destinations, experiences, stories] = await Promise.all([
       sql`SELECT id, slug, name, region, summary FROM destinations WHERE name ILIKE ${term} OR region ILIKE ${term} OR summary ILIKE ${term} ORDER BY name LIMIT 20`,
       sql`SELECT id, slug, name, category, summary FROM experiences WHERE name ILIKE ${term} OR category ILIKE ${term} OR summary ILIKE ${term} ORDER BY name LIMIT 20`,
-      sql`SELECT id, slug, title, excerpt, category FROM articles WHERE status = 'published' AND (title ILIKE ${term} OR excerpt ILIKE ${term} OR category ILIKE ${term}) ORDER BY published_at DESC NULLS LAST LIMIT 20`
+      sql`SELECT id, slug, title, excerpt, category FROM articles WHERE published_at IS NOT NULL AND (title ILIKE ${term} OR excerpt ILIKE ${term} OR category ILIKE ${term}) ORDER BY published_at DESC NULLS LAST LIMIT 20`
     ]);
     return NextResponse.json({ destinations, experiences, stories });
   } catch (error) {
