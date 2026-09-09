@@ -60,11 +60,11 @@ export default function Home() {
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end"><div><p className="text-sm font-bold uppercase tracking-[.2em] text-[#b27c1d]">Where to next?</p><h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">Start with a place.</h2></div><p className="max-w-md text-[#66756f]">Destinations are now loaded from the DiscoverLanka database — ready to grow into full destination pages.</p></div>
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {destinations.slice(0, 6).map((d) => (
-            <article key={d.id} className="group relative h-[420px] overflow-hidden rounded-3xl bg-[#183d32] text-white">
+            <a key={d.id} href={`/destinations/${d.slug}`} className="group relative block h-[420px] overflow-hidden rounded-3xl bg-[#183d32] text-white focus:outline-none focus:ring-4 focus:ring-[#d9a441]/50" aria-label={`Explore ${d.name}`}>
               <img src={destinationImages[d.slug] ?? destinationImages.kandy} alt={d.name} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
-              <div className="absolute bottom-0 p-7"><p className="text-sm text-white/70">{d.region}</p><h3 className="mt-1 text-3xl font-semibold">{d.name}</h3><p className="mt-2 max-w-sm text-sm text-white/70">{d.summary}</p></div>
-            </article>
+              <div className="absolute bottom-0 w-full p-7"><p className="text-sm text-white/70">{d.region}</p><h3 className="mt-1 text-3xl font-semibold">{d.name}</h3><p className="mt-2 max-w-sm text-sm text-white/70">{d.summary}</p><span className="mt-4 inline-block text-sm font-bold text-[#e7c36e]">Explore destination →</span></div>
+            </a>
           ))}
           {destinations.length === 0 && <div className="md:col-span-3 rounded-3xl border border-black/10 p-10 text-center text-[#66756f]">Loading Sri Lanka destinations…</div>}
         </div>
