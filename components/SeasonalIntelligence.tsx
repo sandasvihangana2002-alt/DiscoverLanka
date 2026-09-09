@@ -2,14 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-type Season = { id: string; name: string; starts_month: number; ends_month: number; notes: string | null };
+type Season = { id: string; name: string; months: string | null; notes: string | null };
 type Destination = { id: string; slug: string; name: string; region: string; summary: string; best_time: string };
 
 const fallbackSeasons: Season[] = [
-  { id: "fallback-1", name: "Northeast Monsoon", starts_month: 12, ends_month: 2, notes: "A strong window for the south and west coast, with beach days and calmer sea conditions often favored." },
-  { id: "fallback-2", name: "First Inter-Monsoon", starts_month: 3, ends_month: 4, notes: "Warm transition months with short afternoon showers; inland cultural and hill-country trips can work well." },
-  { id: "fallback-3", name: "Southwest Monsoon", starts_month: 5, ends_month: 9, notes: "The southwest is wetter, making the east and north attractive for outdoor and beach plans." },
-  { id: "fallback-4", name: "Second Inter-Monsoon", starts_month: 10, ends_month: 11, notes: "A greener transition period with occasional heavy showers across inland highlands." },
+  { id: "fallback-1", name: "Northeast Monsoon", months: "Dec – Feb", notes: "A strong window for the south and west coast, with beach days and calmer sea conditions often favored." },
+  { id: "fallback-2", name: "First Inter-Monsoon", months: "Mar – Apr", notes: "Warm transition months with short afternoon showers; inland cultural and hill-country trips can work well." },
+  { id: "fallback-3", name: "Southwest Monsoon", months: "May – Sep", notes: "The southwest is wetter, making the east and north attractive for outdoor and beach plans." },
+  { id: "fallback-4", name: "Second Inter-Monsoon", months: "Oct – Nov", notes: "A greener transition period with occasional heavy showers across inland highlands." },
 ];
 
 const recommendationMap: Record<string, string[]> = {
@@ -20,9 +20,16 @@ const recommendationMap: Record<string, string[]> = {
 };
 
 function seasonForMonth(month: number, seasons: Season[]) {
-  return seasons.find((season) => {
-    if (season.starts_month <= season.ends_month) return month >= season.starts_month && month <= season.ends_month;
-    return month >= season.starts_month || month <= season.ends_month;
+  const byRange = seasons.find((season) => {
+    const text = season.months ?? "";
+    const numbers = [...text.matchAll(/\b(\d{1,2})\b/g)].map((match) => Number(match[1]));
+    return numbers.length >= 2 && (numbers[0] <= numbers[1] ? month >= numbers[0] && month <= numbers[1] : month >= numbers[0] || month <= numbers[1]);
+  });
+  if (byRange) return byRange;
+  return fallbackSeasons.find((season) => {
+    const fallbackRanges: Record<string, number[]> = { "Northeast Monsoon": [12, 2], "First Inter-Monsoon": [3, 4], "Southwest Monsoon": [5, 9], "Second Inter-Monsoon": [10, 11] };
+    const range = fallbackRanges[season.name];
+    return month >= range[0] || month <= range[1];
   }) ?? seasons[0];
 }
 
@@ -55,7 +62,7 @@ export default function SeasonalIntelligence() {
         <div>
           <div className="mb-4 flex items-center justify-between gap-4">
             <div><p className="text-xs font-bold uppercase tracking-widest text-[#8d651d]">Current season</p><p className="mt-1 text-lg font-semibold">{currentSeason?.name ?? "Sri Lanka travel season"}</p></div>
-            <span className="rounded-full bg-white px-4 py-2 text-xs font-bold text-[#183d32]">{new Date().toLocaleString("en-LK", { month: "long" })}</span>
+            <span className="rounded-full bg-white px-4 py-2 text-xs font-bold text-[#183d32]">{currentSeason?.months ?? new Date().toLocaleString("en-LK", { month: "long" })}</span>
           </div>
           {recommended.length ? (
             <div className="grid gap-3 sm:grid-cols-2">
