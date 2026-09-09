@@ -26,16 +26,16 @@ const destinationImages: Record<string, string> = {
   anuradhapura: "https://images.unsplash.com/photo-1588258524675-c7f1e3e8d5d8?auto=format&fit=crop&w=2200&q=85",
 };
 
-async function getDestination(slug: string) {
+async function getDestination(slug: string): Promise<Destination | null> {
   if (!process.env.DATABASE_URL) return null;
   const sql = neon(process.env.DATABASE_URL);
-  const rows = await sql<Destination[]>`
+  const rows = await sql`
     SELECT id, slug, name, region, summary, description, latitude, longitude, best_time
     FROM destinations
     WHERE slug = ${slug}
     LIMIT 1
   `;
-  return rows[0] ?? null;
+  return (rows[0] as Destination | undefined) ?? null;
 }
 
 export default async function DestinationPage({ params }: { params: Promise<{ slug: string }> }) {
