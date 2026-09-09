@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { neon } from "@neondatabase/serverless";
 
@@ -10,6 +11,14 @@ async function getStory(slug: string) {
   const sql = neon(process.env.DATABASE_URL);
   const rows = await sql`SELECT id, slug, title, excerpt, content, category, published_at FROM articles WHERE slug = ${slug} LIMIT 1`;
   return (rows[0] as Story | undefined) ?? null;
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const story = await getStory(slug).catch(() => null);
+  if (!story) return { title: "Story not found | DiscoverLanka" };
+  const description = story.excerpt || `Read ${story.title} on DiscoverLanka.`;
+  return { title: `${story.title} | DiscoverLanka`, description, alternates: { canonical: `/stories/${story.slug}` }, openGraph: { title: `${story.title} | DiscoverLanka`, description, type: "article" }, twitter: { card: "summary_large_image", title: `${story.title} | DiscoverLanka`, description } };
 }
 
 export default async function StoryPage({ params }: { params: Promise<{ slug: string }> }) {
