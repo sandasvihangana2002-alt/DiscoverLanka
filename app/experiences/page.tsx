@@ -6,7 +6,7 @@ type Experience={id:string;slug:string;name:string;category:string|null;summary:
 const images:Record<string,string>={
   wildlife:"https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=1600&q=88",
   food:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1600&q=88",
-  culture:"https://images.unsplash.com/photo-1588258524675-c7f1e3e8d5e8?auto=format&fit=crop&w=1600&q=88",
+  culture:"https://images.unsplash.com/photo-1588258524675-c7f1e3e8d5d8?auto=format&fit=crop&w=1600&q=88",
   slow:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=88",
   "sigiriya-sunrise":"https://images.unsplash.com/photo-1588598198321-9735fd5246b8?auto=format&fit=crop&w=1600&q=88",
   "tea-country-morning":"https://images.unsplash.com/photo-1590123221594-8c5d2c5f3f44?auto=format&fit=crop&w=1600&q=88",
