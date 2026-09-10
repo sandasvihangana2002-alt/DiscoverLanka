@@ -1,0 +1,87 @@
+/* Final interaction layer: keeps tilt and reveal transforms composable and adds tactile depth. */
+body.luxury-site.luxury-enhanced .luxury-tilt.luxury-reveal {
+  opacity: 0;
+  --reveal-y: 22px;
+  transform: perspective(1200px) translateY(var(--reveal-y)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+}
+
+body.luxury-site.luxury-enhanced .luxury-tilt.luxury-revealed {
+  opacity: 1;
+  --reveal-y: 0px;
+  transform: perspective(1200px) translateY(var(--reveal-y)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+}
+
+body.luxury-site.luxury-enhanced .luxury-reveal:not(.luxury-tilt) {
+  --reveal-y: 22px;
+  opacity: 0;
+  transform: translateY(var(--reveal-y));
+}
+
+body.luxury-site.luxury-enhanced .luxury-reveal:not(.luxury-tilt).luxury-revealed {
+  --reveal-y: 0px;
+  opacity: 1;
+  transform: translateY(var(--reveal-y));
+}
+
+body.luxury-site .luxury-interactive {
+  transition: transform .26s cubic-bezier(.2,.8,.2,1), box-shadow .28s ease, border-color .24s ease, background .28s ease, filter .28s ease !important;
+}
+
+body.luxury-site .luxury-interactive:active {
+  transform: translate3d(0, 1px, 0) scale(.975) !important;
+  box-shadow: inset 0 2px 7px rgba(0,0,0,.22), 0 8px 26px rgba(0,0,0,.12) !important;
+}
+
+body.luxury-site button.luxury-interactive,
+body.luxury-site a.luxury-interactive.luxury-pill,
+body.luxury-site a.luxury-interactive[class*="premium-button"] {
+  box-shadow: 0 12px 32px rgba(0,0,0,.15), inset 0 1px 0 rgba(255,255,255,.07) !important;
+}
+
+body.luxury-site button.luxury-interactive:hover,
+body.luxury-site a.luxury-interactive.luxury-pill:hover,
+body.luxury-site a.luxury-interactive[class*="premium-button"]:hover {
+  box-shadow: 0 18px 42px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.10) !important;
+}
+
+body.luxury-site .luxury-step-card,
+body.luxury-site .luxury-map-panel,
+body.luxury-site .hero-glass-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+body.luxury-site .luxury-step-card::after,
+body.luxury-site .luxury-map-panel::after,
+body.luxury-site .hero-glass-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(255,255,255,.055), transparent 34%, transparent 62%, rgba(216,184,117,.045));
+  opacity: .8;
+}
+
+body.luxury-site .luxury-step-card > *,
+body.luxury-site .luxury-map-panel > *,
+body.luxury-site .hero-glass-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+body.luxury-site.luxury-enhanced [data-golden-route] .golden-route-node {
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .28s ease, background .28s ease, box-shadow .28s ease;
+}
+
+body.luxury-site.luxury-enhanced [data-golden-route] .golden-route-node:hover {
+  transform: translateX(4px);
+  border-color: rgba(216,184,117,.35);
+  box-shadow: 0 16px 45px rgba(0,0,0,.16);
+}
+
+@media (max-width: 640px) {
+  body.luxury-site.luxury-enhanced .luxury-tilt.luxury-reveal,
+  body.luxury-site.luxury-enhanced .luxury-tilt.luxury-revealed {
+    transform: translateY(var(--reveal-y, 0px));
+  }
+}
