@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./luxury-overrides.css";
 
 const siteUrl = "https://discover-lanka.vercel.app";
 
