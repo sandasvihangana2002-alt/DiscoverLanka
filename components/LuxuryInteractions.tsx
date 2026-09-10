@@ -1,8 +1,11 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 export default function LuxuryInteractions() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const body = document.body;
     body.classList.add("luxury-enhanced");
@@ -127,7 +130,7 @@ export default function LuxuryInteractions() {
       cleanup.forEach((dispose) => dispose());
       body.classList.remove("luxury-enhanced", "luxury-cursor-focus");
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
