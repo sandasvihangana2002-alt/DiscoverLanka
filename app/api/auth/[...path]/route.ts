@@ -2,14 +2,24 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-async function getAuthHandler() {
+type RouteContext = {
+  params: Promise<Record<string, string | string[]>>;
+};
+
+type AuthHandler = (
+  request: Request,
+  context: RouteContext
+) => Response | Promise<Response>;
+
+async function getAuthHandler(): Promise<AuthHandler | null> {
   const cookieSecret = process.env.NEON_AUTH_COOKIE_SECRET?.trim();
   if (!cookieSecret) return null;
+
   const { auth } = await import("@/lib/auth/server");
-  return auth.handler();
+  return auth.handler() as AuthHandler;
 }
 
-async function handler(request: Request) {
+async function handler(request: Request, context: RouteContext) {
   try {
     const authHandler = await getAuthHandler();
     if (!authHandler) {
@@ -18,7 +28,8 @@ async function handler(request: Request) {
         { status: 503 }
       );
     }
-    return authHandler(request);
+
+    return await authHandler(request, context);
   } catch (error) {
     console.error("Auth route error", error);
     return NextResponse.json(
