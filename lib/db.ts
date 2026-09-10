@@ -1,11 +1,12 @@
 import { neon } from "@neondatabase/serverless";
 
-// Use the exact return type produced by the Neon driver so the API routes
-// retain Neon-specific query helpers such as transaction().
-export type SqlTag = ReturnType<typeof neon>;
+export type QueryRow = Record<string, any>;
+export type SqlTag = (strings: TemplateStringsArray, ...values: unknown[]) => Promise<QueryRow[]>;
 
 export function getSql(): SqlTag | null {
   const url = process.env.DATABASE_URL?.trim();
   if (!url) return null;
-  return neon(url);
+  const client = neon(url);
+  return ((strings: TemplateStringsArray, ...values: unknown[]) =>
+    client(strings, ...values) as Promise<QueryRow[]>) as SqlTag;
 }
