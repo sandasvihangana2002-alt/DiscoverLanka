@@ -14,9 +14,9 @@ export default function LuxuryInteractions() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const cleanup: Array<() => void> = [];
 
-    const add = (element: Element | Window, event: string, handler: EventListener) => {
-      element.addEventListener(event, handler);
-      cleanup.push(() => element.removeEventListener(event, handler));
+    const add = (target: EventTarget, event: string, handler: EventListener) => {
+      target.addEventListener(event, handler);
+      cleanup.push(() => target.removeEventListener(event, handler));
     };
 
     const interactive = Array.from(
