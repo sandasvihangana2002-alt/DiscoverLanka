@@ -148,7 +148,7 @@ export default function MyTripPage() {
                   <p className="mt-2 text-[#66756f]">{route || "Your selected places"}</p>
                 </div>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {[["Duration", `${days} days"`], ["Travellers", String(travelers)], ["Style", budget], ["Budget", money(Number(estimate))]].map(([label, value]) => <div key={label} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3"><p className="text-[10px] font-bold uppercase tracking-[.16em] text-white/45">{label}</p><p className="mt-1 text-sm font-semibold text-white/90">{value}</p></div>)}
+                  {[["Duration", `${days} days`], ["Travellers", String(travelers)], ["Style", budget], ["Budget", money(Number(estimate))]].map(([label, value]) => <div key={label} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3"><p className="text-[10px] font-bold uppercase tracking-[.16em] text-white/45">{label}</p><p className="mt-1 text-sm font-semibold text-white/90">{value}</p></div>)}
                 </div>
               </div>
 
