@@ -2,29 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { neon } from "@neondatabase/serverless";
 
-export const dynamic = "force-dynamic";
-
-type Story = { id: string; slug: string; title: string; excerpt: string; content: string; category: string; published_at: string | null };
-
-async function getStory(slug: string) {
-  if (!process.env.DATABASE_URL) return null;
-  const sql = neon(process.env.DATABASE_URL);
-  const rows = await sql`SELECT id, slug, title, excerpt, content, category, published_at FROM articles WHERE slug = ${slug} LIMIT 1`;
-  return (rows[0] as Story | undefined) ?? null;
-}
-
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  const story = await getStory(slug).catch(() => null);
-  if (!story) return { title: "Story not found | DiscoverLanka" };
-  const description = story.excerpt || `Read ${story.title} on DiscoverLanka.`;
-  return { title: `${story.title} | DiscoverLanka`, description, alternates: { canonical: `/stories/${story.slug}` }, openGraph: { title: `${story.title} | DiscoverLanka`, description, type: "article" }, twitter: { card: "summary_large_image", title: `${story.title} | DiscoverLanka`, description } };
-}
-
-export default async function StoryPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  let story: Story | null = null;
-  try { story = await getStory(slug); } catch { story = null; }
-  if (!story) notFound();
-  return <main className="min-h-screen bg-[#f7f5ef] text-[#10251f]"><header className="border-b border-black/10"><div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5"><a href="/" className="text-xl font-bold">Discover<span className="text-[#d9a441]">Lanka</span></a><a href="/stories" className="text-sm font-semibold text-[#66756f]">← All stories</a></div></header><article className="mx-auto max-w-3xl px-6 py-16 md:py-24"><p className="text-sm font-bold uppercase tracking-[.2em] text-[#b27c1d]">{story.category || "Sri Lanka"}</p><h1 className="mt-4 text-5xl font-semibold tracking-[-.04em] md:text-7xl">{story.title}</h1>{story.excerpt && <p className="mt-7 text-xl leading-8 text-[#66756f]">{story.excerpt}</p>}<div className="mt-12 border-t border-black/10 pt-10 whitespace-pre-line text-lg leading-9 text-[#31453f]">{story.content}</div><a href="/plan" className="mt-12 inline-block rounded-full bg-[#183d32] px-7 py-3.5 font-bold text-white">Build my trip →</a></article></main>;
-}
+export const dynamic="force-dynamic";
+type Story={id:string;slug:string;title:string;excerpt:string;content:string;category:string;published_at:string|null};
+const heroImages=["https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2200&q=88","https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=2200&q=88","https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=2200&q=88"];
+async function getStory(slug:string){if(!process.env.DATABASE_URL)return null;const sql=neon(process.env.DATABASE_URL);const rows=await sql`SELECT id,slug,title,excerpt,content,category,published_at FROM articles WHERE slug=${slug} LIMIT 1`;return (rows[0] as Story|undefined)??null}
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{const {slug}=await params;const s=await getStory(slug).catch(()=>null);if(!s)return {title:"Story not found | DiscoverLanka"};return {title:`${s.title} | DiscoverLanka`,description:s.excerpt||`Read ${s.title} on DiscoverLanka.`,alternates:{canonical:`/stories/${s.slug}`},openGraph:{title:`${s.title} | DiscoverLanka`,description:s.excerpt||"",type:"article",images:[{url:heroImages[0],alt:s.title}]}}}
+export default async function StoryPage({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const s=await getStory(slug).catch(()=>null);if(!s)notFound();const image=heroImages[Math.abs(s.slug.length)%heroImages.length];return <main className="min-h-screen bg-[#07120f] text-[#f4efe6]">
+<header className="sticky top-0 z-40 px-3 pt-3 sm:px-5"><div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/10 bg-black/20 px-5 py-4 backdrop-blur-xl"><a href="/" className="text-xl font-semibold">Discover<span className="text-[#d8b875]">Lanka</span></a><div className="flex items-center gap-4"><a href="/stories" className="text-sm font-semibold text-white/65">Journal</a><a href="/plan" className="premium-button premium-button-gold rounded-full px-4 py-2 text-xs font-extrabold">Build My Trip ↗</a></div></div></header>
+<section className="mx-auto max-w-7xl px-5 pb-16 pt-20 sm:px-8 md:pt-28"><div className="relative min-h-[590px] overflow-hidden rounded-[2.2rem] border border-white/10"><img src={image} alt="" className="absolute inset-0 h-full w-full object-cover"/><div className="absolute inset-0 bg-gradient-to-t from-[#06100d] via-[#06100d]/20 to-transparent"/><div className="absolute inset-x-0 bottom-0 p-7 sm:p-10"><div className="route-hero-panel max-w-4xl"><p className="luxury-section-eyebrow">{s.category||"Sri Lanka"} · JOURNAL</p><h1 className="luxury-display-small mt-3 text-5xl md:text-7xl">{s.title}</h1>{s.excerpt&&<p className="mt-5 max-w-3xl text-lg leading-8 text-white/68">{s.excerpt}</p>}</div></div></div></section>
+<article className="mx-auto grid max-w-7xl gap-12 px-5 pb-24 sm:px-8 lg:grid-cols-[minmax(0,760px)_300px]"><div><div className="border-t border-white/10 pt-9 whitespace-pre-line text-lg leading-9 text-white/70 md:text-xl md:leading-10">{s.content}</div><a href="/plan" className="premium-button premium-button-gold mt-10 inline-flex rounded-full px-7 py-3.5 text-xs font-extrabold uppercase tracking-[.16em]">Turn this into a journey ↗</a></div><aside className="h-fit route-hero-panel lg:sticky lg:top-28"><p className="luxury-section-eyebrow">Continue exploring</p><div className="mt-6 space-y-3"><a href="/destinations" className="block rounded-2xl border border-white/8 bg-white/[.035] p-4 text-sm font-semibold text-white/75 transition hover:border-[#d8b875]/30 hover:text-white">Browse destinations ↗</a><a href="/experiences" className="block rounded-2xl border border-white/8 bg-white/[.035] p-4 text-sm font-semibold text-white/75 transition hover:border-[#d8b875]/30 hover:text-white">Find an experience ↗</a><a href="/my-trip" className="block rounded-2xl border border-white/8 bg-white/[.035] p-4 text-sm font-semibold text-white/75 transition hover:border-[#d8b875]/30 hover:text-white">Open My Trip ↗</a></div></aside></article>
+</main>}
