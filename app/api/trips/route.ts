@@ -1,5 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import { NextResponse } from "next/server";
+import { auth } from "@/lib/auth/server";
 
 export const dynamic = "force-dynamic";
 
@@ -13,6 +14,15 @@ type TripPayload = {
   selectedSlugs?: string[];
   itinerary?: unknown[];
 };
+
+async function getSessionUser() {
+  try {
+    const { data } = await auth.getSession();
+    return data?.user ?? null;
+  } catch {
+    return null;
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -28,12 +38,22 @@ export async function POST(request: Request) {
     const budgetEstimate = Number.isFinite(Number(body.budgetEstimate)) ? Number(body.budgetEstimate) : null;
     const data = { days, travelers, interest, budgetLevel, selectedSlugs, itinerary };
     const sql = neon(process.env.DATABASE_URL);
+    const user = await getSessionUser();
+
+    if (user?.id) {
+      await sql`
+        INSERT INTO users (id, email, name, preferences)
+        VALUES (${user.id}, ${user.email}, ${user.name ?? null}, '{}'::jsonb)
+        ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email, name = EXCLUDED.name, updated_at = NOW()
+      `;
+    }
+
     const rows = await sql`
-      INSERT INTO trips (title, budget, currency, status, data)
-      VALUES (${title}, ${budgetEstimate}, 'LKR', 'draft', ${JSON.stringify(data)}::jsonb)
+      INSERT INTO trips (user_id, title, budget, currency, status, data)
+      VALUES (${user?.id ?? null}, ${title}, ${budgetEstimate}, 'LKR', 'draft', ${JSON.stringify(data)}::jsonb)
       RETURNING id, title, budget, currency, status, data, created_at, updated_at
     `;
-    return NextResponse.json({ trip: rows[0] }, { status: 201 });
+    return NextResponse.json({ trip: rows[0], cloudSynced: Boolean(user?.id) }, { status: 201 });
   } catch (error) {
     console.error("Trips POST error", error);
     return NextResponse.json({ error: "Unable to create trip" }, { status: 500 });
@@ -46,10 +66,10 @@ export async function GET(request: Request) {
     const id = new URL(request.url).searchParams.get("id");
     if (!id) return NextResponse.json({ error: "Trip id is required" }, { status: 400 });
     const sql = neon(process.env.DATABASE_URL);
-    const rows = await sql`
-      SELECT id, title, budget, currency, status, data, created_at, updated_at
-      FROM trips WHERE id = ${id} LIMIT 1
-    `;
+    const user = await getSessionUser();
+    const rows = user?.id
+      ? await sql`SELECT id, title, budget, currency, status, data, created_at, updated_at FROM trips WHERE id = ${id} AND (user_id = ${user.id} OR user_id IS NULL) LIMIT 1`
+      : await sql`SELECT id, title, budget, currency, status, data, created_at, updated_at FROM trips WHERE id = ${id} LIMIT 1`;
     if (!rows.length) return NextResponse.json({ error: "Trip not found" }, { status: 404 });
     return NextResponse.json({ trip: rows[0] });
   } catch (error) {
