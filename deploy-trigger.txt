@@ -1,2 +1,2 @@
 Deployment trigger for the Netlify production environment.
-Account + saved trips dashboard is ready.
+Trip management controls are ready.
