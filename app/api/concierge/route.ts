@@ -37,7 +37,9 @@ const safeTravelers = (value: unknown) => Math.max(1, Math.min(10, Number(value)
 
 function normalizeInterests(value: unknown) {
   const allowed = ["Mountains", "Coast", "Wildlife", "Culture", "Food", "Slow travel"];
-  return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string" && allowed.includes(item)).slice(0, 4) : ["Mountains"];
+  return Array.isArray(value)
+    ? value.filter((item): item is string => typeof item === "string" && allowed.includes(item)).slice(0, 4)
+    : ["Mountains"];
 }
 
 function scoreDestination(destination: Destination, interests: string[], budget: string, pace: string, index: number) {
@@ -79,7 +81,9 @@ export async function POST(request: Request) {
     const interests = normalizeInterests(body.interests);
     const budget = ["Budget", "Comfort", "Premium"].includes(String(body.budget)) ? String(body.budget) : "Comfort";
     const pace = ["Slow", "Balanced", "Fast"].includes(String(body.pace)) ? String(body.pace) : "Balanced";
-    const startingPoint = body.startingPoint && ["Colombo", "Airport", "Kandy", "Galle", "Ella", "Flexible"].includes(body.startingPoint) ? body.startingPoint : "Flexible";
+    const startingPoint = body.startingPoint && ["Colombo", "Airport", "Kandy", "Galle", "Ella", "Flexible"].includes(body.startingPoint)
+      ? body.startingPoint
+      : "Flexible";
 
     if (!process.env.DATABASE_URL) {
       return NextResponse.json({ error: "DATABASE_URL is not configured." }, { status: 500 });
@@ -91,12 +95,16 @@ export async function POST(request: Request) {
       sql`SELECT e.slug, e.name, e.category, e.summary, d.slug AS destination_slug, d.name AS destination_name FROM experiences e LEFT JOIN destinations d ON d.id=e.destination_id ORDER BY e.created_at DESC`,
     ]);
 
-    const destinations = (destinationRows as Destination[]).map((place, index) => ({ place, score: scoreDestination(place, interests, budget, pace, index) })).sort((a, b) => b.score - a.score);
+    const destinations = (destinationRows as Destination[])
+      .map((place, index) => ({ place, score: scoreDestination(place, interests, budget, pace, index) }))
+      .sort((a, b) => b.score - a.score);
     const routeLength = days <= 3 ? 2 : days <= 6 ? 3 : days <= 10 ? 4 : 5;
     const route = destinations.slice(0, Math.min(routeLength, destinations.length)).map(({ place }) => place);
     const experiences = experienceRows as Experience[];
     const routeSlugs = new Set(route.map((place) => place.slug));
-    const pickedExperiences = experiences.filter((item) => item.destination_slug && routeSlugs.has(item.destination_slug)).slice(0, 6);
+    const pickedExperiences = experiences
+      .filter((item) => item.destination_slug && routeSlugs.has(item.destination_slug))
+      .slice(0, 6);
 
     let narrative = buildFallbackNarrative({ days, travelers, interests, budget, pace, startingPoint }, route);
     let aiPowered = false;
@@ -109,13 +117,13 @@ export async function POST(request: Request) {
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.OPENAI_API_KEY}` },
           body: JSON.stringify({
             model,
-            input: `You are the DiscoverLanka luxury travel concierge. Create a warm, concise 2-3 sentence itinerary rationale. User: ${travelers} travelers, ${days} days, budget ${budget}, pace ${pace}, interests ${interests.join(", ")}, start ${startingPoint}. Recommended route: ${route.map((p) => `${p.name} (${p.region})`).join(" → ")}. Do not invent bookings, prices, or facts not provided.`,
+            input: `You are the DiscoverLanka luxury travel concierge. Create a warm, concise 2-3 sentence itinerary rationale. User: ${travelers} travelers, ${days} days, budget ${budget}, pace ${pace}, interests ${interests.join(", ")}, start ${startingPoint}. Recommended route: ${route.map((place) => `${place.name} (${place.region})`).join(" → ")}. Do not invent bookings, prices, or facts not provided.`,
             max_output_tokens: 260,
           }),
         });
         if (aiResponse.ok) {
-          const payload = await aiResponse.json();
-          const text = payload.output_text || payload.output?.flatMap((item: { content?: Array<{ text?: string }> }) => item.content ?? []).map((part) => part.text ?? "").join(" ").trim();
+          const payload = await aiResponse.json() as { output_text?: unknown };
+          const text = typeof payload.output_text === "string" ? payload.output_text.trim() : "";
           if (text) { narrative = text; aiPowered = true; }
         }
       } catch {}
