@@ -1,2 +1,2 @@
 Deployment trigger for the Netlify production environment.
-Responsive UI polish is ready.
+Account + saved trips dashboard is ready.
