@@ -10,7 +10,8 @@ body.luxury-site {
 body.luxury-site .luxury-glass,
 body.luxury-site .golden-trail-card,
 body.luxury-site .journey-dossier,
-body.luxury-site .luxury-feature-shell {
+body.luxury-site .luxury-feature-shell,
+body.luxury-site .luxury-step-card {
   background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.022));
   border: 1px solid rgba(255,255,255,.12);
   box-shadow: 0 28px 85px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.055);
@@ -20,10 +21,15 @@ body.luxury-site .luxury-feature-shell {
 
 body.luxury-site .luxury-glass:hover,
 body.luxury-site .journey-dossier:hover,
-body.luxury-site .luxury-feature-shell:hover {
+body.luxury-site .luxury-feature-shell:hover,
+body.luxury-site .luxury-step-card:hover {
   border-color: rgba(216,184,117,.24);
   box-shadow: 0 36px 105px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.075);
 }
+
+body.luxury-site .luxury-step-card { border-radius: 28px; }
+body.luxury-site .luxury-step-card input,
+body.luxury-site .luxury-step-card select { background: rgba(255,255,255,.045)!important; }
 
 body.luxury-site .luxury-focus-grid {
   display: grid;
@@ -167,6 +173,32 @@ body.luxury-site .route-stat {
 }
 body.luxury-site .route-stat strong { display:block; margin-top:.22rem; color: var(--sig-ink); font-size:1.2rem; }
 body.luxury-site .route-stat span { color: var(--sig-muted); font-size:.68rem; text-transform:uppercase; letter-spacing:.14em; }
+
+/* Sticky mobile journey action */
+@media (max-width: 640px) {
+  body.luxury-site .luxury-mobile-trip-cta {
+    position: fixed;
+    left: 14px;
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 20px;
+    background: rgba(7,18,14,.80);
+    box-shadow: 0 24px 70px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
+    backdrop-filter: blur(22px) saturate(125%);
+    -webkit-backdrop-filter: blur(22px) saturate(125%);
+  }
+}
+
+@media (min-width: 641px) {
+  body.luxury-site .luxury-mobile-trip-cta { display:none; }
+}
 
 @media (max-width: 760px) {
   body.luxury-site .luxury-focus-grid { grid-template-columns: 1fr; }
