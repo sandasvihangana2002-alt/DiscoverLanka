@@ -1,21 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-type Story = { id: string; slug: string; title: string; excerpt: string; content: string; category: string; published_at: string | null };
-
-export default function StoriesPage() {
-  const [stories, setStories] = useState<Story[]>([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => { fetch("/api/stories").then((r)=>r.json()).then((d)=>setStories(d.stories??[])).catch(()=>setStories([])).finally(()=>setLoading(false)); }, []);
-  return <main className="premium-page min-h-screen bg-[#f6f2e9] text-[#10251f]">
-    <header className="sticky top-0 z-30"><div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5"><a href="/" className="text-xl font-bold tracking-tight">Discover<span className="text-[#c7a66a]">Lanka</span></a><div className="flex items-center gap-4 text-sm font-semibold"><a href="/experiences">Experiences</a><a href="/plan">Plan</a><a href="/my-trip">My Trip</a></div></div></header>
-    <section className="mx-auto max-w-7xl px-6 pb-24 pt-16 md:pt-28"><p className="premium-kicker">Stories from the island</p><h1 className="premium-display mt-5 max-w-5xl text-6xl md:text-8xl">Go beyond the guidebook.</h1><p className="premium-muted mt-7 max-w-2xl text-lg leading-8">Ideas, places and local perspectives to help you travel Sri Lanka with more curiosity — and a little more intention.</p>
-      <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {loading&&<div className="premium-card p-10 text-center premium-muted lg:col-span-3">Loading stories…</div>}
-        {!loading&&stories.length===0&&<div className="premium-card p-12 text-center lg:col-span-3"><p className="premium-kicker">Editorial collection</p><h2 className="mt-3 text-3xl">The first stories are on their way.</h2><p className="premium-muted mx-auto mt-3 max-w-xl leading-7">Destinations and trip planning are ready while we grow the DiscoverLanka journal.</p><a href="/plan" className="premium-button premium-button-dark mt-7 text-white">Plan a journey →</a></div>}
-        {stories.map((story,index)=><article key={story.id} className={`premium-card group overflow-hidden ${index===0?"lg:row-span-2":""}`}><div className={`relative overflow-hidden bg-[#16382f] ${index===0?"h-[26rem] lg:h-[38rem]":"h-60"}`}><div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=85')] bg-cover bg-center opacity-55 transition duration-700 group-hover:scale-105"/><div className="absolute inset-0 bg-gradient-to-t from-[#0c261f]/80 via-transparent to-transparent"/><p className="absolute bottom-5 left-6 premium-kicker !text-[#e7c98b]">{story.category||"Sri Lanka"}</p></div><div className="p-7"><p className="premium-kicker">{story.category||"Sri Lanka"}</p><h2 className="mt-3 text-3xl font-semibold leading-tight">{story.title}</h2><p className="premium-muted mt-4 leading-7">{story.excerpt||story.content.slice(0,180)}</p><a href={`/stories/${story.slug}`} className="mt-6 inline-flex text-sm font-bold text-[#16382f]">Read story →</a></div></article>)}
-      </div>
-    </section>
-  </main>;
+type Story={id:string;slug:string;title:string;excerpt:string;content:string;category:string;published_at:string|null};
+const storyImages=[
+ "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1800&q=88",
+ "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=1800&q=88",
+ "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1800&q=88",
+ "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1800&q=88"
+];
+export default function StoriesPage(){
+ const [stories,setStories]=useState<Story[]>([]);const [loading,setLoading]=useState(true);const [category,setCategory]=useState("All");
+ useEffect(()=>{fetch("/api/stories").then(r=>r.json()).then(d=>setStories(Array.isArray(d.stories)?d.stories:[])).catch(()=>setStories([])).finally(()=>setLoading(false))},[]);
+ const categories=useMemo(()=>["All",...Array.from(new Set(stories.map(s=>s.category).filter(Boolean)))],[stories]);
+ const visible=useMemo(()=>category==="All"?stories:stories.filter(s=>s.category===category),[stories,category]);
+ return <main className="min-h-screen bg-[#07120f] text-[#f4efe6]">
+  <header className="sticky top-0 z-40 px-3 pt-3 sm:px-5"><div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/10 bg-black/20 px-5 py-4 backdrop-blur-xl"><a href="/" className="text-xl font-semibold">Discover<span className="text-[#d8b875]">Lanka</span></a><nav className="hidden items-center gap-6 text-sm text-white/70 md:flex"><a href="/">Discover</a><a href="/destinations">Destinations</a><a href="/experiences">Experiences</a><a className="text-white" href="/stories">Stories</a><a href="/plan">Plan</a><a href="/my-trip">My Trip</a></nav><a href="/plan" className="premium-button premium-button-gold rounded-full px-4 py-2 text-xs font-extrabold">Build My Trip ↗</a></div></header>
+  <section className="mx-auto max-w-7xl px-5 pb-14 pt-24 sm:px-8 md:pt-32"><p className="luxury-section-eyebrow">Stories from the island</p><h1 className="luxury-display-small mt-5 max-w-5xl text-6xl md:text-8xl">Go beyond the guidebook.</h1><p className="mt-7 max-w-2xl text-base leading-8 text-white/60 md:text-lg">Places, perspectives and small travel ideas designed to make your Sri Lanka journey feel considered rather than crowded.</p><div className="mt-9 flex gap-2 overflow-x-auto pb-2">{categories.map(c=><button key={c} type="button" onClick={()=>setCategory(c)} className={`shrink-0 rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-[.15em] ${category===c?"border-[#d8b875]/40 bg-[#d8b875] text-[#07120f]":"border-white/12 bg-white/5 text-white/65"}`}>{c}</button>)}</div></section>
+  <section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8">{loading?<div className="route-hero-panel p-10 text-center text-white/60">Loading stories…</div>:visible.length===0?<div className="route-hero-panel p-12 text-center"><h2 className="font-serif text-3xl">The journal is growing.</h2><p className="mx-auto mt-3 max-w-xl text-white/60">Explore the planner while new DiscoverLanka stories are added.</p><a href="/plan" className="premium-button premium-button-gold mt-6 inline-flex rounded-full px-6 py-3 text-xs font-extrabold uppercase tracking-[.15em]">Plan a journey ↗</a></div>:<div className="grid gap-5 md:grid-cols-12">{visible.map((story,index)=><article key={story.id} className={`${index===0?"md:col-span-8 md:row-span-2":"md:col-span-4"} group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[.03]`}><a href={`/stories/${story.slug}`} className="block h-full"><div className={`${index===0?"min-h-[650px]":"min-h-[340px]"} relative overflow-hidden`}><img src={storyImages[index%storyImages.length]} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105" loading={index>1?"lazy":"eager"}/><div className="absolute inset-0 bg-gradient-to-t from-[#06100d] via-[#06100d]/15 to-transparent"/><div className="absolute inset-x-0 bottom-0 p-6 sm:p-8"><p className="luxury-section-eyebrow">{story.category||"Sri Lanka"}</p><h2 className={`${index===0?"text-5xl md:text-6xl":"text-3xl"} mt-3 font-serif leading-[.95]`}>{story.title}</h2><p className="mt-4 max-w-xl text-sm leading-6 text-white/65">{story.excerpt||story.content.slice(0,180)}</p><div className="mt-5 text-xs font-bold uppercase tracking-[.18em] text-white/75">Read story ↗</div></div></div></a></article>)}</div>}</section>
+ </main>;
 }
