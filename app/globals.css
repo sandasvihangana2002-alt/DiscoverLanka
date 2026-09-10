@@ -3,26 +3,113 @@
 :root {
   --ink:#10251f;
   --muted:#66756f;
-  --paper:#f7f5ef;
+  --paper:#f6f2e9;
   --card:#fffdf8;
-  --soft:#f1eee6;
-  --sand:#e9e2d3;
-  --accent:#d9a441;
-  --gold:#e7c36e;
-  --green:#183d32;
-  --line:rgba(16,37,31,.10);
+  --soft:#eeeadf;
+  --sand:#ddd4c3;
+  --accent:#c7a66a;
+  --gold:#e7c98b;
+  --green:#16382f;
+  --forest:#0c261f;
+  --line:rgba(16,37,31,.11);
 }
+
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; background:var(--paper); }
-body { margin:0; background:var(--paper); color:var(--ink); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; }
-h1,h2,h3,h4 { font-family:Georgia,"Times New Roman",serif; letter-spacing:-.025em; }
+body {
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4 {
+  font-family:Georgia,"Times New Roman",serif;
+  letter-spacing:-.035em;
+  font-weight:600;
+}
+
 img { display:block; }
-a,button,input,textarea { transition:all .2s ease; }
-a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible { outline:3px solid rgba(217,164,65,.38); outline-offset:3px; }
+a,button,input,textarea { transition:all .25s ease; }
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible {
+  outline:2px solid rgba(199,166,106,.75);
+  outline-offset:3px;
+}
 button { cursor:pointer; }
-::selection { background:var(--accent); color:var(--ink); }
-.hero-grid { background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px); background-size:42px 42px; }
-.premium-card { border:1px solid var(--line); border-radius:1.5rem; background:rgba(255,255,255,.84); box-shadow:0 14px 35px rgba(16,37,31,.06); }
-.premium-card:hover { box-shadow:0 18px 45px rgba(16,37,31,.10); transform:translateY(-2px); }
-.soft-divider { border-color:var(--line); }
-@media (prefers-reduced-motion:reduce) { html{scroll-behavior:auto;} *,*::before,*::after{transition:none!important;animation:none!important;} }
+::selection { background:var(--gold); color:var(--ink); }
+
+/* Luxury design language */
+.premium-page { background:var(--paper); color:var(--ink); }
+.premium-shell { width:min(1280px,calc(100% - 40px)); margin:0 auto; }
+.premium-kicker {
+  font-size:.68rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.28em;
+  color:#8d7447;
+}
+.premium-display {
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:500;
+  letter-spacing:-.05em;
+  line-height:.94;
+}
+.premium-muted { color:var(--muted); }
+.premium-card {
+  border:1px solid var(--line);
+  border-radius:1.65rem;
+  background:rgba(255,253,248,.9);
+  box-shadow:0 18px 50px rgba(16,37,31,.055);
+}
+.premium-card:hover {
+  transform:translateY(-3px);
+  box-shadow:0 24px 60px rgba(16,37,31,.10);
+}
+.premium-image-frame { overflow:hidden; border-radius:1.8rem; }
+.premium-image-frame img { width:100%; height:100%; object-fit:cover; }
+.premium-button {
+  display:inline-flex;
+  min-height:46px;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  padding:0 22px;
+  font-size:.84rem;
+  font-weight:800;
+  letter-spacing:.01em;
+}
+.premium-button-dark { background:var(--green); color:white; }
+.premium-button-dark:hover { background:#0d2a23; transform:translateY(-1px); }
+.premium-button-gold { background:var(--accent); color:var(--forest); }
+.premium-button-gold:hover { background:#d2b681; transform:translateY(-1px); }
+.premium-button-ghost { border:1px solid rgba(255,255,255,.45); color:white; background:rgba(255,255,255,.05); backdrop-filter:blur(12px); }
+.premium-button-ghost:hover { background:rgba(255,255,255,.12); }
+
+.hero-grid {
+  background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+
+main article { border-radius:1.5rem; }
+main section { scroll-margin-top:100px; }
+
+/* Quietly upgrade common Tailwind surfaces already used across the app. */
+main .shadow-sm { box-shadow:0 16px 40px rgba(16,37,31,.055) !important; }
+main .rounded-3xl { border-radius:1.5rem !important; }
+main .rounded-\[2rem\] { border-radius:1.85rem !important; }
+
+@media (max-width:900px) {
+  .premium-shell { width:min(100% - 28px,760px); }
+}
+
+@media (max-width:640px) {
+  .premium-shell { width:calc(100% - 24px); }
+  .premium-display { line-height:1; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+  *,*::before,*::after { transition:none !important; animation:none !important; }
+}
