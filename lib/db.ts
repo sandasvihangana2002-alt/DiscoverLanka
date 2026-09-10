@@ -1,9 +1,8 @@
-import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
+import { neon } from "@neondatabase/serverless";
 
-// Keep the shared helper's type identical to the official Neon HTTP query function.
-// The previous hand-written function type stripped Neon-specific helpers such as
-// transaction/query options and caused TypeScript failures across the API routes.
-export type SqlTag = NeonQueryFunction<false, false>;
+// Use the exact return type produced by the Neon driver so the API routes
+// retain Neon-specific query helpers such as transaction().
+export type SqlTag = ReturnType<typeof neon>;
 
 export function getSql(): SqlTag | null {
   const url = process.env.DATABASE_URL?.trim();
