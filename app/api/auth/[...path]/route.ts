@@ -4,18 +4,35 @@ import { getServerAuth } from "@/lib/auth/server";
 export const dynamic = "force-dynamic";
 
 type RouteContext = { params: Promise<Record<string, string | string[]>> };
-type AuthHandler = (request: Request, context: RouteContext) => Response | Promise<Response>;
+type RouteHandler = (request: Request, context: RouteContext) => Response | Promise<Response>;
+type AuthHandlers = { GET: RouteHandler; POST: RouteHandler };
 
-async function handler(request: Request, context: RouteContext) {
+function getHandlers(): AuthHandlers | null {
+  const auth = getServerAuth();
+  if (!auth) return null;
+  return auth.handler() as unknown as AuthHandlers;
+}
+
+async function runAuthHandler(method: keyof AuthHandlers, request: Request, context: RouteContext) {
   try {
-    const auth = getServerAuth();
-    if (!auth) return NextResponse.json({ error: "Authentication is not configured on this deployment." }, { status: 503 });
-    return await (auth.handler() as unknown as AuthHandler)(request, context);
+    const handlers = getHandlers();
+    if (!handlers) {
+      return NextResponse.json(
+        { error: "Authentication is not configured on this deployment." },
+        { status: 503 },
+      );
+    }
+    return await handlers[method](request, context);
   } catch (error) {
-    console.error("Auth route error", error);
-    return NextResponse.json({ error: "Authentication service is temporarily unavailable." }, { status: 503 });
+    console.error(`Auth ${method} route error`, error);
+    return NextResponse.json(
+      { error: "Authentication service is temporarily unavailable." },
+      { status: 503 },
+    );
   }
 }
 
-export const GET = handler;
-export const POST = handler;
+export const GET = (request: Request, context: RouteContext) =>
+  runAuthHandler("GET", request, context);
+export const POST = (request: Request, context: RouteContext) =>
+  runAuthHandler("POST", request, context);
