@@ -161,7 +161,249 @@ body.luxury-site main:not(.luxury-home) [role="form"] {
   border-color: var(--lux-border) !important;
 }
 
-/* Mobile: preserve comfortable touch targets and make the glass layers breathe. */
+/* ===== Cinematic interaction system ===== */
+body.luxury-site.luxury-enhanced {
+  --lux-cursor-x: 50vw;
+  --lux-cursor-y: 50vh;
+}
+
+body.luxury-site.luxury-enhanced::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9990;
+  opacity: .42;
+  background: radial-gradient(circle 180px at var(--lux-cursor-x) var(--lux-cursor-y), rgba(216,184,117,.055), transparent 72%);
+  transition: opacity .35s ease;
+}
+
+body.luxury-site.luxury-cursor-focus::after {
+  opacity: .78;
+}
+
+body.luxury-site .luxury-interactive {
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  isolation: isolate;
+}
+
+body.luxury-site .luxury-interactive::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  background: radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,.18), transparent 46%);
+  transition: opacity .25s ease;
+  z-index: -1;
+}
+
+body.luxury-site .luxury-interactive:hover::after,
+body.luxury-site .luxury-interactive:focus-visible::after {
+  opacity: 1;
+}
+
+body.luxury-site .luxury-interactive:active {
+  transform: translateY(1px) scale(.985) !important;
+  filter: brightness(.98);
+}
+
+body.luxury-site .luxury-interactive:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(216,184,117,.16), 0 18px 48px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+
+body.luxury-site .luxury-tilt {
+  transform: perspective(1200px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform .5s cubic-bezier(.2,.75,.2,1), box-shadow .45s ease !important;
+  will-change: transform;
+  overflow: hidden;
+}
+
+body.luxury-site .luxury-tilt::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  pointer-events: none;
+  opacity: .8;
+  background: radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,.12), transparent 26%);
+  mix-blend-mode: screen;
+  transition: opacity .35s ease;
+}
+
+body.luxury-site .luxury-tilt:hover {
+  box-shadow: 0 34px 100px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.08) !important;
+}
+
+/* Scroll reveal: the client component turns this on after hydration. */
+body.luxury-site.luxury-enhanced .luxury-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .72s ease, transform .72s cubic-bezier(.2,.7,.2,1) !important;
+}
+
+body.luxury-site.luxury-enhanced .luxury-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+body.luxury-site.luxury-enhanced .luxury-reveal:nth-child(2) { transition-delay: .06s !important; }
+body.luxury-site.luxury-enhanced .luxury-reveal:nth-child(3) { transition-delay: .12s !important; }
+body.luxury-site.luxury-enhanced .luxury-reveal:nth-child(4) { transition-delay: .18s !important; }
+body.luxury-site.luxury-enhanced .luxury-reveal:nth-child(5) { transition-delay: .24s !important; }
+
+/* Golden Trail for journey routes. */
+body.luxury-site [data-golden-route] {
+  position: relative;
+  isolation: isolate;
+}
+
+body.luxury-site [data-golden-route]::before {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: 22px;
+  bottom: 22px;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(216,184,117,.72) 12%, rgba(216,184,117,.32) 88%, transparent);
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 1.15s cubic-bezier(.22,.72,.2,1);
+}
+
+body.luxury-site [data-golden-route].golden-route-active::before {
+  transform: scaleY(1);
+}
+
+body.luxury-site .golden-route-node {
+  position: relative;
+}
+
+body.luxury-site .golden-route-node::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  border-radius: 999px;
+  background: #d8b875;
+  box-shadow: 0 0 0 5px rgba(216,184,117,.10), 0 0 26px rgba(216,184,117,.18);
+  transform: translateY(-50%);
+}
+
+body.luxury-site .golden-route-node > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Custom cursor only on fine pointers. */
+.luxury-cursor-ring,
+.luxury-cursor-dot {
+  position: fixed;
+  left: -12px;
+  top: -12px;
+  pointer-events: none;
+  z-index: 10000;
+  border-radius: 999px;
+  transform: translate3d(-100px,-100px,0);
+  will-change: transform;
+}
+
+.luxury-cursor-ring {
+  width: 24px;
+  height: 24px;
+  margin-left: -12px;
+  margin-top: -12px;
+  border: 1px solid rgba(244,239,230,.58);
+  box-shadow: 0 0 0 7px rgba(216,184,117,.055), inset 0 0 18px rgba(255,255,255,.045);
+  mix-blend-mode: screen;
+  transition: width .2s ease, height .2s ease, margin .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.luxury-cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  margin-top: -3px;
+  background: #d8b875;
+  box-shadow: 0 0 16px rgba(216,184,117,.48);
+}
+
+body.luxury-cursor-focus .luxury-cursor-ring {
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
+  margin-top: -20px;
+  border-color: rgba(216,184,117,.72);
+  box-shadow: 0 0 0 9px rgba(216,184,117,.07), inset 0 0 22px rgba(255,255,255,.05);
+}
+
+/* Plan Builder composition */
+body.luxury-site main:not(.luxury-home) section:first-of-type > div:first-child {
+  max-width: 1180px;
+}
+
+body.luxury-site .luxury-step-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--lux-border) !important;
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(255,255,255,.085), rgba(255,255,255,.025)) !important;
+  box-shadow: 0 28px 90px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.05) !important;
+  backdrop-filter: blur(24px) saturate(125%);
+  -webkit-backdrop-filter: blur(24px) saturate(125%);
+}
+
+body.luxury-site .luxury-step-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(255,255,255,.06), transparent 38%, rgba(216,184,117,.055));
+}
+
+body.luxury-site .luxury-step-number {
+  display: inline-flex;
+  min-width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(216,184,117,.34);
+  background: rgba(216,184,117,.08);
+  color: var(--lux-gold);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+
+/* Map panel glass */
+body.luxury-site .luxury-map {
+  border: 1px solid var(--lux-border);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 30px 100px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.05);
+  background: #0b1813;
+}
+
+body.luxury-site .luxury-map-panel {
+  border: 1px solid rgba(255,255,255,.13) !important;
+  background: rgba(7,18,14,.60) !important;
+  box-shadow: 0 24px 74px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.05) !important;
+  backdrop-filter: blur(18px) saturate(125%);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+}
+
+body.luxury-site .luxury-map-marker span:first-child {
+  box-shadow: 0 0 0 6px rgba(216,184,117,.10), 0 0 22px rgba(216,184,117,.30);
+}
+
+/* Mobile */
 @media (max-width: 640px) {
   body.luxury-site main:not(.luxury-home) > header > div,
   body.luxury-site main:not(.luxury-home) header > div {
@@ -171,5 +413,38 @@ body.luxury-site main:not(.luxury-home) [role="form"] {
   body.luxury-site main:not(.luxury-home) button[class*="rounded-full"],
   body.luxury-site main:not(.luxury-home) button[class*="rounded-2xl"] {
     min-height: 44px;
+  }
+
+  body.luxury-site .luxury-tilt {
+    transform: none !important;
+  }
+
+  body.luxury-site .luxury-map {
+    border-radius: 22px;
+  }
+}
+
+@media (pointer: coarse) {
+  .luxury-cursor-ring,
+  .luxury-cursor-dot {
+    display: none !important;
+  }
+
+  body.luxury-site.luxury-enhanced::after {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.luxury-site .luxury-interactive,
+  body.luxury-site .luxury-tilt,
+  body.luxury-site .luxury-reveal,
+  body.luxury-site [data-golden-route]::before {
+    transition: none !important;
+  }
+
+  body.luxury-site.luxury-enhanced .luxury-reveal {
+    opacity: 1;
+    transform: none;
   }
 }
