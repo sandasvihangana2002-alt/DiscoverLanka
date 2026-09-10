@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./luxury-overrides.css";
+import LuxuryInteractions from "@/components/LuxuryInteractions";
 
 const siteUrl = "https://discover-lanka.vercel.app";
 
@@ -63,5 +64,5 @@ body.luxury-site .premium-muted{color:rgba(244,239,230,.68)!important}
 `;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className="antialiased luxury-site"><style dangerouslySetInnerHTML={{ __html: luxuryCss }} />{children}</body></html>;
+  return <html lang="en"><body className="antialiased luxury-site"><style dangerouslySetInnerHTML={{ __html: luxuryCss }} /><LuxuryInteractions />{children}</body></html>;
 }
