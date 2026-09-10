@@ -10,7 +10,7 @@ async function handler(request: Request, context: RouteContext) {
   try {
     const auth = getServerAuth();
     if (!auth) return NextResponse.json({ error: "Authentication is not configured on this deployment." }, { status: 503 });
-    return await (auth.handler() as AuthHandler)(request, context);
+    return await (auth.handler() as unknown as AuthHandler)(request, context);
   } catch (error) {
     console.error("Auth route error", error);
     return NextResponse.json({ error: "Authentication service is temporarily unavailable." }, { status: 503 });
