@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./luxury-overrides.css";
 import "./luxury-motion.css";
+import "./luxury-v2.css";
 import LuxuryInteractions from "@/components/LuxuryInteractions";
 
 const siteUrl = "https://discover-lanka.vercel.app";
