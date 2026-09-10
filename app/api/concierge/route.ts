@@ -54,14 +54,12 @@ function scoreDestination(destination: Destination, interests: string[], budget:
 
 function orderRoute(candidates: Destination[], startName: string) {
   const pool = [...candidates];
-  const start = startCoords[startName];
   const ordered: Destination[] = [];
-  if (start) {
+  const start = startCoords[startName];
+  if (start && pool.length) {
     pool.sort((a, b) => Math.hypot(a.latitude - start[0], a.longitude - start[1]) - Math.hypot(b.latitude - start[0], b.longitude - start[1]));
-    ordered.push(pool.shift()!);
-  } else {
-    ordered.push(pool.shift()!);
   }
+  if (pool.length) ordered.push(pool.shift()!);
   while (pool.length) {
     const from = ordered.at(-1)!;
     let nearestIndex = 0;
@@ -83,6 +81,7 @@ function chooseFocus(interests: string[], destination: Destination, dayInStop: n
 }
 
 function makeDayPlans(route: Destination[], days: number, interests: string[], pace: string): DayPlan[] {
+  if (!route.length) return [];
   const stays = route.map(() => 1);
   let extras = Math.max(0, days - route.length);
   let cursor = 0;
@@ -90,15 +89,14 @@ function makeDayPlans(route: Destination[], days: number, interests: string[], p
   const plans: DayPlan[] = [];
   let day = 1;
   route.forEach((destination, routeIndex) => {
-    for (let localDay = 1; localDay <= stays[routeIndex]; localDay += 1) {
+    for (let localDay = 1; localDay <= stays[routeIndex] && day <= days; localDay += 1) {
       const previous = routeIndex > 0 ? route[routeIndex - 1] : null;
       const minutes = transferMinutes(previous, destination);
-      const arrival = routeIndex === 0 ? "Settle in gently" : `Travel from ${previous?.name}`;
       const focus = chooseFocus(interests, destination, localDay);
       const transferNote = routeIndex === 0 ? undefined : `Approx. ${minutes} min transfer before the main afternoon plan.`;
       const items = localDay === 1
         ? [
-            { time: routeIndex === 0 ? "Morning" : "09:00", title: routeIndex === 0 ? "Arrive & settle" : arrival, detail: routeIndex === 0 ? "Keep the first hours light and leave room for the journey to unfold." : `Allow a generous transfer window. ${transferNote}` },
+            { time: routeIndex === 0 ? "Morning" : "09:00", title: routeIndex === 0 ? "Arrive & settle" : `Travel from ${previous?.name}`, detail: routeIndex === 0 ? "Keep the first hours light and leave room for the journey to unfold." : transferNote ?? "Allow a generous transfer window." },
             { time: routeIndex === 0 ? "Afternoon" : "15:00", title: focus, detail: destination.summary },
             { time: "18:30", title: "Golden hour pause", detail: pace === "Fast" ? "Finish with one simple local stop rather than adding another major attraction." : "Keep the evening open for a slow walk, a drink or a local dinner." },
           ]
@@ -111,7 +109,7 @@ function makeDayPlans(route: Destination[], days: number, interests: string[], p
       day += 1;
     }
   });
-  return plans.slice(0, days);
+  return plans;
 }
 
 function buildFallbackNarrative(input: { days: number; travelers: number; budget: string; pace: string; startingPoint: string; interests: string[] }, route: Destination[]) {
@@ -138,12 +136,9 @@ export async function POST(request: Request) {
       sql`SELECT e.slug, e.name, e.category, e.summary, d.slug AS destination_slug, d.name AS destination_name FROM experiences e LEFT JOIN destinations d ON d.id=e.destination_id ORDER BY e.created_at DESC`,
     ]);
 
-    const ranked = (destinationRows as Destination[])
-      .map((place, index) => ({ place, score: scoreDestination(place, interests, budget, pace, index, startingPoint) }))
-      .sort((a, b) => b.score - a.score);
+    const ranked = (destinationRows as Destination[]).map((place, index) => ({ place, score: scoreDestination(place, interests, budget, pace, index, startingPoint) })).sort((a, b) => b.score - a.score);
     const routeLength = days <= 3 ? 2 : days <= 6 ? 3 : days <= 10 ? 4 : 5;
-    const candidates = ranked.slice(0, Math.min(routeLength + 2, ranked.length)).map((item) => item.place);
-    const route = orderRoute(candidates.slice(0, Math.min(routeLength, candidates.length)), startingPoint);
+    const route = orderRoute(ranked.slice(0, Math.min(routeLength + 1, ranked.length)).map((item) => item.place).slice(0, routeLength), startingPoint);
     const itinerary = makeDayPlans(route, days, interests, pace);
     const routeSlugs = route.map((place) => place.slug);
     const experiences = experienceRows as Experience[];
@@ -151,25 +146,19 @@ export async function POST(request: Request) {
 
     let narrative = buildFallbackNarrative({ days, travelers, interests, budget, pace, startingPoint }, route);
     let aiPowered = false;
-    let userId: string | null = null;
-    try { const { data: session } = await auth.getSession(); userId = session?.user?.id ?? null; } catch {}
+    let cloudSynced = false;
+    let user: { id?: string; email?: string; name?: string | null } | null = null;
+    try { const result = await auth.getSession(); user = result.data?.user ?? null; } catch {}
 
-    if (userId) {
-      await sql`INSERT INTO users (id, email, name, preferences) VALUES (${userId}, ${userId}, ${null}, ${JSON.stringify({ interests, budget, pace, startingPoint })}::jsonb) ON CONFLICT (id) DO UPDATE SET preferences = jsonb_build_object('interests', ${JSON.stringify(interests)}::jsonb, 'budget', ${budget}, 'pace', ${pace}, 'startingPoint', ${startingPoint}), updated_at = NOW()`;
+    if (user?.id && user.email) {
+      await sql`INSERT INTO users (id, email, name, preferences) VALUES (${user.id}, ${user.email}, ${user.name ?? null}, ${JSON.stringify({ interests, budget, pace, startingPoint })}::jsonb) ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email, name = EXCLUDED.name, preferences = EXCLUDED.preferences, updated_at = NOW()`;
+      cloudSynced = true;
     }
 
     if (process.env.OPENAI_API_KEY) {
       try {
         const model = process.env.OPENAI_MODEL || "gpt-5-mini";
-        const aiResponse = await fetch("https://api.openai.com/v1/responses", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.OPENAI_API_KEY}` },
-          body: JSON.stringify({
-            model,
-            input: `You are the DiscoverLanka luxury travel concierge. Write a warm concise 2-3 sentence rationale using only the supplied facts. User: ${travelers} travelers, ${days} days, budget ${budget}, pace ${pace}, interests ${interests.join(", ")}, start ${startingPoint}. Route: ${route.map((p) => `${p.name} (${p.region})`).join(" → ")}. Keep it practical and aspirational; do not invent bookings, prices, opening hours, or attractions.`,
-            max_output_tokens: 260,
-          }),
-        });
+        const aiResponse = await fetch("https://api.openai.com/v1/responses", { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.OPENAI_API_KEY}` }, body: JSON.stringify({ model, input: `You are the DiscoverLanka luxury travel concierge. Write a warm concise 2-3 sentence rationale using only the supplied facts. User: ${travelers} travelers, ${days} days, budget ${budget}, pace ${pace}, interests ${interests.join(", ")}, start ${startingPoint}. Route: ${route.map((p) => `${p.name} (${p.region})`).join(" → ")}.`, max_output_tokens: 260 }) });
         if (aiResponse.ok) {
           const payload = await aiResponse.json() as { output_text?: unknown };
           if (typeof payload.output_text === "string" && payload.output_text.trim()) { narrative = payload.output_text.trim(); aiPowered = true; }
@@ -177,7 +166,7 @@ export async function POST(request: Request) {
       } catch {}
     }
 
-    return NextResponse.json({ aiPowered, profile: { days, travelers, interests, budget, pace, startingPoint }, route, experiences: pickedExperiences, narrative, itinerary, estimatedDailyRate: budget === "Premium" ? 35000 : budget === "Budget" ? 9000 : 18000, routeSlugs });
+    return NextResponse.json({ aiPowered, cloudSynced, profile: { days, travelers, interests, budget, pace, startingPoint }, route, experiences: pickedExperiences, narrative, itinerary, estimatedDailyRate: budget === "Premium" ? 35000 : budget === "Budget" ? 9000 : 18000, routeSlugs });
   } catch (error) {
     console.error("Concierge error", error);
     return NextResponse.json({ error: "Could not build your journey." }, { status: 500 });
