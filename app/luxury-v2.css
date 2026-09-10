@@ -76,7 +76,6 @@ body.luxury-site .luxury-display-small {
   line-height: .96;
 }
 
-/* Golden Trail */
 body.luxury-site .golden-trail {
   position: relative;
   display: grid;
@@ -124,38 +123,16 @@ body.luxury-site .golden-trail-card {
   padding: .55rem;
   border-radius: 19px;
 }
-body.luxury-site .golden-trail-card img {
-  width: 72px;
-  height: 60px;
-  border-radius: 14px;
-  object-fit: cover;
-}
+body.luxury-site .golden-trail-card img { width: 72px; height: 60px; border-radius: 14px; object-fit: cover; }
 body.luxury-site .golden-trail-copy { min-width: 0; }
-body.luxury-site .golden-trail-copy h3 {
-  margin: .18rem 0 0;
-  color: var(--sig-ink);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.15rem;
-}
-body.luxury-site .golden-trail-copy > p:last-child {
-  margin: .15rem 0 0;
-  color: var(--sig-muted);
-  font-size: .78rem;
-}
+body.luxury-site .golden-trail-copy h3 { margin: .18rem 0 0; color: var(--sig-ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.15rem; }
+body.luxury-site .golden-trail-copy > p:last-child { margin: .15rem 0 0; color: var(--sig-muted); font-size: .78rem; }
 body.luxury-site .golden-trail-copy .luxury-kicker { color: var(--sig-gold); font-size: .58rem; }
-body.luxury-site .golden-trail-remove {
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  color: var(--sig-muted);
-  border: 1px solid rgba(255,255,255,.11);
-  background: rgba(255,255,255,.035);
-}
+body.luxury-site .golden-trail-remove { width: 34px; height: 34px; border-radius: 999px; color: var(--sig-muted); border: 1px solid rgba(255,255,255,.11); background: rgba(255,255,255,.035); }
 body.luxury-site .golden-trail-remove:hover { color: var(--sig-ink); border-color: rgba(216,184,117,.32); }
 body.luxury-site .golden-trail-compact .golden-trail-card { grid-template-columns: 58px minmax(0,1fr) auto; min-height: 62px; }
 body.luxury-site .golden-trail-compact .golden-trail-card img { width: 58px; height: 50px; }
 
-/* Editorial route dossier */
 body.luxury-site .route-hero-panel {
   border: 1px solid rgba(255,255,255,.15);
   border-radius: 30px;
@@ -165,16 +142,10 @@ body.luxury-site .route-hero-panel {
   backdrop-filter: blur(24px) saturate(128%);
   -webkit-backdrop-filter: blur(24px) saturate(128%);
 }
-body.luxury-site .route-stat {
-  padding: 15px 16px;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,.09);
-  background: rgba(255,255,255,.035);
-}
+body.luxury-site .route-stat { padding: 15px 16px; border-radius: 18px; border: 1px solid rgba(255,255,255,.09); background: rgba(255,255,255,.035); }
 body.luxury-site .route-stat strong { display:block; margin-top:.22rem; color: var(--sig-ink); font-size:1.2rem; }
 body.luxury-site .route-stat span { color: var(--sig-muted); font-size:.68rem; text-transform:uppercase; letter-spacing:.14em; }
 
-/* Sticky mobile journey action */
 @media (max-width: 640px) {
   body.luxury-site .luxury-mobile-trip-cta {
     position: fixed;
@@ -195,18 +166,52 @@ body.luxury-site .route-stat span { color: var(--sig-muted); font-size:.68rem; t
     -webkit-backdrop-filter: blur(22px) saturate(125%);
   }
 }
+@media (min-width: 641px) { body.luxury-site .luxury-mobile-trip-cta { display:none; } }
 
-@media (min-width: 641px) {
-  body.luxury-site .luxury-mobile-trip-cta { display:none; }
+/* Floating AI concierge entry point */
+body.luxury-site .concierge-launcher {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9995;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 0 15px;
+  border: 1px solid rgba(216,184,117,.30);
+  border-radius: 999px;
+  color: var(--sig-ink);
+  background: linear-gradient(145deg, rgba(17,43,34,.92), rgba(7,19,15,.88));
+  box-shadow: 0 18px 55px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.07);
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  transition: transform .28s cubic-bezier(.2,.75,.2,1), border-color .28s ease, box-shadow .28s ease;
 }
+body.luxury-site .concierge-launcher:hover {
+  transform: translateY(-3px);
+  border-color: rgba(216,184,117,.52);
+  box-shadow: 0 24px 72px rgba(0,0,0,.42), 0 0 0 4px rgba(216,184,117,.05), inset 0 1px 0 rgba(255,255,255,.09);
+}
+body.luxury-site .concierge-launcher:active { transform: translateY(0) scale(.98); }
+body.luxury-site .concierge-launcher-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sig-gold); box-shadow: 0 0 15px rgba(216,184,117,.65); animation: concierge-pulse 2.3s ease-in-out infinite; }
+body.luxury-site .concierge-launcher-arrow { color: var(--sig-gold); font-size: 14px; transition: transform .25s ease; }
+body.luxury-site .concierge-launcher:hover .concierge-launcher-arrow { transform: translate(2px,-2px); }
+@keyframes concierge-pulse { 0%,100% { opacity:.45; transform:scale(.85); } 50% { opacity:1; transform:scale(1); } }
 
 @media (max-width: 760px) {
   body.luxury-site .luxury-focus-grid { grid-template-columns: 1fr; }
   body.luxury-site .golden-trail-card { grid-template-columns: 58px minmax(0,1fr) auto; }
   body.luxury-site .golden-trail-card img { width: 58px; height: 52px; }
   body.luxury-site .route-hero-panel { padding: 20px; border-radius: 24px; }
+  body.luxury-site .concierge-launcher { right: 12px; bottom: 12px; min-height: 44px; padding: 0 13px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body.luxury-site .golden-trail-line { animation: none; }
+  body.luxury-site .golden-trail-line,
+  body.luxury-site .concierge-launcher-dot { animation: none; }
 }
