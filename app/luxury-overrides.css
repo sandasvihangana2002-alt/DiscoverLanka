@@ -1,0 +1,175 @@
+/* Full-site luxury polish: glass controls, stronger contrast, cleaner rhythm, and premium interaction states. */
+
+body.luxury-site {
+  --lux-bg: #07120f;
+  --lux-surface: rgba(255,255,255,.07);
+  --lux-surface-strong: rgba(13,38,31,.78);
+  --lux-border: rgba(255,255,255,.12);
+  --lux-border-strong: rgba(255,255,255,.18);
+  --lux-ink: #f4efe6;
+  --lux-muted: rgba(244,239,230,.70);
+  --lux-dim: rgba(244,239,230,.52);
+  --lux-gold: #d8b875;
+}
+
+body.luxury-site main:not(.luxury-home) {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  background: transparent !important;
+  color: var(--lux-ink) !important;
+}
+
+body.luxury-site main:not(.luxury-home)::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(216,184,117,.075), transparent 24%),
+    radial-gradient(circle at 92% 10%, rgba(42,104,83,.14), transparent 28%);
+}
+
+/* Page headers */
+body.luxury-site main:not(.luxury-home) > header {
+  background: transparent !important;
+}
+
+body.luxury-site main:not(.luxury-home) > header > div,
+body.luxury-site main:not(.luxury-home) header > div {
+  color: var(--lux-ink) !important;
+  background: rgba(7,18,14,.42) !important;
+  border: 1px solid var(--lux-border) !important;
+  border-radius: 999px;
+  box-shadow: 0 18px 60px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.045) !important;
+  backdrop-filter: blur(22px) saturate(125%);
+  -webkit-backdrop-filter: blur(22px) saturate(125%);
+}
+
+/* Interior panels and controls */
+body.luxury-site main:not(.luxury-home) section:not(:first-of-type) > div,
+body.luxury-site main:not(.luxury-home) aside,
+body.luxury-site main:not(.luxury-home) article,
+body.luxury-site main:not(.luxury-home) .premium-card {
+  border-color: var(--lux-border) !important;
+}
+
+body.luxury-site main:not(.luxury-home) button,
+body.luxury-site main:not(.luxury-home) a[class*="rounded-2xl"],
+body.luxury-site main:not(.luxury-home) a[class*="rounded-3xl"] {
+  transition: transform .28s ease, background .28s ease, border-color .28s ease, box-shadow .28s ease !important;
+}
+
+body.luxury-site main:not(.luxury-home) button:hover,
+body.luxury-site main:not(.luxury-home) a[class*="rounded-2xl"]:hover,
+body.luxury-site main:not(.luxury-home) a[class*="rounded-3xl"]:hover {
+  transform: translateY(-2px);
+}
+
+/* Ensure common text utilities remain visible on dark glass. */
+body.luxury-site main:not(.luxury-home) .text-black,
+body.luxury-site main:not(.luxury-home) .text-gray-900,
+body.luxury-site main:not(.luxury-home) .text-gray-800,
+body.luxury-site main:not(.luxury-home) .text-gray-700,
+body.luxury-site main:not(.luxury-home) .text-gray-600 {
+  color: var(--lux-ink) !important;
+}
+
+body.luxury-site main:not(.luxury-home) .text-gray-500,
+body.luxury-site main:not(.luxury-home) .text-gray-400 {
+  color: var(--lux-muted) !important;
+}
+
+/* Trip Builder: make the configuration area feel like a glass consultation desk. */
+body.luxury-site main:not(.luxury-home) > section:first-of-type {
+  position: relative;
+}
+
+body.luxury-site main:not(.luxury-home) > section:first-of-type > .mt-12,
+body.luxury-site main:not(.luxury-home) > section:first-of-type > .mt-10,
+body.luxury-site main:not(.luxury-home) > section:first-of-type > .mt-8 {
+  border-color: var(--lux-border) !important;
+}
+
+/* Glass option chips / selectable pills */
+body.luxury-site main:not(.luxury-home) button[class*="rounded-full"],
+body.luxury-site main:not(.luxury-home) button[class*="rounded-2xl"] {
+  border: 1px solid var(--lux-border) !important;
+  background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025)) !important;
+  color: var(--lux-ink) !important;
+  box-shadow: 0 12px 34px rgba(0,0,0,.11), inset 0 1px 0 rgba(255,255,255,.04) !important;
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+}
+
+body.luxury-site main:not(.luxury-home) button[class*="rounded-full"][class*="bg-[#183d32]"],
+body.luxury-site main:not(.luxury-home) button[class*="rounded-2xl"][class*="bg-[#183d32]"] {
+  background: linear-gradient(145deg, rgba(39,88,71,.88), rgba(12,35,28,.86)) !important;
+  border-color: rgba(216,184,117,.42) !important;
+}
+
+/* Inputs stay unmistakably interactive. */
+body.luxury-site main:not(.luxury-home) input,
+body.luxury-site main:not(.luxury-home) textarea,
+body.luxury-site main:not(.luxury-home) select {
+  min-height: 48px;
+  border-radius: 16px;
+  border: 1px solid var(--lux-border) !important;
+  background: rgba(255,255,255,.045) !important;
+  color: var(--lux-ink) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 10px 30px rgba(0,0,0,.10) !important;
+}
+
+body.luxury-site main:not(.luxury-home) input:focus,
+body.luxury-site main:not(.luxury-home) textarea:focus,
+body.luxury-site main:not(.luxury-home) select:focus {
+  border-color: rgba(216,184,117,.50) !important;
+  box-shadow: 0 0 0 3px rgba(216,184,117,.12), inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+
+body.luxury-site main:not(.luxury-home) option {
+  background: #0d211a;
+  color: var(--lux-ink);
+}
+
+/* Premium CTA behavior */
+body.luxury-site main:not(.luxury-home) .premium-button-gold,
+body.luxury-site main:not(.luxury-home) a[class*="bg-[#d9a441]"],
+body.luxury-site main:not(.luxury-home) button[class*="bg-[#d9a441]"] {
+  border: 1px solid rgba(244,239,230,.18) !important;
+  background: linear-gradient(135deg, #c7a66a, #e3c991) !important;
+  color: #09140f !important;
+  box-shadow: 0 16px 44px rgba(216,184,117,.19) !important;
+}
+
+body.luxury-site main:not(.luxury-home) .premium-button-gold:hover,
+body.luxury-site main:not(.luxury-home) a[class*="bg-[#d9a441]"]:hover,
+body.luxury-site main:not(.luxury-home) button[class*="bg-[#d9a441]"]:hover {
+  box-shadow: 0 22px 54px rgba(216,184,117,.26) !important;
+}
+
+/* Detail-page hero copy sits crisply over photography. */
+body.luxury-site main:not(.luxury-home) > section:first-of-type h1,
+body.luxury-site main:not(.luxury-home) > section:first-of-type h2 {
+  text-shadow: 0 8px 28px rgba(0,0,0,.28);
+}
+
+/* Review blocks */
+body.luxury-site main:not(.luxury-home) form,
+body.luxury-site main:not(.luxury-home) [role="form"] {
+  border-color: var(--lux-border) !important;
+}
+
+/* Mobile: preserve comfortable touch targets and make the glass layers breathe. */
+@media (max-width: 640px) {
+  body.luxury-site main:not(.luxury-home) > header > div,
+  body.luxury-site main:not(.luxury-home) header > div {
+    border-radius: 22px;
+  }
+
+  body.luxury-site main:not(.luxury-home) button[class*="rounded-full"],
+  body.luxury-site main:not(.luxury-home) button[class*="rounded-2xl"] {
+    min-height: 44px;
+  }
+}
