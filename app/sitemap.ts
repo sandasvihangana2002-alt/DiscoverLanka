@@ -4,11 +4,11 @@ import { neon } from "@neondatabase/serverless";
 const baseUrl = "https://discover-lanka.vercel.app";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticRoutes = ["", "/experiences", "/plan", "/stories", "/events", "/my-trip"].map((path) => ({
+  const staticRoutes = ["", "/destinations", "/experiences", "/search", "/plan", "/stories", "/events", "/my-trip"].map((path) => ({
     url: `${baseUrl}${path}`,
     lastModified: new Date(),
     changeFrequency: path === "" ? "weekly" as const : "monthly" as const,
-    priority: path === "" ? 1 : 0.7,
+    priority: path === "" ? 1 : path === "/destinations" || path === "/plan" ? 0.85 : 0.7,
   }));
 
   if (!process.env.DATABASE_URL) return staticRoutes;
