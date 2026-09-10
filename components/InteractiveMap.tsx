@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-type Destination = { id:string; name:string; region:string; summary:string; latitude:number; longitude:number; slug:string };
+type Destination = { id:string; name:string; region:string; summary:string; latitude?:number; longitude?:number; slug:string };
 export default function InteractiveMap({destinations}:{destinations:Destination[]}){
  const [selected,setSelected]=useState<Destination|null>(null);
  const [route,setRoute]=useState<string[]>([]);
@@ -12,7 +12,7 @@ export default function InteractiveMap({destinations}:{destinations:Destination[
  return <div className="relative h-[520px] w-full overflow-hidden bg-[#dce8df]">
   <iframe title="Sri Lanka destination map" src={mapSrc} className="absolute inset-0 h-full w-full border-0" loading="lazy"/>
   <div className="absolute inset-0 pointer-events-none">
-   {destinations.map(d=>{const left=((d.longitude-79.5)/(82.2-79.5))*100;const top=(1-(d.latitude-5.8)/(9.9-5.8))*100;return <button key={d.id} onClick={()=>setSelected(d)} style={{left:`${left}%`,top:`${top}%`}} className="pointer-events-auto absolute -translate-x-1/2 -translate-y-full group" aria-label={`Open ${d.name}`}><span className="block h-5 w-5 rounded-full border-4 border-white bg-[#d9a441] shadow-lg transition group-hover:scale-125"/><span className="mt-1 hidden whitespace-nowrap rounded-full bg-[#10251f] px-2 py-1 text-[10px] font-bold text-white shadow-md group-hover:block">{d.name}</span></button>})}
+   {destinations.map(d=>{const latitude=d.latitude??7.8731;const longitude=d.longitude??80.7718;const left=((longitude-79.5)/(82.2-79.5))*100;const top=(1-(latitude-5.8)/(9.9-5.8))*100;return <button key={d.id} onClick={()=>setSelected(d)} style={{left:`${left}%`,top:`${top}%`}} className="pointer-events-auto absolute -translate-x-1/2 -translate-y-full group" aria-label={`Open ${d.name}`}><span className="block h-5 w-5 rounded-full border-4 border-white bg-[#d9a441] shadow-lg transition group-hover:scale-125"/><span className="mt-1 hidden whitespace-nowrap rounded-full bg-[#10251f] px-2 py-1 text-[10px] font-bold text-white shadow-md group-hover:block">{d.name}</span></button>})}
   </div>
   <div className="absolute left-4 top-4 z-10 max-h-[455px] w-[235px] overflow-auto rounded-2xl border border-black/10 bg-white/95 p-3 shadow-xl backdrop-blur">
    <div className="flex items-center justify-between px-2 pb-2"><p className="text-xs font-bold uppercase tracking-widest text-[#8d651d]">Explore Sri Lanka</p>{route.length>0&&<button onClick={()=>setRoute([])} className="text-[10px] font-bold text-[#8d651d]">Clear route</button>}</div>
