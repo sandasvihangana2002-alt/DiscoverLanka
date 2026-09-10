@@ -19,12 +19,7 @@ export default function LuxuryInteractions() {
       cleanup.push(() => target.removeEventListener(event, handler));
     };
 
-    const interactive = Array.from(
-      document.querySelectorAll<HTMLElement>(
-        'button, a.luxury-pill, a[class*="premium-button"], .luxury-save, .luxury-icon-button, input, select, textarea'
-      )
-    );
-
+    const interactive = Array.from(document.querySelectorAll<HTMLElement>('button, a.luxury-pill, a[class*="premium-button"], .luxury-save, .luxury-icon-button, input, select, textarea'));
     interactive.forEach((element) => {
       element.classList.add("luxury-interactive");
       const press = () => {
@@ -35,30 +30,32 @@ export default function LuxuryInteractions() {
       add(element, "pointerdown", press);
     });
 
-    const cards = Array.from(
-      document.querySelectorAll<HTMLElement>('.premium-card, main article, .luxury-feature-card, .luxury-mini-card, .luxury-glass')
-    ).filter((element, index, list) => list.indexOf(element) === index);
-
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.premium-card, main article, .luxury-feature-card, .luxury-mini-card, .luxury-glass')).filter((element, index, list) => list.indexOf(element) === index);
     cards.forEach((card) => card.classList.add("luxury-tilt", "luxury-reveal"));
     interactive.forEach((element) => element.classList.add("luxury-reveal"));
 
     if (!reduceMotion) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("luxury-revealed");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.08, rootMargin: "0px 0px -8% 0px" }
-      );
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("luxury-revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: "0px 0px -8% 0px" });
       document.querySelectorAll<HTMLElement>(".luxury-reveal").forEach((element) => observer.observe(element));
       cleanup.push(() => observer.disconnect());
     } else {
       document.querySelectorAll<HTMLElement>(".luxury-reveal").forEach((element) => element.classList.add("luxury-revealed"));
     }
+
+    const launch = document.createElement("a");
+    launch.className = "concierge-launcher luxury-interactive";
+    launch.href = "/concierge";
+    launch.innerHTML = '<span class="concierge-launcher-dot" aria-hidden="true"></span><span>Concierge</span><span class="concierge-launcher-arrow" aria-hidden="true">↗</span>';
+    launch.setAttribute("aria-label", "Open DiscoverLanka Concierge");
+    if (pathname !== "/concierge") body.appendChild(launch);
+    cleanup.push(() => launch.remove());
 
     if (finePointer && !reduceMotion) {
       const ring = document.createElement("div");
@@ -70,35 +67,23 @@ export default function LuxuryInteractions() {
       body.append(ring, dot);
 
       let raf = 0;
-      let x = -100;
-      let y = -100;
-      let tx = x;
-      let ty = y;
-
+      let x = -100; let y = -100; let tx = x; let ty = y;
       const tick = () => {
-        x += (tx - x) * 0.2;
-        y += (ty - y) * 0.2;
+        x += (tx - x) * 0.2; y += (ty - y) * 0.2;
         ring.style.transform = `translate3d(${x}px, ${y}px, 0)`;
         dot.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
         body.style.setProperty("--lux-cursor-x", `${tx}px`);
         body.style.setProperty("--lux-cursor-y", `${ty}px`);
         raf = requestAnimationFrame(tick);
       };
-
-      const move = (event: Event) => {
-        const pointer = event as PointerEvent;
-        tx = pointer.clientX;
-        ty = pointer.clientY;
-      };
+      const move = (event: Event) => { const pointer = event as PointerEvent; tx = pointer.clientX; ty = pointer.clientY; };
       add(window, "pointermove", move);
       raf = requestAnimationFrame(tick);
       cleanup.push(() => { cancelAnimationFrame(raf); ring.remove(); dot.remove(); });
 
-      interactive.forEach((element) => {
-        const enter = () => body.classList.add("luxury-cursor-focus");
-        const leave = () => body.classList.remove("luxury-cursor-focus");
-        add(element, "pointerenter", enter);
-        add(element, "pointerleave", leave);
+      [...interactive, launch].forEach((element) => {
+        add(element, "pointerenter", () => body.classList.add("luxury-cursor-focus"));
+        add(element, "pointerleave", () => body.classList.remove("luxury-cursor-focus"));
       });
 
       cards.forEach((card) => {
@@ -114,22 +99,15 @@ export default function LuxuryInteractions() {
           card.style.setProperty("--spot-y", `${(py * 100).toFixed(1)}%`);
         };
         const resetCard = () => {
-          card.style.setProperty("--tilt-x", "0deg");
-          card.style.setProperty("--tilt-y", "0deg");
-          card.style.setProperty("--spot-x", "50%");
-          card.style.setProperty("--spot-y", "50%");
+          card.style.setProperty("--tilt-x", "0deg"); card.style.setProperty("--tilt-y", "0deg");
+          card.style.setProperty("--spot-x", "50%"); card.style.setProperty("--spot-y", "50%");
         };
-        add(card, "pointermove", moveCard);
-        add(card, "pointerleave", resetCard);
+        add(card, "pointermove", moveCard); add(card, "pointerleave", resetCard);
       });
     }
 
     document.querySelectorAll<HTMLElement>("[data-golden-route]").forEach((route) => route.classList.add("golden-route-active"));
-
-    return () => {
-      cleanup.forEach((dispose) => dispose());
-      body.classList.remove("luxury-enhanced", "luxury-cursor-focus");
-    };
+    return () => { cleanup.forEach((dispose) => dispose()); body.classList.remove("luxury-enhanced", "luxury-cursor-focus"); };
   }, [pathname]);
 
   return null;
