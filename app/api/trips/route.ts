@@ -16,6 +16,7 @@ type TripPayload = {
   status?: unknown;
   startDate?: unknown;
   endDate?: unknown;
+  events?: unknown;
 };
 
 type SessionUser = { id?: string; email?: string; name?: string | null };
@@ -51,6 +52,7 @@ function normalizedBody(body: TripPayload) {
     ? body.selectedSlugs.filter((item): item is string => typeof item === "string").slice(0, 30)
     : [];
   const itinerary = Array.isArray(body.itinerary) ? body.itinerary.slice(0, 90) : [];
+  const events = Array.isArray(body.events) ? body.events.slice(0, 30) : [];
   const interest = typeof body.interest === "string" ? body.interest.trim().slice(0, 80) : "Mountains";
   const budgetLevel = typeof body.budgetLevel === "string" ? body.budgetLevel.trim().slice(0, 40) : "Comfort";
   const title = typeof body.title === "string" && body.title.trim()
@@ -60,9 +62,9 @@ function normalizedBody(body: TripPayload) {
   const status = typeof body.status === "string" && ["draft", "planned", "completed", "archived"].includes(body.status)
     ? body.status
     : "draft";
-  const startDate = typeof body.startDate === "string" ? body.startDate.slice(0, 10) : null;
-  const endDate = typeof body.endDate === "string" ? body.endDate.slice(0, 10) : null;
-  return { days, travelers, selectedSlugs, itinerary, interest, budgetLevel, title, budgetEstimate, status, startDate, endDate };
+  const startDate = typeof body.startDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(body.startDate) ? body.startDate : null;
+  const endDate = typeof body.endDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(body.endDate) ? body.endDate : null;
+  return { days, travelers, selectedSlugs, itinerary, events, interest, budgetLevel, title, budgetEstimate, status, startDate, endDate };
 }
 
 async function requireOwnedTrip(sql: SqlTag, id: string, userId: string | null) {
@@ -87,12 +89,13 @@ export async function POST(request: Request) {
       budgetLevel: values.budgetLevel,
       selectedSlugs: values.selectedSlugs,
       itinerary: values.itinerary,
+      events: values.events,
     };
 
     const rows = await sql`
       INSERT INTO trips (user_id, title, start_date, end_date, budget, currency, status, data)
       VALUES (${userId}, ${values.title}, ${values.startDate}, ${values.endDate}, ${values.budgetEstimate}, 'LKR', ${values.status}, ${JSON.stringify(data)}::jsonb)
-      RETURNING id, title, start_date, end_date, budget, currency, status, data, created_at, updated_at
+      RETURNING id, title, start_date, end_date, budget, currency, status, data, share_token, created_at, updated_at
     `;
     return NextResponse.json({ trip: rows[0], synced: Boolean(userId) }, { status: 201 });
   } catch (error) {
@@ -105,19 +108,27 @@ export async function GET(request: Request) {
   try {
     const sql = getSql();
     if (!sql) return NextResponse.json({ error: "DATABASE_URL is not configured" }, { status: 500 });
-    const id = new URL(request.url).searchParams.get("id");
-    if (!id) return NextResponse.json({ error: "Trip id is required" }, { status: 400 });
+    const params = new URL(request.url).searchParams;
+    const id = params.get("id");
+    const share = params.get("share");
+    if (!id && !share) return NextResponse.json({ error: "Trip id or share token is required" }, { status: 400 });
+
+    if (share) {
+      const rows = await sql`SELECT id, title, start_date, end_date, budget, currency, status, data, share_token, created_at, updated_at FROM trips WHERE share_token = ${share}::uuid LIMIT 1`;
+      if (!rows.length) return NextResponse.json({ error: "Shared trip not found" }, { status: 404 });
+      return NextResponse.json({ trip: rows[0] as TripRow, shared: true });
+    }
 
     const user = await sessionUser();
     const userId = await resolveUserId(sql, user ?? undefined);
     if (userId) {
-      const owned = await requireOwnedTrip(sql, id, userId);
+      const owned = await requireOwnedTrip(sql, id!, userId);
       if (!owned) return NextResponse.json({ error: "Trip not found" }, { status: 404 });
-      const rows = await sql`SELECT id, title, start_date, end_date, budget, currency, status, data, created_at, updated_at FROM trips WHERE id = ${id} AND user_id = ${userId} LIMIT 1`;
+      const rows = await sql`SELECT id, title, start_date, end_date, budget, currency, status, data, share_token, created_at, updated_at FROM trips WHERE id = ${id!} AND user_id = ${userId} LIMIT 1`;
       return NextResponse.json({ trip: rows[0] as TripRow });
     }
 
-    const rows = await sql`SELECT id, title, start_date, end_date, budget, currency, status, data, created_at, updated_at FROM trips WHERE id = ${id} AND user_id IS NULL LIMIT 1`;
+    const rows = await sql`SELECT id, title, start_date, end_date, budget, currency, status, data, share_token, created_at, updated_at FROM trips WHERE id = ${id!} AND user_id IS NULL LIMIT 1`;
     if (!rows.length) return NextResponse.json({ error: "Trip not found" }, { status: 404 });
     return NextResponse.json({ trip: rows[0] as TripRow });
   } catch (error) {
@@ -147,10 +158,10 @@ export async function PATCH(request: Request) {
           end_date = ${values.endDate},
           budget = ${values.budgetEstimate},
           status = ${values.status},
-          data = ${JSON.stringify({ days: values.days, travelers: values.travelers, interest: values.interest, budgetLevel: values.budgetLevel, selectedSlugs: values.selectedSlugs, itinerary: values.itinerary })}::jsonb,
+          data = ${JSON.stringify({ days: values.days, travelers: values.travelers, interest: values.interest, budgetLevel: values.budgetLevel, selectedSlugs: values.selectedSlugs, itinerary: values.itinerary, events: values.events })}::jsonb,
           updated_at = NOW()
       WHERE id = ${id} AND user_id = ${userId}
-      RETURNING id, title, start_date, end_date, budget, currency, status, data, created_at, updated_at
+      RETURNING id, title, start_date, end_date, budget, currency, status, data, share_token, created_at, updated_at
     `;
     return NextResponse.json({ trip: rows[0] });
   } catch (error) {
