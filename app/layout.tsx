@@ -5,7 +5,7 @@ import "./luxury-motion.css";
 import "./luxury-v2.css";
 import LuxuryInteractions from "@/components/LuxuryInteractions";
 
-const siteUrl = "https://discover-lanka.vercel.app";
+const siteUrl = "https://discoverlanka-6mpa.netlify.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -61,8 +61,19 @@ body.luxury-site .text-white\/40,body.luxury-site .text-white\/45,body.luxury-si
 body.luxury-site .premium-muted{color:rgba(244,239,230,.68)!important}
 
 @media(max-width:900px){body.luxury-site .hero-glass-panel{padding:26px}}
-@media(max-width:640px){body.luxury-site{overflow-x:hidden}body.luxury-site main>section{scroll-margin-top:90px}body.luxury-site .hero-glass-panel{padding:20px;border-radius:24px}body.luxury-site main:not(.luxury-home) a[class*="rounded-full"],body.luxury-site main:not(.luxury-home) button[class*="rounded-full"]{min-height:44px}}
-@media(prefers-reduced-motion:reduce){body.luxury-site *,body.luxury-site *::before,body.luxury-site *::after{transition:none!important;animation:none!important}}
+@media(max-width:640px){
+  body.luxury-site{overflow-x:hidden}
+  body.luxury-site main{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+  body.luxury-site main>section{scroll-margin-top:90px}
+  body.luxury-site .hero-glass-panel{padding:20px;border-radius:24px}
+  body.luxury-site main:not(.luxury-home) a[class*="rounded-full"],body.luxury-site main:not(.luxury-home) button[class*="rounded-full"]{min-height:44px}
+  body.luxury-site main:not(.luxury-home) h1.luxury-display-small{font-size:clamp(2.25rem,11vw,4rem);line-height:.96}
+  body.luxury-site main:not(.luxury-home) h2{font-size:clamp(1.8rem,8vw,2.6rem)}
+  body.luxury-site main:not(.luxury-home) .grid{scroll-margin-top:90px}
+  body.luxury-site main:not(.luxury-home) img{max-width:100%}
+  body.luxury-site main:not(.luxury-home) article{overflow:hidden}
+}
+@media(prefers-reduced-motion:reduce){body.luxury-site *,body.luxury-site *::before,body.luxury-site *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 `;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
