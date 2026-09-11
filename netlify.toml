@@ -1,7 +1,0 @@
-# Netlify production redeploy after environment configuration update
-[build]
-  command = "npm run build"
-  publish = ".next"
-
-[build.environment]
-  NODE_VERSION = "24"
