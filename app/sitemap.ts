@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
 import { neon } from "@neondatabase/serverless";
 
-const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");
+const baseUrl = "https://discover-lanka.vercel.app";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const routes = ["", "/destinations", "/experiences", "/search", "/plan", "/concierge", "/stories", "/events", "/my-trip", "/about", "/contact", "/privacy", "/terms"].map((path) => ({
+  const routes = ["", "/destinations", "/experiences", "/plan", "/concierge", "/stories", "/events", "/about", "/contact", "/privacy", "/terms"].map((path) => ({
     url: `${baseUrl}${path}`,
     lastModified: new Date(),
     changeFrequency: path === "" || path === "/stories" ? "weekly" as const : "monthly" as const,
@@ -23,24 +23,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     return [
       ...routes,
-      ...destinations.map((item) => ({
-        url: `${baseUrl}/destinations/${item.slug}`,
-        lastModified: new Date(item.updated_at),
-        changeFrequency: "monthly" as const,
-        priority: 0.8,
-      })),
-      ...experiences.map((item) => ({
-        url: `${baseUrl}/experiences/${item.slug}`,
-        lastModified: new Date(item.updated_at),
-        changeFrequency: "monthly" as const,
-        priority: 0.75,
-      })),
-      ...stories.map((item) => ({
-        url: `${baseUrl}/stories/${item.slug}`,
-        lastModified: new Date(item.updated_at ?? new Date()),
-        changeFrequency: "weekly" as const,
-        priority: 0.7,
-      })),
+      ...destinations.map((item) => ({ url: `${baseUrl}/destinations/${item.slug}`, lastModified: item.updated_at ? new Date(item.updated_at) : new Date(), changeFrequency: "monthly" as const, priority: 0.8 })),
+      ...experiences.map((item) => ({ url: `${baseUrl}/experiences/${item.slug}`, lastModified: item.updated_at ? new Date(item.updated_at) : new Date(), changeFrequency: "monthly" as const, priority: 0.75 })),
+      ...stories.map((item) => ({ url: `${baseUrl}/stories/${item.slug}`, lastModified: item.updated_at ? new Date(item.updated_at) : new Date(), changeFrequency: "weekly" as const, priority: 0.7 })),
     ];
   } catch {
     return routes;
