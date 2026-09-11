@@ -5,7 +5,7 @@ import "./luxury-motion.css";
 import "./luxury-v2.css";
 import LuxuryInteractions from "@/components/LuxuryInteractions";
 
-const siteUrl = "https://discover-lanka-iugi.vercel.app";
+const siteUrl = "https://discover-lanka.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -32,7 +32,7 @@ body.luxury-site [class~="bg-white"],body.luxury-site [class*="bg-white/"],body.
 body.luxury-site [class*="bg-[#16382f]"],body.luxury-site [class*="bg-[#183d32]"],body.luxury-site [class*="bg-[#0c261f]"],body.luxury-site [class*="bg-[#10251f]"]{background:linear-gradient(145deg,rgba(18,53,43,.78),rgba(6,19,15,.72))!important}
 body.luxury-site [class*="text-[#10251f]"],body.luxury-site [class*="text-[#183d32]"],body.luxury-site [class*="text-[#16382f]"]{color:var(--lx-ivory)!important}
 body.luxury-site [class*="text-[#66756f]"]{color:var(--lx-muted)!important}
-body.luxury-site [class*="text-[#8d651d]"],body.luxury-site [class*="text-[#8d7447]"],body.luxury-site [class*="text-[#b27c1d]"],body.luxury-site [class*="text-[#d9a441]"],body.luxury-site [class*="text-[#c7a66a]"],body.luxury-site [class*="text-[#e7c98b]"],body.luxury-site [class*="text-[#e7c36e"]]{color:var(--lx-gold)!important}
+body.luxury-site [class*="text-[#8d651d]"],body.luxury-site [class*="text-[#8d7447]"],body.luxury-site [class*="text-[#b27c1d]"],body.luxury-site [class*="text-[#d9a441]"],body.luxury-site [class*="text-[#c7a66a]"],body.luxury-site [class*="text-[#e7c98b]"],body.luxury-site [class*="text-[#e7c36e]"]{color:var(--lx-gold)!important}
 body.luxury-site input,body.luxury-site textarea,body.luxury-site select{background:rgba(255,255,255,.045)!important;color:var(--lx-ivory)!important;border-color:rgba(255,255,255,.13)!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 body.luxury-site input::placeholder,body.luxury-site textarea::placeholder{color:rgba(244,239,230,.42)}
 body.luxury-site header>div,body.luxury-site .backdrop-blur-md,body.luxury-site .backdrop-blur-xl{border-color:rgba(255,255,255,.12)!important;backdrop-filter:blur(20px) saturate(120%);-webkit-backdrop-filter:blur(20px) saturate(120%)}
