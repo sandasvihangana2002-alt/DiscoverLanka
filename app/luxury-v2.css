@@ -1,217 +1,46 @@
 /* DiscoverLanka Signature UX v2 — editorial travel + concierge interaction layer */
-body.luxury-site {
-  --sig-bg: #07120f;
-  --sig-ink: #f4efe6;
-  --sig-muted: rgba(244,239,230,.68);
-  --sig-gold: #d8b875;
-  --sig-line: rgba(255,255,255,.12);
-}
+body.luxury-site{--sig-bg:#07120f;--sig-ink:#f4efe6;--sig-muted:rgba(244,239,230,.68);--sig-gold:#d8b875;--sig-line:rgba(255,255,255,.12)}
+body.luxury-site .luxury-glass,body.luxury-site .golden-trail-card,body.luxury-site .journey-dossier,body.luxury-site .luxury-feature-shell,body.luxury-site .luxury-step-card{background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.022));border:1px solid rgba(255,255,255,.12);box-shadow:0 28px 85px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.055);backdrop-filter:blur(22px) saturate(125%);-webkit-backdrop-filter:blur(22px) saturate(125%)}
+body.luxury-site .luxury-glass:hover,body.luxury-site .journey-dossier:hover,body.luxury-site .luxury-feature-shell:hover,body.luxury-site .luxury-step-card:hover{border-color:rgba(216,184,117,.24);box-shadow:0 36px 105px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.075)}
+body.luxury-site .luxury-step-card{border-radius:28px}body.luxury-site .luxury-step-card input,body.luxury-site .luxury-step-card select{background:rgba(255,255,255,.045)!important}
+body.luxury-site .luxury-focus-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1.25rem}
+body.luxury-site .luxury-focus-card{position:relative;min-height:320px;overflow:hidden;border:1px solid var(--sig-line);border-radius:28px;background:rgba(255,255,255,.035);isolation:isolate}
+body.luxury-site .luxury-focus-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(3,12,9,.94) 100%);z-index:0}
+body.luxury-site .luxury-focus-card img{transition:transform 1.1s cubic-bezier(.2,.7,.2,1),filter .7s ease}body.luxury-site .luxury-focus-card:hover img{transform:scale(1.065);filter:saturate(1.08) contrast(1.04)}body.luxury-site .luxury-focus-card>*{position:relative;z-index:1}
+body.luxury-site .luxury-section-eyebrow{color:var(--sig-gold);font-size:.68rem;font-weight:800;letter-spacing:.25em;text-transform:uppercase}
+body.luxury-site .luxury-display-small{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.035em;line-height:.96}
+body.luxury-site .golden-trail{position:relative;display:grid;gap:.8rem;padding:.45rem 0}.golden-trail-line{position:absolute;left:17px;top:20px;bottom:20px;width:1px;background:linear-gradient(180deg,transparent,rgba(216,184,117,.9) 8%,rgba(216,184,117,.28) 92%,transparent);transform-origin:top;animation:golden-trail-draw 1.25s cubic-bezier(.2,.8,.2,1) both}@keyframes golden-trail-draw{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+body.luxury-site .golden-trail-stop{position:relative;display:grid;grid-template-columns:36px minmax(0,1fr);gap:.75rem;align-items:center}.golden-trail-marker{position:relative;z-index:2;display:grid;place-items:center;width:35px;height:35px;border-radius:999px;color:#07120f;background:var(--sig-gold);font-size:.65rem;font-weight:900;box-shadow:0 0 0 6px rgba(216,184,117,.08),0 0 25px rgba(216,184,117,.15)}
+body.luxury-site .golden-trail-card{min-height:74px;display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:.85rem;align-items:center;padding:.55rem;border-radius:19px}.golden-trail-card img{width:72px;height:60px;border-radius:14px;object-fit:cover}.golden-trail-copy{min-width:0}.golden-trail-copy h3{margin:.18rem 0 0;color:var(--sig-ink);font-family:Georgia,"Times New Roman",serif;font-size:1.15rem}.golden-trail-copy>p:last-child{margin:.15rem 0 0;color:var(--sig-muted);font-size:.78rem}.golden-trail-copy .luxury-kicker{color:var(--sig-gold);font-size:.58rem}.golden-trail-remove{width:34px;height:34px;border-radius:999px;color:var(--sig-muted);border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.035)}.golden-trail-remove:hover{color:var(--sig-ink);border-color:rgba(216,184,117,.32)}
+body.luxury-site .golden-trail-compact .golden-trail-card{grid-template-columns:58px minmax(0,1fr) auto;min-height:62px}.golden-trail-compact .golden-trail-card img{width:58px;height:50px}
+body.luxury-site .route-hero-panel{border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:26px;background:linear-gradient(145deg,rgba(8,26,20,.68),rgba(255,255,255,.035));box-shadow:0 35px 100px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(24px) saturate(128%);-webkit-backdrop-filter:blur(24px) saturate(128%)}
+body.luxury-site .route-stat{padding:15px 16px;border-radius:18px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035)}.route-stat strong{display:block;margin-top:.22rem;color:var(--sig-ink);font-size:1.2rem}.route-stat span{color:var(--sig-muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.14em}
+body.luxury-site .luxury-mobile-trip-cta{position:fixed;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:80;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid rgba(255,255,255,.13);border-radius:20px;background:rgba(7,18,14,.80);box-shadow:0 24px 70px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(22px) saturate(125%);-webkit-backdrop-filter:blur(22px) saturate(125%)}
+@media(min-width:641px){body.luxury-site .luxury-mobile-trip-cta{display:none}}
+body.luxury-site .concierge-launcher{position:fixed;right:20px;bottom:20px;z-index:9995;display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:0 15px;border:1px solid rgba(216,184,117,.30);border-radius:999px;color:var(--sig-ink);background:linear-gradient(145deg,rgba(17,43,34,.92),rgba(7,19,15,.88));box-shadow:0 18px 55px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(20px) saturate(130%);-webkit-backdrop-filter:blur(20px) saturate(130%);font-size:11px;font-weight:800;letter-spacing:.10em;text-transform:uppercase}.concierge-launcher:hover{transform:translateY(-3px);border-color:rgba(216,184,117,.52)}.concierge-launcher-dot{width:7px;height:7px;border-radius:50%;background:var(--sig-gold);box-shadow:0 0 15px rgba(216,184,117,.65);animation:concierge-pulse 2.3s ease-in-out infinite}.concierge-launcher-arrow{color:var(--sig-gold);font-size:14px}@keyframes concierge-pulse{0%,100%{opacity:.45;transform:scale(.85)}50%{opacity:1;transform:scale(1)}}
+@media(max-width:760px){body.luxury-site .luxury-focus-grid{grid-template-columns:1fr}body.luxury-site .golden-trail-card{grid-template-columns:58px minmax(0,1fr) auto}body.luxury-site .golden-trail-card img{width:58px;height:52px}body.luxury-site .route-hero-panel{padding:20px;border-radius:24px}body.luxury-site .concierge-launcher{right:12px;bottom:12px;min-height:44px;padding:0 13px}}
+@media(max-width:640px){body.luxury-site .luxury-mobile-trip-cta{display:flex}}
+@media(prefers-reduced-motion:reduce){body.luxury-site .golden-trail-line,body.luxury-site .concierge-launcher-dot{animation:none}}
 
-body.luxury-site .luxury-glass,
-body.luxury-site .golden-trail-card,
-body.luxury-site .journey-dossier,
-body.luxury-site .luxury-feature-shell,
-body.luxury-site .luxury-step-card {
-  background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.022));
-  border: 1px solid rgba(255,255,255,.12);
-  box-shadow: 0 28px 85px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.055);
-  backdrop-filter: blur(22px) saturate(125%);
-  -webkit-backdrop-filter: blur(22px) saturate(125%);
+/* FINAL RESPONSIVE POLISH */
+html{overflow-x:hidden}body.luxury-site{overflow-x:hidden}body.luxury-site main{max-width:100%;overflow-x:clip}
+body.luxury-site header{z-index:60}
+body.luxury-site main:not(.luxury-home)>header>div,body.luxury-site main:not(.luxury-home) header>div{max-width:1280px;width:100%}
+body.luxury-site .premium-button,body.luxury-site .luxury-pill{white-space:nowrap}
+body.luxury-site img{max-width:100%}
+body.luxury-site a,body.luxury-site button{ -webkit-tap-highlight-color:transparent; }
+body.luxury-site button{touch-action:manipulation}
+@media(max-width:1024px){body.luxury-site .luxury-home .luxury-nav{gap:10px}.luxury-home .luxury-hero .hero-glass-panel{padding:26px}.luxury-home .luxury-feature-card{min-height:520px}body.luxury-site main:not(.luxury-home)>section{scroll-margin-top:92px}}
+@media(max-width:760px){body.luxury-site main:not(.luxury-home)>header{padding-left:12px!important;padding-right:12px!important}body.luxury-site main:not(.luxury-home)>header>div{padding:12px 14px!important;gap:10px}body.luxury-site main:not(.luxury-home)>header nav{gap:7px}body.luxury-site main:not(.luxury-home)>header>a:last-child{max-width:48%;overflow:hidden;text-overflow:ellipsis}
+body.luxury-site main:not(.luxury-home)>section:first-of-type{padding-top:7.2rem!important;padding-bottom:2.75rem!important}body.luxury-site main:not(.luxury-home)>section:first-of-type>h1{font-size:clamp(2.55rem,12vw,4.8rem)!important;line-height:.94!important}body.luxury-site main:not(.luxury-home)>section:first-of-type>p:not(.luxury-section-eyebrow){font-size:.98rem;line-height:1.7}
+body.luxury-site main:not(.luxury-home)>section{padding-left:16px!important;padding-right:16px!important}body.luxury-site main:not(.luxury-home)>section>.max-w-7xl,body.luxury-site main:not(.luxury-home)>section>.mx-auto{width:100%}
+body.luxury-site .luxury-focus-card{min-height:270px;border-radius:22px}body.luxury-site .luxury-focus-grid{gap:12px}body.luxury-site .luxury-focus-card h2{font-size:2rem}body.luxury-site .luxury-focus-card p{max-width:100%}
+body.luxury-site .luxury-step-card{border-radius:22px;padding:18px!important}body.luxury-site .route-hero-panel{padding:18px!important;border-radius:22px}body.luxury-site .route-stat{padding:12px}.route-stat strong{font-size:1rem}.route-stat span{font-size:.58rem}
+body.luxury-site .golden-trail-card{grid-template-columns:54px minmax(0,1fr)!important;gap:10px}.golden-trail-card img{width:54px!important;height:48px!important}.golden-trail-remove{grid-column:2;justify-self:end;margin-top:-6px}
+body.luxury-site .concierge-launcher{bottom:calc(76px + env(safe-area-inset-bottom));max-width:calc(100vw - 24px);overflow:hidden}.luxury-mobile-trip-cta{bottom:calc(12px + env(safe-area-inset-bottom))!important}
 }
-
-body.luxury-site .luxury-glass:hover,
-body.luxury-site .journey-dossier:hover,
-body.luxury-site .luxury-feature-shell:hover,
-body.luxury-site .luxury-step-card:hover {
-  border-color: rgba(216,184,117,.24);
-  box-shadow: 0 36px 105px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.075);
+@media(max-width:520px){body.luxury-site .luxury-home header{padding:8px 10px!important}.luxury-home .luxury-nav{padding:9px 10px!important}.luxury-home .brand-mark{font-size:1.08rem}.luxury-home .luxury-icon-button{min-width:40px;height:40px}.luxury-home .luxury-hero{min-height:94svh}.luxury-home .hero-glass-panel{padding:17px!important;border-radius:22px}.luxury-home .luxury-display{font-size:clamp(3rem,14vw,4.5rem)!important}.luxury-home .luxury-pill{min-height:44px;padding:0 15px}.luxury-home .luxury-hero .max-w-4xl>p{line-height:1.65}.luxury-home .luxury-section{padding-top:72px!important;padding-bottom:72px!important}.luxury-home .luxury-feature-card{min-height:470px;border-radius:22px}.luxury-home .luxury-mini-card{min-height:125px;border-radius:20px}.luxury-home .luxury-mobile-nav{margin-left:2px;margin-right:2px}
+body.luxury-site main:not(.luxury-home)>header>div{border-radius:20px!important}.premium-button{min-height:44px}.premium-shell{width:calc(100% - 24px)}
 }
-
-body.luxury-site .luxury-step-card { border-radius: 28px; }
-body.luxury-site .luxury-step-card input,
-body.luxury-site .luxury-step-card select { background: rgba(255,255,255,.045)!important; }
-
-body.luxury-site .luxury-focus-grid {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0,1fr));
-  gap: 1.25rem;
-}
-
-body.luxury-site .luxury-focus-card {
-  position: relative;
-  min-height: 320px;
-  overflow: hidden;
-  border: 1px solid var(--sig-line);
-  border-radius: 28px;
-  background: rgba(255,255,255,.035);
-  isolation: isolate;
-}
-
-body.luxury-site .luxury-focus-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(3,12,9,.94) 100%);
-  z-index: 0;
-}
-
-body.luxury-site .luxury-focus-card img {
-  transition: transform 1.1s cubic-bezier(.2,.7,.2,1), filter .7s ease;
-}
-
-body.luxury-site .luxury-focus-card:hover img { transform: scale(1.065); filter: saturate(1.08) contrast(1.04); }
-body.luxury-site .luxury-focus-card > * { position: relative; z-index: 1; }
-
-body.luxury-site .luxury-section-eyebrow {
-  color: var(--sig-gold);
-  font-size: .68rem;
-  font-weight: 800;
-  letter-spacing: .25em;
-  text-transform: uppercase;
-}
-
-body.luxury-site .luxury-display-small {
-  font-family: Georgia, "Times New Roman", serif;
-  letter-spacing: -.035em;
-  line-height: .96;
-}
-
-body.luxury-site .golden-trail {
-  position: relative;
-  display: grid;
-  gap: .8rem;
-  padding: .45rem 0;
-}
-body.luxury-site .golden-trail-line {
-  position: absolute;
-  left: 17px;
-  top: 20px;
-  bottom: 20px;
-  width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(216,184,117,.9) 8%, rgba(216,184,117,.28) 92%, transparent);
-  transform-origin: top;
-  animation: golden-trail-draw 1.25s cubic-bezier(.2,.8,.2,1) both;
-}
-@keyframes golden-trail-draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-body.luxury-site .golden-trail-stop {
-  position: relative;
-  display: grid;
-  grid-template-columns: 36px minmax(0,1fr);
-  gap: .75rem;
-  align-items: center;
-}
-body.luxury-site .golden-trail-marker {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 35px;
-  height: 35px;
-  border-radius: 999px;
-  color: #07120f;
-  background: var(--sig-gold);
-  font-size: .65rem;
-  font-weight: 900;
-  box-shadow: 0 0 0 6px rgba(216,184,117,.08), 0 0 25px rgba(216,184,117,.15);
-}
-body.luxury-site .golden-trail-card {
-  min-height: 74px;
-  display: grid;
-  grid-template-columns: 72px minmax(0,1fr) auto;
-  gap: .85rem;
-  align-items: center;
-  padding: .55rem;
-  border-radius: 19px;
-}
-body.luxury-site .golden-trail-card img { width: 72px; height: 60px; border-radius: 14px; object-fit: cover; }
-body.luxury-site .golden-trail-copy { min-width: 0; }
-body.luxury-site .golden-trail-copy h3 { margin: .18rem 0 0; color: var(--sig-ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.15rem; }
-body.luxury-site .golden-trail-copy > p:last-child { margin: .15rem 0 0; color: var(--sig-muted); font-size: .78rem; }
-body.luxury-site .golden-trail-copy .luxury-kicker { color: var(--sig-gold); font-size: .58rem; }
-body.luxury-site .golden-trail-remove { width: 34px; height: 34px; border-radius: 999px; color: var(--sig-muted); border: 1px solid rgba(255,255,255,.11); background: rgba(255,255,255,.035); }
-body.luxury-site .golden-trail-remove:hover { color: var(--sig-ink); border-color: rgba(216,184,117,.32); }
-body.luxury-site .golden-trail-compact .golden-trail-card { grid-template-columns: 58px minmax(0,1fr) auto; min-height: 62px; }
-body.luxury-site .golden-trail-compact .golden-trail-card img { width: 58px; height: 50px; }
-
-body.luxury-site .route-hero-panel {
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 30px;
-  padding: 26px;
-  background: linear-gradient(145deg, rgba(8,26,20,.68), rgba(255,255,255,.035));
-  box-shadow: 0 35px 100px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.06);
-  backdrop-filter: blur(24px) saturate(128%);
-  -webkit-backdrop-filter: blur(24px) saturate(128%);
-}
-body.luxury-site .route-stat { padding: 15px 16px; border-radius: 18px; border: 1px solid rgba(255,255,255,.09); background: rgba(255,255,255,.035); }
-body.luxury-site .route-stat strong { display:block; margin-top:.22rem; color: var(--sig-ink); font-size:1.2rem; }
-body.luxury-site .route-stat span { color: var(--sig-muted); font-size:.68rem; text-transform:uppercase; letter-spacing:.14em; }
-
-@media (max-width: 640px) {
-  body.luxury-site .luxury-mobile-trip-cta {
-    position: fixed;
-    left: 14px;
-    right: 14px;
-    bottom: calc(14px + env(safe-area-inset-bottom));
-    z-index: 80;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 12px;
-    border: 1px solid rgba(255,255,255,.13);
-    border-radius: 20px;
-    background: rgba(7,18,14,.80);
-    box-shadow: 0 24px 70px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
-    backdrop-filter: blur(22px) saturate(125%);
-    -webkit-backdrop-filter: blur(22px) saturate(125%);
-  }
-}
-@media (min-width: 641px) { body.luxury-site .luxury-mobile-trip-cta { display:none; } }
-
-/* Floating AI concierge entry point */
-body.luxury-site .concierge-launcher {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 9995;
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  min-height: 46px;
-  padding: 0 15px;
-  border: 1px solid rgba(216,184,117,.30);
-  border-radius: 999px;
-  color: var(--sig-ink);
-  background: linear-gradient(145deg, rgba(17,43,34,.92), rgba(7,19,15,.88));
-  box-shadow: 0 18px 55px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.07);
-  backdrop-filter: blur(20px) saturate(130%);
-  -webkit-backdrop-filter: blur(20px) saturate(130%);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .10em;
-  text-transform: uppercase;
-  transition: transform .28s cubic-bezier(.2,.75,.2,1), border-color .28s ease, box-shadow .28s ease;
-}
-body.luxury-site .concierge-launcher:hover {
-  transform: translateY(-3px);
-  border-color: rgba(216,184,117,.52);
-  box-shadow: 0 24px 72px rgba(0,0,0,.42), 0 0 0 4px rgba(216,184,117,.05), inset 0 1px 0 rgba(255,255,255,.09);
-}
-body.luxury-site .concierge-launcher:active { transform: translateY(0) scale(.98); }
-body.luxury-site .concierge-launcher-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sig-gold); box-shadow: 0 0 15px rgba(216,184,117,.65); animation: concierge-pulse 2.3s ease-in-out infinite; }
-body.luxury-site .concierge-launcher-arrow { color: var(--sig-gold); font-size: 14px; transition: transform .25s ease; }
-body.luxury-site .concierge-launcher:hover .concierge-launcher-arrow { transform: translate(2px,-2px); }
-@keyframes concierge-pulse { 0%,100% { opacity:.45; transform:scale(.85); } 50% { opacity:1; transform:scale(1); } }
-
-@media (max-width: 760px) {
-  body.luxury-site .luxury-focus-grid { grid-template-columns: 1fr; }
-  body.luxury-site .golden-trail-card { grid-template-columns: 58px minmax(0,1fr) auto; }
-  body.luxury-site .golden-trail-card img { width: 58px; height: 52px; }
-  body.luxury-site .route-hero-panel { padding: 20px; border-radius: 24px; }
-  body.luxury-site .concierge-launcher { right: 12px; bottom: 12px; min-height: 44px; padding: 0 13px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body.luxury-site .golden-trail-line,
-  body.luxury-site .concierge-launcher-dot { animation: none; }
-}
+@media(min-width:761px) and (max-width:1100px){body.luxury-site main:not(.luxury-home)>header nav{gap:4px;font-size:.78rem}body.luxury-site main:not(.luxury-home)>header>a:last-child{padding-left:14px!important;padding-right:14px!important}}
+@media(prefers-reduced-motion:reduce){body.luxury-site *{scroll-behavior:auto!important}}
