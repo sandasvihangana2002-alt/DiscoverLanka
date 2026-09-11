@@ -12,7 +12,11 @@ const images:Record<string,string>={
   yala:"https://images.unsplash.com/photo-1557008075-7f2c5efa4cfd?auto=format&fit=crop&w=1800&q=88",
   mirissa:"https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1800&q=88",
   "nuwara-eliya":"https://images.unsplash.com/photo-1590123221594-8c5d2c5f3f44?auto=format&fit=crop&w=1800&q=88",
-  anuradhapura:"https://images.unsplash.com/photo-1588258524675-c7f1e3e8d5d8?auto=format&fit=crop&w=1800&q=88"
+  anuradhapura:"https://images.unsplash.com/photo-1588258524675-c7f1e3e8d5d8?auto=format&fit=crop&w=1800&q=88",
+  trincomalee:"https://images.unsplash.com/photo-1694869248690-2956574b7032?auto=format&fit=crop&w=1800&q=88",
+  "arugam-bay":"https://yalu.travel/content/images/2025/08/yalulife_arugam_bay_surfing.jpg",
+  jaffna:"https://images.unsplash.com/photo-1725773682183-f0c885081ce5?auto=format&fit=crop&w=1800&q=88",
+  udawalawe:"https://advantiko.com/wp-content/uploads/2020/06/udawalawe-national-park2.jpg"
 };
 
 async function getDestinations(){
@@ -57,7 +61,7 @@ export default async function DestinationsPage(){
 
       <div className="luxury-focus-grid">
         {rest.map((destination,index)=><a key={destination.id} href={`/destinations/${destination.slug}`} className={`luxury-focus-card group ${index===0?"col-span-7":"col-span-5"}`}>
-          <img src={images[destination.slug]??images.kandy} alt={destination.name} className="absolute inset-0 h-full w-full object-cover" loading="lazy"/>
+          <img src={images[destination.slug]??images.ella} alt={destination.name} className="absolute inset-0 h-full w-full object-cover" loading="lazy"/>
           <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
             <p className="luxury-section-eyebrow">{String(index+2).padStart(2,"0")} · {destination.region}</p>
             <h2 className="mt-2 font-serif text-3xl tracking-tight">{destination.name}</h2>

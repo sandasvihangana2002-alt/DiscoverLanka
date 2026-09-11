@@ -4,14 +4,22 @@ import { useEffect, useMemo, useState } from "react";
 
 type Experience={id:string;slug:string;name:string;category:string|null;summary:string|null;description:string|null;destination_name:string|null};
 const images:Record<string,string>={
-  wildlife:"https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=1600&q=88",
-  food:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1600&q=88",
-  culture:"https://images.unsplash.com/photo-1588258524675-c7f1e3e8d5d8?auto=format&fit=crop&w=1600&q=88",
-  slow:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=88",
-  "sigiriya-sunrise":"https://images.unsplash.com/photo-1588598198321-9735fd5246b8?auto=format&fit=crop&w=1600&q=88",
-  "tea-country-morning":"https://images.unsplash.com/photo-1590123221594-8c5d2c5f3f44?auto=format&fit=crop&w=1600&q=88",
-  "galle-fort-walk":"https://images.unsplash.com/photo-1566296314736-6eaac1ca0cb9?auto=format&fit=crop&w=1600&q=88",
-  "kandy-food-evening":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=88"
+ wildlife:"https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=1600&q=88",
+ food:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1600&q=88",
+ culture:"https://images.unsplash.com/photo-1588258524675-c7f1e3e8d5d8?auto=format&fit=crop&w=1600&q=88",
+ slow:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=88",
+ "sigiriya-sunrise":"https://images.unsplash.com/photo-1588598198321-9735fd5246b8?auto=format&fit=crop&w=1600&q=88",
+ "tea-country-morning":"https://images.unsplash.com/photo-1590123221594-8c5d2c5f3f44?auto=format&fit=crop&w=1600&q=88",
+ "galle-fort-walk":"https://images.unsplash.com/photo-1566296314736-6eaac1ca0cb9?auto=format&fit=crop&w=1600&q=88",
+ "kandy-food-evening":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=88",
+ "trinco-bay-sunrise":"https://images.unsplash.com/photo-1694869248690-2956574b7032?auto=format&fit=crop&w=1600&q=88",
+ "nilaveli-coast-day":"https://images.unsplash.com/photo-1694869248690-2956574b7032?auto=format&fit=crop&w=1600&q=88",
+ "arugam-surf-session":"https://yalu.travel/content/images/2025/08/yalulife_arugam_bay_surfing.jpg",
+ "lagoon-paddle-arugam":"https://yalu.travel/content/images/2025/08/yalulife_arugam_bay_surfing.jpg",
+ "jaffna-food-trail":"https://images.unsplash.com/photo-1725773682183-f0c885081ce5?auto=format&fit=crop&w=1600&q=88",
+ "nallur-cultural-morning":"https://images.unsplash.com/photo-1725773682183-f0c885081ce5?auto=format&fit=crop&w=1600&q=88",
+ "udawalawe-elephant-safari":"https://advantiko.com/wp-content/uploads/2020/06/udawalawe-national-park2.jpg",
+ "village-lunch-udawalawe":"https://advantiko.com/wp-content/uploads/2020/06/udawalawe-national-park2.jpg"
 };
 const fallback="https://images.unsplash.com/photo-1586613837427-44f7a0b1e5e6?auto=format&fit=crop&w=1600&q=88";
 const filters=["All","Wildlife","Culture","Food","Coast","Slow travel","Heritage"];
