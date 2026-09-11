@@ -5,7 +5,7 @@ import "./luxury-motion.css";
 import "./luxury-v2.css";
 import LuxuryInteractions from "@/components/LuxuryInteractions";
 
-const siteUrl = "https://discoverlanka-6mpa.netlify.app";
+const siteUrl = "https://discover-lanka-iugi.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
