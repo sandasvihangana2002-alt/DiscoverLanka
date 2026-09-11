@@ -17,9 +17,9 @@ const images:Record<string,string>={
  "nuwara-eliya":"https://images.unsplash.com/photo-1590123221594-8c5d2c5f3f44?auto=format&fit=crop&w=2200&q=88",
  anuradhapura:"https://images.unsplash.com/photo-1588258524675-c7f1e3e8d5d8?auto=format&fit=crop&w=2200&q=88",
  trincomalee:"https://images.unsplash.com/photo-1694869248690-2956574b7032?auto=format&fit=crop&w=2200&q=88",
- "arugam-bay":"https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=2200&q=88",
+ "arugam-bay":"https://yalu.travel/content/images/2025/08/yalulife_arugam_bay_surfing.jpg",
  jaffna:"https://images.unsplash.com/photo-1725773682183-f0c885081ce5?auto=format&fit=crop&w=2200&q=88",
- udawalawe:"https://images.unsplash.com/photo-1557008075-7f2c5efa4cfd?auto=format&fit=crop&w=2200&q=88"
+ udawalawe:"https://advantiko.com/wp-content/uploads/2020/06/udawalawe-national-park2.jpg"
 };
 const guide:Record<string,{mood:string;highlights:string[];tips:string[]}>= {
  kandy:{mood:"Culture, ceremony & cool hill-country evenings",highlights:["Walk the lake and old city at an unhurried pace","Make time for local food and tea","Pair the city with a quieter hill-country stop"],tips:["Start cultural visits earlier in the day","Leave space for traffic and hill roads","Use this as a base for short Central Province day trips"]},
