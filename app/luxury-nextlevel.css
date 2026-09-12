@@ -1,0 +1,180 @@
+/* DiscoverLanka Next Level — immersive travel interface system
+   CSS only. No new image/video requests. Preserves existing interactions and data flows. */
+:root{
+  --dl-night:#06110d;
+  --dl-forest:#0d2a21;
+  --dl-forest-2:#123d30;
+  --dl-ivory:#f6f0e5;
+  --dl-muted:rgba(246,240,229,.68);
+  --dl-brass:#d8b875;
+  --dl-brass-soft:rgba(216,184,117,.18);
+  --dl-line:rgba(246,240,229,.12);
+  --dl-line-soft:rgba(246,240,229,.07);
+}
+
+html{scroll-behavior:smooth;background:var(--dl-night)}
+::selection{background:rgba(216,184,117,.28);color:var(--dl-ivory)}
+
+body.luxury-site{
+  background:
+    radial-gradient(circle at 12% 7%,rgba(216,184,117,.08),transparent 23%),
+    radial-gradient(circle at 88% 16%,rgba(26,91,69,.19),transparent 28%),
+    linear-gradient(180deg,#06110d 0%,#081812 48%,#06110d 100%);
+}
+body.luxury-site::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.14;
+  background-image:
+    linear-gradient(90deg,rgba(216,184,117,.035) 1px,transparent 1px),
+    linear-gradient(rgba(216,184,117,.028) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(to bottom,rgba(0,0,0,.85),transparent 72%);
+}
+body.luxury-site main,body.luxury-site footer,body.luxury-site header{position:relative;z-index:1}
+
+/* Editorial typography */
+body.luxury-site h1,body.luxury-site h2,body.luxury-site h3,body.luxury-site h4{
+  font-family:Georgia,"Times New Roman",serif;
+  letter-spacing:-.035em;
+}
+body.luxury-site p,body.luxury-site span,body.luxury-site button,body.luxury-site input,body.luxury-site textarea,body.luxury-site select{letter-spacing:.005em}
+
+/* Premium navigation */
+body.luxury-site header{transition:background .35s ease,transform .35s ease,box-shadow .35s ease}
+body.luxury-site header>div{
+  border:1px solid rgba(216,184,117,.16)!important;
+  background:linear-gradient(180deg,rgba(8,24,18,.78),rgba(8,24,18,.52))!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.055)!important;
+  backdrop-filter:blur(24px) saturate(125%);
+  -webkit-backdrop-filter:blur(24px) saturate(125%);
+}
+body.luxury-site header nav a{position:relative;transition:color .25s ease,opacity .25s ease}
+body.luxury-site header nav a::after{
+  content:"";position:absolute;left:50%;bottom:-7px;width:0;height:1px;
+  transform:translateX(-50%);background:var(--dl-brass);transition:width .25s ease;
+}
+body.luxury-site header nav a:hover::after,body.luxury-site header nav a[aria-current="page"]::after{width:24px}
+body.luxury-site .brand-mark{letter-spacing:-.035em}
+body.luxury-site .brand-mark span{color:var(--dl-brass)!important}
+
+/* Hero: cinematic, layered, minimal */
+body.luxury-site .luxury-home .luxury-hero{position:relative;isolation:isolate;overflow:hidden}
+body.luxury-site .luxury-home .luxury-hero::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(2,11,8,.60) 0%,rgba(2,11,8,.20) 44%,rgba(2,11,8,.54) 100%),
+    linear-gradient(180deg,rgba(2,11,8,.14) 0%,transparent 48%,rgba(2,11,8,.88) 100%);
+}
+body.luxury-site .luxury-home .luxury-hero>div{position:relative;z-index:1}
+body.luxury-site .luxury-home .hero-glass-panel{
+  border-color:rgba(216,184,117,.30)!important;
+  background:linear-gradient(145deg,rgba(5,20,14,.47),rgba(255,255,255,.045))!important;
+  box-shadow:0 40px 125px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.085)!important;
+}
+body.luxury-site .luxury-home .hero-glass-panel::after{
+  content:"";position:absolute;left:22px;right:22px;bottom:14px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(216,184,117,.35),transparent);pointer-events:none;
+}
+body.luxury-site .luxury-home .luxury-display{
+  text-shadow:0 10px 45px rgba(0,0,0,.35);
+}
+body.luxury-site .luxury-home .luxury-display::after{
+  content:"";display:block;margin-top:18px;width:68px;height:2px;background:var(--dl-brass);opacity:.85;
+}
+
+/* Floating card system */
+body.luxury-site .luxury-feature-card,
+body.luxury-site .luxury-mini-card,
+body.luxury-site .luxury-focus-card,
+body.luxury-site .premium-card,
+body.luxury-site .journey-dossier,
+body.luxury-site .luxury-step-card,
+body.luxury-site article{
+  border-color:rgba(216,184,117,.13)!important;
+  box-shadow:0 30px 90px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.045)!important;
+}
+body.luxury-site .luxury-feature-card,
+body.luxury-site .luxury-mini-card,
+body.luxury-site .luxury-focus-card{transform:translateZ(0);transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s ease,border-color .35s ease}
+body.luxury-site .luxury-feature-card:hover,
+body.luxury-site .luxury-mini-card:hover,
+body.luxury-site .luxury-focus-card:hover{transform:translateY(-7px);border-color:rgba(216,184,117,.28)!important;box-shadow:0 42px 110px rgba(0,0,0,.29),inset 0 1px 0 rgba(255,255,255,.065)!important}
+body.luxury-site .luxury-feature-card img,
+body.luxury-site .luxury-mini-card img,
+body.luxury-site .luxury-focus-card img{transition:transform 1s cubic-bezier(.2,.72,.18,1),filter .6s ease}
+body.luxury-site .luxury-feature-card:hover img,
+body.luxury-site .luxury-mini-card:hover img,
+body.luxury-site .luxury-focus-card:hover img{transform:scale(1.055);filter:saturate(1.04) contrast(1.03)}
+
+/* Section rhythm */
+body.luxury-site .luxury-section-eyebrow{letter-spacing:.30em!important;color:var(--dl-brass)!important}
+body.luxury-site .luxury-section-eyebrow::before,
+body.luxury-site .luxury-section-eyebrow::after{width:34px!important;background:linear-gradient(90deg,transparent,rgba(216,184,117,.7))!important}
+body.luxury-site .luxury-section-eyebrow::after{background:linear-gradient(90deg,rgba(216,184,117,.7),transparent)!important}
+body.luxury-site .luxury-section h2,body.luxury-site .luxury-home .luxury-section h2{max-width:18ch}
+
+/* Buttons: tactile, restrained */
+body.luxury-site a[class*="rounded-full"],body.luxury-site button[class*="rounded-full"]{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease,background .25s ease}
+body.luxury-site a[class*="rounded-full"]:hover,body.luxury-site button[class*="rounded-full"]:hover{transform:translateY(-2px)}
+body.luxury-site .premium-button-gold{position:relative;overflow:hidden}
+body.luxury-site .premium-button-gold::before{
+  content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.28) 48%,transparent 68%);
+  transform:translateX(-120%);transition:transform .8s ease;pointer-events:none;
+}
+body.luxury-site .premium-button-gold:hover::before{transform:translateX(120%)}
+
+/* Planner / itinerary as premium dossier */
+body.luxury-site .luxury-step-card,
+body.luxury-site .route-hero-panel,
+body.luxury-site .journey-dossier{position:relative;overflow:hidden}
+body.luxury-site .luxury-step-card::before,
+body.luxury-site .route-hero-panel::before,
+body.luxury-site .journey-dossier::before{
+  content:"";position:absolute;left:0;top:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(216,184,117,.72),transparent);opacity:.7;pointer-events:none;
+}
+body.luxury-site .route-stat{transition:transform .25s ease,border-color .25s ease,background .25s ease}
+body.luxury-site .route-stat:hover{transform:translateY(-3px);border-color:rgba(216,184,117,.26);background:rgba(255,255,255,.055)}
+body.luxury-site .golden-trail-card{transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+body.luxury-site .golden-trail-card:hover{transform:translateX(4px);border-color:rgba(216,184,117,.25);box-shadow:0 20px 50px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.055)}
+
+/* Horizontal journey / tour-day treatment */
+body.luxury-site .golden-trail,
+body.luxury-site [data-tour-days]{scrollbar-width:thin;scrollbar-color:rgba(216,184,117,.55) transparent}
+body.luxury-site .golden-trail::-webkit-scrollbar,
+body.luxury-site [data-tour-days]::-webkit-scrollbar{height:3px;width:3px}
+body.luxury-site .golden-trail::-webkit-scrollbar-thumb,
+body.luxury-site [data-tour-days]::-webkit-scrollbar-thumb{background:rgba(216,184,117,.55);border-radius:999px}
+
+/* Forms */
+body.luxury-site input:focus,body.luxury-site textarea:focus,body.luxury-site select:focus{
+  outline:none!important;border-color:rgba(216,184,117,.52)!important;
+  box-shadow:0 0 0 4px rgba(216,184,117,.08),0 14px 40px rgba(0,0,0,.16)!important;
+}
+body.luxury-site select option{background:#0a1b15;color:var(--dl-ivory)}
+
+/* Footer */
+body.luxury-site footer{border-top:1px solid rgba(216,184,117,.11)!important;background:linear-gradient(180deg,rgba(6,17,13,0),rgba(5,15,11,.55))}
+body.luxury-site footer a{transition:color .2s ease,opacity .2s ease}
+body.luxury-site footer a:hover{color:var(--dl-brass)!important}
+
+/* Accessibility */
+body.luxury-site a:focus-visible,body.luxury-site button:focus-visible,body.luxury-site input:focus-visible,body.luxury-site textarea:focus-visible,body.luxury-site select:focus-visible{outline:2px solid rgba(216,184,117,.8);outline-offset:3px}
+
+@media(max-width:900px){
+  body.luxury-site .luxury-home .luxury-display::after{margin-top:14px;width:52px}
+  body.luxury-site .luxury-home .hero-glass-panel{backdrop-filter:blur(16px) saturate(118%);-webkit-backdrop-filter:blur(16px) saturate(118%)}
+}
+@media(max-width:640px){
+  body.luxury-site::before{opacity:.08;background-size:34px 34px}
+  body.luxury-site header>div{background:linear-gradient(180deg,rgba(8,24,18,.88),rgba(8,24,18,.68))!important}
+  body.luxury-site .luxury-home .luxury-hero::after{background:linear-gradient(180deg,rgba(2,11,8,.20),rgba(2,11,8,.88) 92%)}
+  body.luxury-site .luxury-home .hero-glass-panel::after{left:14px;right:14px}
+  body.luxury-site .luxury-section h2,body.luxury-site .luxury-home .luxury-section h2{max-width:none}
+  body.luxury-site .luxury-section-eyebrow::before,body.luxury-site .luxury-section-eyebrow::after{width:18px!important}
+  body.luxury-site .luxury-feature-card:hover,body.luxury-site .luxury-mini-card:hover,body.luxury-site .luxury-focus-card:hover{transform:none}
+  body.luxury-site .golden-trail-card:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  body.luxury-site *,body.luxury-site *::before,body.luxury-site *::after{animation:none!important;transition:none!important}
+}
