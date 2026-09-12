@@ -146,7 +146,7 @@ export default function Home() {
       </header>
 
       <section id="top" className="luxury-hero relative isolate min-h-[100svh] overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/0/00/Nine_Arch_Bridge_Ella.jpg')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Nine_Arch_Bridge_in_Ella.jpg/1280px-Nine_Arch_Bridge_in_Ella.jpg')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,16,13,.70)_0%,rgba(5,20,16,.34)_40%,rgba(6,21,17,.10)_72%,rgba(3,10,8,.26)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_28%,rgba(236,194,105,.22),transparent_30%)]" />
 
@@ -204,7 +204,7 @@ export default function Home() {
         </div>
 
         <div className="absolute bottom-5 left-5 z-10 rounded-full border border-white/20 bg-black/25 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[.14em] text-white/60 backdrop-blur-md sm:left-8">
-          Photo: Esh7788 · Wikimedia Commons · CC BY-SA 4.0
+          Photo: Dilshan255 · Wikimedia Commons · CC BY-SA 4.0
         </div>
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#07120f] to-transparent" />
       </section>
