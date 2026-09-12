@@ -44,3 +44,29 @@ body.luxury-site main:not(.luxury-home)>header>div{border-radius:20px!important}
 }
 @media(min-width:761px) and (max-width:1100px){body.luxury-site main:not(.luxury-home)>header nav{gap:4px;font-size:.78rem}body.luxury-site main:not(.luxury-home)>header>a:last-child{padding-left:14px!important;padding-right:14px!important}}
 @media(prefers-reduced-motion:reduce){body.luxury-site *{scroll-behavior:auto!important}}
+
+/* CEYLON SIGNATURE LAYER — CSS only, no new image requests */
+body.luxury-site{--sig-tea:#123b2f;--sig-ruby:#7e3329;--sig-brass:#d8b875;--sig-ivory:#f5efe4;--sig-gold-soft:rgba(216,184,117,.16)}
+body.luxury-site .luxury-glass,body.luxury-site .golden-trail-card,body.luxury-site .journey-dossier,body.luxury-site .luxury-feature-shell,body.luxury-site .luxury-step-card{position:relative;border-color:rgba(216,184,117,.18);background-image:linear-gradient(145deg,rgba(255,255,255,.078),rgba(18,59,47,.045)),linear-gradient(90deg,rgba(216,184,117,.025) 1px,transparent 1px),linear-gradient(rgba(216,184,117,.02) 1px,transparent 1px);background-size:auto,26px 26px,26px 26px;background-position:0 0,0 0,0 0}
+body.luxury-site .luxury-glass::before,body.luxury-site .journey-dossier::before,body.luxury-site .luxury-feature-shell::before,body.luxury-site .luxury-step-card::before{content:"";position:absolute;inset:9px;border:1px solid rgba(216,184,117,.075);border-radius:inherit;pointer-events:none}
+body.luxury-site .luxury-glass::after,body.luxury-site .journey-dossier::after,body.luxury-site .luxury-feature-shell::after,body.luxury-site .luxury-step-card::after{content:"◆";position:absolute;right:13px;top:8px;color:rgba(216,184,117,.28);font-size:8px;line-height:1;pointer-events:none}
+body.luxury-site .luxury-kicker,body.luxury-site .luxury-section-eyebrow,.luxury-site .brand-mark span{color:var(--sig-brass)}
+body.luxury-site .luxury-section-eyebrow{position:relative;display:inline-flex;align-items:center;gap:10px}
+body.luxury-site .luxury-section-eyebrow::before,body.luxury-site .luxury-section-eyebrow::after{content:"";height:1px;width:28px;background:linear-gradient(90deg,transparent,rgba(216,184,117,.72))}
+body.luxury-site .luxury-section-eyebrow::after{background:linear-gradient(90deg,rgba(216,184,117,.72),transparent)}
+body.luxury-site .luxury-home .hero-glass-panel{border-color:rgba(216,184,117,.30);box-shadow:0 38px 110px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.07)}
+body.luxury-site .luxury-home .hero-glass-panel::before{content:"";position:absolute;left:16px;right:16px;top:12px;height:1px;background:linear-gradient(90deg,transparent,rgba(216,184,117,.65),transparent);pointer-events:none}
+body.luxury-site .luxury-home .luxury-pill,.luxury-site .luxury-pill-outline{border-color:rgba(216,184,117,.34);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+body.luxury-site .luxury-home .luxury-pill:hover,.luxury-site .luxury-pill-outline:hover{border-color:rgba(216,184,117,.62);box-shadow:0 12px 35px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.08)}
+body.luxury-site .luxury-home .luxury-nav{border-color:rgba(216,184,117,.22)!important;background:rgba(7,18,15,.72)}
+body.luxury-site .luxury-home .luxury-nav a[aria-current="page"],body.luxury-site .luxury-home .luxury-nav a:hover{color:var(--sig-ivory);text-shadow:0 0 18px rgba(216,184,117,.18)}
+body.luxury-site .route-hero-panel{border-color:rgba(216,184,117,.22);background:linear-gradient(145deg,rgba(18,59,47,.48),rgba(255,255,255,.03))}
+body.luxury-site .route-stat{border-color:rgba(216,184,117,.14)}
+body.luxury-site .golden-trail-marker{background:linear-gradient(145deg,#e8cf90,#d8b875)}
+body.luxury-site .golden-trail-line{background:linear-gradient(180deg,transparent,rgba(216,184,117,.92) 10%,rgba(126,51,41,.38) 56%,rgba(216,184,117,.24) 92%,transparent)}
+body.luxury-site .luxury-feature-card img,body.luxury-site .luxury-focus-card img{filter:saturate(.94) contrast(1.02)}
+body.luxury-site .luxury-feature-card:hover img,body.luxury-site .luxury-focus-card:hover img{filter:saturate(1.02) contrast(1.03)}
+body.luxury-site .concierge-launcher{border-color:rgba(216,184,117,.38);background:linear-gradient(145deg,rgba(18,59,47,.94),rgba(7,19,15,.92))}
+body.luxury-site .concierge-launcher-arrow{color:var(--sig-brass)}
+@media(max-width:760px){body.luxury-site .luxury-glass::before,body.luxury-site .journey-dossier::before,body.luxury-site .luxury-feature-shell::before,body.luxury-site .luxury-step-card::before{inset:7px}body.luxury-site .luxury-section-eyebrow::before,body.luxury-site .luxury-section-eyebrow::after{width:18px}body.luxury-site .luxury-home .hero-glass-panel::before{left:12px;right:12px}}
+@media(prefers-reduced-motion:reduce){body.luxury-site .luxury-feature-card img,body.luxury-site .luxury-focus-card img{transition:none}}
