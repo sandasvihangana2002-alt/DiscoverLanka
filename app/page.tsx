@@ -146,9 +146,9 @@ export default function Home() {
       </header>
 
       <section id="top" className="luxury-hero relative isolate min-h-[100svh] overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=2600&q=92')] bg-cover bg-center" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,16,13,.80)_0%,rgba(5,20,16,.55)_36%,rgba(6,21,17,.16)_72%,rgba(3,10,8,.48)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_35%,rgba(207,174,104,.18),transparent_32%)]" />
+        <div className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/0/00/Nine_Arch_Bridge_Ella.jpg')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,16,13,.70)_0%,rgba(5,20,16,.34)_40%,rgba(6,21,17,.10)_72%,rgba(3,10,8,.26)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_28%,rgba(236,194,105,.22),transparent_30%)]" />
 
         <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-center px-5 pb-10 pt-32 sm:px-8 md:pt-40">
           <div className="hero-glass-panel w-full">
@@ -158,16 +158,16 @@ export default function Home() {
                 <h1 className="luxury-display mt-6 max-w-4xl text-[3.8rem] leading-[.9] tracking-[-.055em] sm:text-7xl md:text-8xl lg:text-[7.1rem]">
                   Discover Sri Lanka.
                   <br />
-                  <span className="text-[#e8cf9a]">Feel the journey.</span>
+                  <span className="text-[#f1d89f]">Feel the journey.</span>
                 </h1>
-                <p className="mt-7 max-w-2xl text-base leading-7 text-white/75 sm:text-lg sm:leading-8">
+                <p className="mt-7 max-w-2xl text-base leading-7 text-white/82 sm:text-lg sm:leading-8">
                   Beautiful places, thoughtful experiences and a trip shaped around your time, taste and pace.
                 </p>
                 <div className="mt-9 flex flex-wrap gap-3">
                   <a href="/plan" className="luxury-pill luxury-pill-gold">Build My Trip <span>↗</span></a>
                   <a href="#discover" className="luxury-pill luxury-pill-outline">Explore the island</a>
                 </div>
-                <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/18 pt-5 text-[10px] font-bold uppercase tracking-[.24em] text-white/58">
+                <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/18 pt-5 text-[10px] font-bold uppercase tracking-[.24em] text-white/66">
                   <span>Handpicked destinations</span>
                   <span>Local experiences</span>
                   <span>Season-aware planning</span>
@@ -203,6 +203,9 @@ export default function Home() {
           </div>
         </div>
 
+        <div className="absolute bottom-5 left-5 z-10 rounded-full border border-white/20 bg-black/25 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[.14em] text-white/60 backdrop-blur-md sm:left-8">
+          Photo: Esh7788 · Wikimedia Commons · CC BY-SA 4.0
+        </div>
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#07120f] to-transparent" />
       </section>
 
@@ -333,7 +336,7 @@ export default function Home() {
             {stories.slice(0, 3).map((story, index) => (
               <a key={story.id} href={`/stories/${story.slug}`} className="group overflow-hidden rounded-[2rem] border border-white/8 bg-white/[.03]">
                 <div className="relative h-72 overflow-hidden">
-                  <img src={storyImages[index % storyImages.length]} alt="" className="h-full w-full object-cover transition duration-[1100ms] group-hover:scale-105" />
+                  <img src={storyImages[index % storyImages.length]} alt={story.title} className="h-full w-full object-cover transition duration-[1100ms] group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#081811] via-transparent to-transparent" />
                   <p className="absolute bottom-5 left-5 luxury-kicker text-[#d8b875]">{story.category || "Sri Lanka"}</p>
                 </div>
