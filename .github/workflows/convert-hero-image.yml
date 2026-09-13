@@ -3,8 +3,6 @@ name: Convert hero image asset
 on:
   push:
     branches: [main]
-    paths:
-      - "public/hero-home.jpg"
 
 permissions:
   contents: write
