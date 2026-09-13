@@ -5,6 +5,7 @@ import "./luxury-motion.css";
 import "./luxury-v2.css";
 import "./luxury-nextlevel.css";
 import LuxuryInteractions from "@/components/LuxuryInteractions";
+import DirectHeroVideo from "@/components/DirectHeroVideo";
 
 const siteUrl = "https://discover-lanka.vercel.app";
 const defaultTitle = "DiscoverLanka | Sri Lanka Travel Guide & Trip Planner";
@@ -70,7 +71,7 @@ body.luxury-site main:not(.luxury-home) a[class*="rounded-full"],body.luxury-sit
 body.luxury-site main:not(.luxury-home) a[class*="rounded-full"]:hover,body.luxury-site main:not(.luxury-home) button[class*="rounded-full"]:hover{background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.045))!important;border-color:rgba(255,255,255,.2);transform:translateY(-1px)}
 body.luxury-site main:not(.luxury-home) a.premium-button-gold,body.luxury-site main:not(.luxury-home) button.premium-button-gold{background:linear-gradient(135deg,#c7a66a,#e3c991)!important;color:#0b1712!important}
 body.luxury-site main:not(.luxury-home) a.premium-button-ghost,body.luxury-site main:not(.luxury-home) button.premium-button-ghost{background:rgba(255,255,255,.035)!important;color:var(--lx-ivory)!important}
-body.luxury-site main:not(.luxury-home) button[class*="rounded-2xl"],body.luxury-site main:not(.luxury-home) a[class*="rounded-2xl"]{border-color:rgba(255,255,255,.11);box-shadow:0 16px 46px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.04);backdrop-filter:blur(18px) saturate(120%);-webkit-backdrop-filter:blur(18px)}
+body.luxury-site main:not(.luxury-home) button[class*="rounded-2xl"],body.luxury-site main:not(.luxury-home) a[class*="rounded-2xl"]{border-color:rgba(255,255,255,.11);box-shadow:0 16px 46px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.04);backdrop-filter:blur(18px) saturate(120%);-webkit-backdrop-filter:blur(18px) saturate(120%)}
 body.luxury-site .text-white\/20,body.luxury-site .text-white\/25,body.luxury-site .text-white\/30,body.luxury-site .text-white\/35{color:rgba(244,239,230,.58)!important}
 body.luxury-site .text-white\/40,body.luxury-site .text-white\/45,body.luxury-site .text-white\/50{color:rgba(244,239,230,.68)!important}
 body.luxury-site .premium-muted{color:rgba(244,239,230,.68)!important}
@@ -80,5 +81,5 @@ body.luxury-site .premium-muted{color:rgba(244,239,230,.68)!important}
 `;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className="antialiased luxury-site"><style dangerouslySetInnerHTML={{ __html: luxuryCss }} /><LuxuryInteractions />{children}</body></html>;
+  return <html lang="en"><body className="antialiased luxury-site"><style dangerouslySetInnerHTML={{ __html: luxuryCss }} /><LuxuryInteractions /><DirectHeroVideo />{children}</body></html>;
 }
