@@ -6,7 +6,7 @@ const HERO_IMAGE_PATH = "/hero-home.jpg";
 
 export default function DirectHeroVideo() {
   useEffect(() => {
-    const apply = () => {
+    const apply = async () => {
       const hero = document.querySelector<HTMLElement>(".luxury-hero");
       if (!hero) return;
 
@@ -36,7 +36,6 @@ export default function DirectHeroVideo() {
 
       const image = document.createElement("img");
       image.dataset.directHeroImage = "true";
-      image.src = HERO_IMAGE_PATH;
       image.alt = "Kandy Lake and Sri Dalada Maligawa, Sri Lanka";
       Object.assign(image.style, {
         position: "absolute",
@@ -50,12 +49,21 @@ export default function DirectHeroVideo() {
       });
       hero.prepend(image);
 
+      try {
+        const response = await fetch(HERO_IMAGE_PATH, { cache: "force-cache" });
+        const encoded = (await response.text()).trim();
+        if (!encoded.startsWith("/9j/")) throw new Error("Invalid hero image asset");
+        image.src = `data:image/jpeg;base64,${encoded}`;
+      } catch {
+        image.remove();
+      }
+
       const content = hero.querySelector<HTMLElement>(":scope > div.relative");
       if (content) content.style.zIndex = "2";
     };
 
-    const frame = requestAnimationFrame(apply);
-    const retry = window.setTimeout(apply, 250);
+    const frame = requestAnimationFrame(() => { void apply(); });
+    const retry = window.setTimeout(() => { void apply(); }, 300);
     return () => {
       cancelAnimationFrame(frame);
       window.clearTimeout(retry);
