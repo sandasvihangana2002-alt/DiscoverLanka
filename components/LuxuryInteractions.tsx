@@ -63,7 +63,6 @@ export default function LuxuryInteractions() {
         heroPanel.style.border = "0";
         heroPanel.style.boxShadow = "none";
         heroPanel.style.backdropFilter = "none";
-        heroPanel.style.webkitBackdropFilter = "none";
       }
 
       const play = () => {
