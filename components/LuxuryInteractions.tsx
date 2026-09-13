@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-const HERO_VIDEO_URL = "https://drive.google.com/uc?export=download&id=1AC9-f3h4WRnM2pSVLX-ab_zgjghLJF0V";
+const HERO_VIDEO_URL = "https://drive.usercontent.google.com/download?export=download&id=1AC9-f3h4WRnM2pSVLX-ab_zgjghLJF0V&confirm=t";
 
 export default function LuxuryInteractions() {
   const pathname = usePathname();
@@ -33,8 +33,9 @@ export default function LuxuryInteractions() {
       video.loop = true;
       video.muted = true;
       video.defaultMuted = true;
+      video.volume = 0;
       video.playsInline = true;
-      video.preload = "metadata";
+      video.preload = "auto";
       video.setAttribute("aria-hidden", "true");
       video.setAttribute("tabindex", "-1");
 
@@ -42,7 +43,7 @@ export default function LuxuryInteractions() {
         position: "absolute",
         left: "50%",
         top: "50%",
-        width: "100svh",
+        width: "100dvh",
         height: "100vw",
         maxWidth: "none",
         maxHeight: "none",
@@ -50,25 +51,48 @@ export default function LuxuryInteractions() {
         objectPosition: "center",
         transform: "translate(-50%, -50%) rotate(90deg) scale(1.035)",
         transformOrigin: "center",
-        zIndex: "-2",
+        zIndex: "0",
         pointerEvents: "none",
-        filter: "saturate(1.06) contrast(1.04) brightness(.9)",
+        filter: "saturate(1.08) contrast(1.05) brightness(.88)",
       });
 
       hero.prepend(video);
+
+      const overlays = Array.from(hero.children).filter((node): node is HTMLElement => node instanceof HTMLElement);
+      overlays.forEach((node) => {
+        if (node === video) return;
+        const currentZ = window.getComputedStyle(node).zIndex;
+        if (currentZ === "auto" || currentZ === "") node.style.zIndex = "1";
+      });
+
+      const heroContent = hero.querySelector<HTMLElement>(":scope > div.relative");
+      if (heroContent) heroContent.style.zIndex = "2";
 
       const heroPanel = hero.querySelector<HTMLElement>(".hero-glass-panel");
       if (heroPanel) {
         heroPanel.style.background = "transparent";
         heroPanel.style.border = "0";
+        heroPanel.style.borderRadius = "0";
         heroPanel.style.boxShadow = "none";
         heroPanel.style.backdropFilter = "none";
+        heroPanel.style.webkitBackdropFilter = "none";
+        heroPanel.style.padding = "0";
       }
+
+      const credit = Array.from(hero.querySelectorAll<HTMLElement>("div")).find((node) => node.textContent?.trim().startsWith("Photo: Dilshan255"));
+      if (credit) credit.remove();
 
       const play = () => {
         if (!reduceMotion) video.play().catch(() => {});
       };
-      video.addEventListener("loadeddata", play, { once: true });
+      add(video, "loadeddata", play);
+      add(video, "canplay", play);
+      add(video, "error", () => {
+        const fallback = hero.querySelector<HTMLElement>("div.bg-cover.bg-center");
+        if (fallback) fallback.style.display = "block";
+        video.style.display = "none";
+      });
+
       cleanup.push(() => {
         video.pause();
         video.removeAttribute("src");
