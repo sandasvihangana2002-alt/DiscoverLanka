@@ -41,10 +41,7 @@ export default function DirectHeroVideo() {
         image.dataset.directHeroImage = "true";
         image.src = HERO_IMAGE_PATH;
         image.alt = "Kandy Lake and Sri Dalada Maligawa, Sri Lanka";
-        Object.assign(image.style, {
-          position:"absolute",inset:"0",width:"100%",height:"100%",
-          objectFit:"cover",objectPosition:"center center",zIndex:"0",pointerEvents:"none"
-        });
+        Object.assign(image.style, {position:"absolute",inset:"0",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center",zIndex:"0",pointerEvents:"none"});
         hero.prepend(image);
       }
 
