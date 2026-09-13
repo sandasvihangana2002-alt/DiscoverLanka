@@ -3,6 +3,8 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
+const HERO_VIDEO_URL = "https://drive.google.com/uc?export=download&id=1AC9-f3h4WRnM2pSVLX-ab_zgjghLJF0V";
+
 export default function LuxuryInteractions() {
   const pathname = usePathname();
 
@@ -18,6 +20,63 @@ export default function LuxuryInteractions() {
       target.addEventListener(event, handler);
       cleanup.push(() => target.removeEventListener(event, handler));
     };
+
+    const hero = document.querySelector<HTMLElement>(".luxury-hero");
+    if (hero) {
+      const legacyHeroImage = hero.querySelector<HTMLElement>("div.bg-cover.bg-center");
+      if (legacyHeroImage) legacyHeroImage.style.display = "none";
+
+      const video = document.createElement("video");
+      video.className = "discoverlanka-hero-video";
+      video.src = HERO_VIDEO_URL;
+      video.autoplay = !reduceMotion;
+      video.loop = true;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.preload = "metadata";
+      video.setAttribute("aria-hidden", "true");
+      video.setAttribute("tabindex", "-1");
+
+      Object.assign(video.style, {
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        width: "100svh",
+        height: "100vw",
+        maxWidth: "none",
+        maxHeight: "none",
+        objectFit: "cover",
+        objectPosition: "center",
+        transform: "translate(-50%, -50%) rotate(90deg) scale(1.035)",
+        transformOrigin: "center",
+        zIndex: "-2",
+        pointerEvents: "none",
+        filter: "saturate(1.06) contrast(1.04) brightness(.9)",
+      });
+
+      hero.prepend(video);
+
+      const heroPanel = hero.querySelector<HTMLElement>(".hero-glass-panel");
+      if (heroPanel) {
+        heroPanel.style.background = "transparent";
+        heroPanel.style.border = "0";
+        heroPanel.style.boxShadow = "none";
+        heroPanel.style.backdropFilter = "none";
+        heroPanel.style.webkitBackdropFilter = "none";
+      }
+
+      const play = () => {
+        if (!reduceMotion) video.play().catch(() => {});
+      };
+      video.addEventListener("loadeddata", play, { once: true });
+      cleanup.push(() => {
+        video.pause();
+        video.removeAttribute("src");
+        video.load();
+        video.remove();
+      });
+    }
 
     const interactive = Array.from(document.querySelectorAll<HTMLElement>('button, a.luxury-pill, a[class*="premium-button"], .luxury-save, .luxury-icon-button, input, select, textarea'));
     interactive.forEach((element) => {
