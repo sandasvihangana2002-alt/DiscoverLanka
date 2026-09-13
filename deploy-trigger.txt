@@ -1,2 +1,1 @@
-Deployment trigger for the Netlify production environment.
-Trip management controls are ready.
+Deploy latest Kandy luxury hero image implementation.
