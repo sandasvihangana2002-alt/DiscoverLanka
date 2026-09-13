@@ -75,7 +75,6 @@ export default function LuxuryInteractions() {
         heroPanel.style.borderRadius = "0";
         heroPanel.style.boxShadow = "none";
         heroPanel.style.backdropFilter = "none";
-        heroPanel.style.webkitBackdropFilter = "none";
         heroPanel.style.padding = "0";
       }
 
