@@ -10,13 +10,30 @@ export default function DirectHeroVideo() {
             isolation: isolate !important;
             overflow: hidden !important;
             background-color: #07120f !important;
+          }
+
+          /* Use the real local Kandy hero image as the only hero background. */
+          body.luxury-site main.luxury-home #top.luxury-hero > .absolute:first-child {
+            display: block !important;
+            position: absolute !important;
+            inset: 0 !important;
             background-image: url("${HERO_IMAGE_PATH}") !important;
             background-size: cover !important;
             background-position: center center !important;
             background-repeat: no-repeat !important;
+            opacity: 1 !important;
+            filter: none !important;
+            z-index: 0 !important;
           }
 
-          body.luxury-site main.luxury-home #top.luxury-hero > .absolute {
+          /* Remove the old gradient / glow overlays completely. */
+          body.luxury-site main.luxury-home #top.luxury-hero > .absolute:nth-child(2),
+          body.luxury-site main.luxury-home #top.luxury-hero > .absolute:nth-child(3) {
+            display: none !important;
+          }
+
+          /* Hide hero-only decorative/cards from the old layout. */
+          body.luxury-site main.luxury-home #top.luxury-hero .hero-glass-panel > div.grid > div:last-child {
             display: none !important;
           }
 
@@ -43,12 +60,13 @@ export default function DirectHeroVideo() {
             width: 100% !important;
           }
 
-          body.luxury-site main.luxury-home #top.luxury-hero .hero-glass-panel > div.grid > div:last-child {
-            display: none !important;
-          }
-
           body.luxury-site main.luxury-home #top.luxury-hero .luxury-display {
             text-shadow: 0 5px 24px rgba(0, 0, 0, .42) !important;
+          }
+
+          body.luxury-site main.luxury-home #top.luxury-hero > div:last-of-type:not(.luxury-glass),
+          body.luxury-site main.luxury-home #top.luxury-hero > .pointer-events-none {
+            display: none !important;
           }
         `,
       }}
