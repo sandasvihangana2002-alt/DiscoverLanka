@@ -3,8 +3,6 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-const HERO_VIDEO_URL = "/hero/srilankantravel.mp4";
-
 export default function LuxuryInteractions() {
   const pathname = usePathname();
 
@@ -19,83 +17,11 @@ export default function LuxuryInteractions() {
       cleanup.push(() => target.removeEventListener(event, handler));
     };
 
-    const hero = document.querySelector<HTMLElement>(".luxury-hero");
-    if (hero && pathname === "/") {
-      const legacyHeroImage = hero.querySelector<HTMLElement>("div.bg-cover.bg-center");
-      if (legacyHeroImage) legacyHeroImage.style.display = "none";
-      hero.querySelector("video[data-discoverlanka-hero]")?.remove();
-
-      const video = document.createElement("video");
-      video.dataset.discoverlankaHero = "true";
-      video.className = "discoverlanka-hero-video";
-      video.src = HERO_VIDEO_URL;
-      video.autoplay = true;
-      video.loop = true;
-      video.muted = true;
-      video.defaultMuted = true;
-      video.playsInline = true;
-      video.preload = "metadata";
-      video.volume = 0;
-      video.setAttribute("aria-hidden", "true");
-      video.setAttribute("tabindex", "-1");
-
-      Object.assign(video.style, {
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-        width: "100dvh",
-        height: "100vw",
-        maxWidth: "none",
-        maxHeight: "none",
-        objectFit: "cover",
-        objectPosition: "center center",
-        transform: "translate(-50%, -50%) rotate(90deg) scale(1.045)",
-        transformOrigin: "center center",
-        zIndex: "0",
-        pointerEvents: "none",
-        display: "block",
-        filter: "saturate(1.08) contrast(1.05) brightness(.9)",
-      });
-
-      hero.prepend(video);
-      Array.from(hero.children).forEach((node) => {
-        if (node === video) return;
-        const element = node as HTMLElement;
-        if (!window.getComputedStyle(element).zIndex || window.getComputedStyle(element).zIndex === "auto") {
-          element.style.zIndex = "1";
-        }
-      });
-      const heroContent = hero.querySelector<HTMLElement>(":scope > div.relative");
-      if (heroContent) heroContent.style.zIndex = "2";
-
-      const heroPanel = hero.querySelector<HTMLElement>(".hero-glass-panel");
-      if (heroPanel) {
-        heroPanel.style.background = "transparent";
-        heroPanel.style.border = "0";
-        heroPanel.style.borderRadius = "0";
-        heroPanel.style.boxShadow = "none";
-        heroPanel.style.backdropFilter = "none";
-        heroPanel.style.padding = "0";
-      }
-
-      const play = () => video.play().catch(() => {});
-      add(video, "loadeddata", play);
-      add(video, "canplay", play);
-      add(video, "error", () => {
-        if (legacyHeroImage) legacyHeroImage.style.display = "block";
-        video.style.display = "none";
-      });
-      play();
-
-      cleanup.push(() => {
-        video.pause();
-        video.removeAttribute("src");
-        video.load();
-        video.remove();
-      });
-    }
-
-    const interactive = Array.from(document.querySelectorAll<HTMLElement>('button, a.luxury-pill, a[class*="premium-button"], .luxury-save, .luxury-icon-button, input, select, textarea'));
+    const interactive = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        'button, a.luxury-pill, a[class*="premium-button"], .luxury-save, .luxury-icon-button, input, select, textarea'
+      )
+    );
     interactive.forEach((element) => {
       element.classList.add("luxury-interactive");
       const press = () => {
@@ -106,7 +32,11 @@ export default function LuxuryInteractions() {
       add(element, "pointerdown", press);
     });
 
-    const cards = Array.from(document.querySelectorAll<HTMLElement>('.premium-card, main article, .luxury-feature-card, .luxury-mini-card, .luxury-glass')).filter((element, index, list) => list.indexOf(element) === index);
+    const cards = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        '.premium-card, main article, .luxury-feature-card, .luxury-mini-card, .luxury-glass'
+      )
+    ).filter((element, index, list) => list.indexOf(element) === index);
     cards.forEach((card) => card.classList.add("luxury-tilt", "luxury-reveal"));
     interactive.forEach((element) => element.classList.add("luxury-reveal"));
 
@@ -153,7 +83,11 @@ export default function LuxuryInteractions() {
         body.style.setProperty("--lux-cursor-y", `${ty}px`);
         raf = requestAnimationFrame(tick);
       };
-      const move = (event: Event) => { const pointer = event as PointerEvent; tx = pointer.clientX; ty = pointer.clientY; };
+      const move = (event: Event) => {
+        const pointer = event as PointerEvent;
+        tx = pointer.clientX;
+        ty = pointer.clientY;
+      };
       add(window, "pointermove", move);
       raf = requestAnimationFrame(tick);
       cleanup.push(() => { cancelAnimationFrame(raf); ring.remove(); dot.remove(); });
