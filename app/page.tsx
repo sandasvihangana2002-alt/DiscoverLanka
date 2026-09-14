@@ -29,7 +29,7 @@ type Story = {
 };
 
 const destinationImages: Record<string, string> = {
-  kandy: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1800&q=90",
+  kandy: "/hero-home.jpg",
   ella: "https://images.unsplash.com/photo-1586613837427-44f7a0b1e5e6?auto=format&fit=crop&w=1800&q=90",
   galle: "https://images.unsplash.com/photo-1566296314736-6eaac1ca0cb9?auto=format&fit=crop&w=1800&q=90",
   sigiriya: "https://images.unsplash.com/photo-1588598198321-9735fd5246b8?auto=format&fit=crop&w=1800&q=90",
@@ -37,13 +37,18 @@ const destinationImages: Record<string, string> = {
   mirissa: "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1800&q=90",
   "nuwara-eliya": "https://images.unsplash.com/photo-1590123221594-8c5d2c5f3f44?auto=format&fit=crop&w=1800&q=90",
   anuradhapura: "https://images.unsplash.com/photo-1588258524675-c7f1e3e8d5d8?auto=format&fit=crop&w=1800&q=90",
+  trincomalee: "https://images.unsplash.com/photo-1603398749944-1e39e3adf9e2?auto=format&fit=crop&w=1800&q=90",
+  "arugam-bay": "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=1800&q=90",
+  jaffna: "https://images.unsplash.com/photo-1599839577407-2a7cecb2af47?auto=format&fit=crop&w=1800&q=90",
+  udawalawe: "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=1800&q=90",
 };
 
 const experienceImages: Record<string, string> = {
-  wildlife: "https://images.unsplash.com/photo-1557008075-7f2c5efa4cfd?auto=format&fit=crop&w=1600&q=90",
-  food: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=1600&q=90",
+  adventure: "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1600&q=90",
   culture: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=90",
-  slow: "https://images.unsplash.com/photo-1586613837427-44f7a0b1e5e6?auto=format&fit=crop&w=1600&q=90",
+  nature: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=1600&q=90",
+  wellness: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1600&q=90",
+  food: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=1600&q=90",
 };
 
 const storyImages = [
@@ -51,6 +56,14 @@ const storyImages = [
   "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=1500&q=88",
   "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1500&q=88",
 ];
+
+const experienceIcons: Record<string, string> = {
+  Adventure: "⌁",
+  Culture: "◈",
+  Nature: "⌁",
+  Wellness: "✦",
+  Food: "◌",
+};
 
 export default function Home() {
   const [destinations, setDestinations] = useState<Destination[]>([]);
@@ -89,299 +102,80 @@ export default function Home() {
     });
   }
 
-  const featured = destinations[0];
-  const supporting = destinations.slice(1, 5);
   const mapDestinations = useMemo(
-    () =>
-      destinations.map((d) => ({
-        ...d,
-        latitude: d.latitude ?? 7.8731,
-        longitude: d.longitude ?? 80.7718,
-      })),
+    () => destinations.map((d) => ({ ...d, latitude: d.latitude ?? 7.8731, longitude: d.longitude ?? 80.7718 })),
     [destinations]
   );
 
+  const featured = destinations.find((d) => d.slug === "kandy") ?? destinations[0];
+  const featuredJourney = destinations.find((d) => d.slug === "sigiriya") ?? destinations[1];
+  const journeyCards = [
+    featuredJourney,
+    destinations.find((d) => d.slug === "ella"),
+    destinations.find((d) => d.slug === "yala"),
+    destinations.find((d) => d.slug === "mirissa"),
+  ].filter(Boolean) as Destination[];
+  const destinationCards = destinations.filter((d) => d.slug !== featured?.slug).slice(0, 6);
+
+  const categories = ["Adventure", "Culture", "Nature", "Wellness", "Food"];
+  const experienceCards = categories.map((name) => experiences.find((e) => e.category?.toLowerCase() === name.toLowerCase()) ?? experiences.find((e) => e.name.toLowerCase().includes(name.toLowerCase()))).filter(Boolean) as Experience[];
+  const visibleStories = stories.slice(0, 3);
+
   return (
-    <main className="luxury-home min-h-screen overflow-x-hidden bg-[#07120f] text-[#f4efe6]">
-      <header className="fixed inset-x-0 top-0 z-50 px-3 py-3 sm:px-5 sm:py-5">
-        <div className="luxury-nav mx-auto max-w-7xl">
-          <a href="#top" className="brand-mark" aria-label="DiscoverLanka home">
-            Discover<span>Lanka</span>
-          </a>
-
-          <nav className="hidden items-center gap-7 text-sm font-medium text-white/72 lg:flex">
-            <a href="#discover" className="luxury-nav-link">Discover</a>
-            <a href="/experiences" className="luxury-nav-link">Experiences</a>
-            <a href="/stories" className="luxury-nav-link">Stories</a>
-            <a href="/plan" className="luxury-nav-link">Plan</a>
-            <a href="#map" className="luxury-nav-link">Map</a>
-            <a href="/my-trip" className="luxury-nav-link">My Trip</a>
+    <main className="home-rebuild min-h-screen bg-[#f4efe5] text-[#17251f]">
+      <header className="home-nav fixed inset-x-0 top-0 z-50 px-4 py-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/20 bg-[#10251f]/75 px-5 py-3 text-white backdrop-blur-xl sm:px-7">
+          <a href="#top" className="font-serif text-xl tracking-tight sm:text-2xl">Discover<span className="text-[#d9b972]">Lanka</span></a>
+          <nav className="hidden items-center gap-7 text-xs font-semibold uppercase tracking-[.14em] text-white/75 lg:flex">
+            <a href="#discover">Discover</a><a href="/experiences">Experiences</a><a href="/stories">Stories</a><a href="/plan">Plan</a><a href="#map">Map</a><a href="/my-trip">My Trip</a>
           </nav>
-
           <div className="flex items-center gap-2">
-            <a href="/search" className="luxury-icon-button hidden sm:inline-flex" aria-label="Search">⌕</a>
-            <a href="/plan" className="luxury-pill luxury-pill-gold hidden sm:inline-flex">Build My Trip <span>↗</span></a>
-            <button
-              onClick={() => setMenuOpen((open) => !open)}
-              className="luxury-icon-button lg:hidden"
-              aria-label="Toggle navigation"
-              aria-expanded={menuOpen}
-            >
-              {menuOpen ? "×" : "☰"}
-            </button>
+            <a href="/search" className="hidden h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-sm sm:inline-flex">⌕</a>
+            <a href="/plan" className="hidden rounded-full bg-[#e3bd78] px-5 py-3 text-[11px] font-black uppercase tracking-[.12em] text-[#102018] sm:inline-flex">Build My Trip ↗</a>
+            <button onClick={() => setMenuOpen((v) => !v)} className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-lg lg:hidden" aria-label="Toggle navigation">{menuOpen ? "×" : "☰"}</button>
           </div>
         </div>
-
-        {menuOpen && (
-          <div className="luxury-mobile-nav mx-auto mt-2 max-w-7xl lg:hidden">
-            <a href="#discover" onClick={() => setMenuOpen(false)}>Discover</a>
-            <a href="/search">Search</a>
-            <a href="/experiences">Experiences</a>
-            <a href="/stories">Stories</a>
-            <a href="/plan">Plan</a>
-            <a href="#map" onClick={() => setMenuOpen(false)}>Map</a>
-            <a href="/my-trip">My Trip</a>
-          </div>
-        )}
+        {menuOpen && <div className="mx-auto mt-2 grid max-w-7xl gap-1 rounded-3xl border border-white/10 bg-[#10251f]/95 p-3 text-white backdrop-blur-xl lg:hidden"><a className="rounded-2xl px-4 py-3" href="#discover">Discover</a><a className="rounded-2xl px-4 py-3" href="/experiences">Experiences</a><a className="rounded-2xl px-4 py-3" href="/stories">Stories</a><a className="rounded-2xl px-4 py-3" href="/plan">Plan</a><a className="rounded-2xl px-4 py-3" href="#map">Map</a><a className="rounded-2xl px-4 py-3" href="/my-trip">My Trip</a></div>}
       </header>
 
-      <section id="top" className="luxury-hero relative isolate min-h-[100svh] overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Nine_Arch_Bridge_in_Ella.jpg/1280px-Nine_Arch_Bridge_in_Ella.jpg')] bg-cover bg-center" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,16,13,.70)_0%,rgba(5,20,16,.34)_40%,rgba(6,21,17,.10)_72%,rgba(3,10,8,.26)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_28%,rgba(236,194,105,.22),transparent_30%)]" />
-
-        <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-center px-5 pb-10 pt-32 sm:px-8 md:pt-40">
-          <div className="hero-glass-panel w-full">
-            <div className="grid w-full gap-10 lg:grid-cols-[1.08fr_.92fr] lg:items-end lg:gap-12">
-              <div className="max-w-4xl">
-                <p className="luxury-kicker text-[#d8b875]">SRI LANKA · CURATED FOR YOU</p>
-                <h1 className="luxury-display mt-6 max-w-4xl text-[3.8rem] leading-[.9] tracking-[-.055em] sm:text-7xl md:text-8xl lg:text-[7.1rem]">
-                  Discover Sri Lanka.
-                  <br />
-                  <span className="text-[#f1d89f]">Feel the journey.</span>
-                </h1>
-                <p className="mt-7 max-w-2xl text-base leading-7 text-white/82 sm:text-lg sm:leading-8">
-                  Beautiful places, thoughtful experiences and a trip shaped around your time, taste and pace.
-                </p>
-                <div className="mt-9 flex flex-wrap gap-3">
-                  <a href="/plan" className="luxury-pill luxury-pill-gold">Build My Trip <span>↗</span></a>
-                  <a href="#discover" className="luxury-pill luxury-pill-outline">Explore the island</a>
-                </div>
-                <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/18 pt-5 text-[10px] font-bold uppercase tracking-[.24em] text-white/66">
-                  <span>Handpicked destinations</span>
-                  <span>Local experiences</span>
-                  <span>Season-aware planning</span>
-                </div>
-              </div>
-
-              <div className="relative hidden min-h-[430px] lg:block">
-                <div className="luxury-glass absolute right-0 top-4 w-[320px] overflow-hidden rounded-[2rem] border border-white/20 p-2 shadow-2xl shadow-black/30">
-                  <img
-                    src={destinationImages[featured?.slug ?? "sigiriya"] ?? destinationImages.sigiriya}
-                    alt={featured?.name ?? "Sigiriya"}
-                    className="h-[330px] w-full rounded-[1.55rem] object-cover"
-                  />
-                  <div className="p-5">
-                    <p className="luxury-kicker text-[#d8b875]">FEATURED ESCAPE</p>
-                    <div className="mt-2 flex items-end justify-between gap-4">
-                      <div>
-                        <h2 className="luxury-serif text-3xl">{featured?.name ?? "Sigiriya"}</h2>
-                        <p className="mt-1 text-sm text-white/60">{featured?.region ?? "Central Province"}</p>
-                      </div>
-                      <span className="luxury-circle-arrow">↗</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="luxury-glass absolute bottom-0 left-0 w-[220px] rounded-[1.6rem] border border-white/20 p-5">
-                  <p className="luxury-kicker text-[#d8b875]">YOUR NEXT MEMORY</p>
-                  <p className="mt-3 luxury-serif text-2xl leading-tight">A slower morning in the hills.</p>
-                  <a href="/plan?interest=Slow%20travel" className="mt-5 inline-flex text-xs font-bold uppercase tracking-[.18em] text-white/74 hover:text-white">Plan around this feeling →</a>
-                </div>
-              </div>
-            </div>
+      <section id="top" className="relative min-h-[92svh] overflow-hidden bg-[#0a1712]">
+        <img src="/hero-home.jpg" alt="Kandy Lake and Sri Dalada Maligawa, Sri Lanka" className="absolute inset-0 h-full w-full object-cover object-center" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,14,11,.64)_0%,rgba(7,20,16,.30)_44%,rgba(5,16,13,.02)_78%)]" />
+        <div className="relative mx-auto flex min-h-[92svh] max-w-7xl items-end px-6 pb-12 pt-32 sm:px-8 sm:pb-16 lg:px-10 lg:pb-20">
+          <div className="max-w-3xl text-white">
+            <p className="mb-5 text-[10px] font-black uppercase tracking-[.28em] text-[#e5c47b]">Sri Lanka · curated for you</p>
+            <h1 className="font-serif text-[4.3rem] leading-[.86] tracking-[-.045em] sm:text-7xl md:text-8xl lg:text-[7rem]">Discover Sri Lanka.<br/><span className="text-[#efcf87]">Feel the journey.</span></h1>
+            <p className="mt-7 max-w-xl text-sm leading-7 text-white/80 sm:text-base sm:leading-8">Beautiful places, thoughtful experiences and a trip shaped around your time, taste and pace.</p>
+            <div className="mt-8 flex flex-wrap gap-3"><a href="/plan" className="rounded-full bg-[#e3bd78] px-6 py-3.5 text-[11px] font-black uppercase tracking-[.14em] text-[#102018]">Build My Trip ↗</a><a href="#discover" className="rounded-full border border-white/30 bg-white/5 px-6 py-3.5 text-[11px] font-black uppercase tracking-[.14em] text-white backdrop-blur-md">Explore the island</a></div>
+            <div className="mt-10 flex flex-wrap gap-7 border-t border-white/20 pt-5 text-[9px] font-bold uppercase tracking-[.2em] text-white/60"><span>Handpicked destinations</span><span>Local experiences</span><span>Season-aware planning</span></div>
           </div>
         </div>
-
-        <div className="absolute bottom-5 left-5 z-10 rounded-full border border-white/20 bg-black/25 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[.14em] text-white/60 backdrop-blur-md sm:left-8">
-          Photo: Dilshan255 · Wikimedia Commons · CC BY-SA 4.0
-        </div>
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#07120f] to-transparent" />
       </section>
 
-      <section className="luxury-section border-y border-white/7 bg-[#07120f] px-5 py-10 sm:px-8">
+      <section className="border-b border-[#1b3028]/10 bg-[#f4efe5] px-6 py-10 sm:px-8 lg:px-10"><div className="mx-auto max-w-7xl"><SeasonalIntelligence /></div></section>
+
+      <section id="discover" className="px-6 py-20 sm:px-8 lg:px-10 lg:py-28">
         <div className="mx-auto max-w-7xl">
-          <SeasonalIntelligence />
-        </div>
-      </section>
-
-      <section id="discover" className="luxury-section bg-[#07120f] px-5 py-24 sm:px-8 md:py-32">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col justify-between gap-8 border-b border-white/10 pb-10 md:flex-row md:items-end">
-            <div>
-              <p className="luxury-kicker text-[#d8b875]">THE ISLAND, REFINED</p>
-              <h2 className="luxury-display mt-4 text-5xl md:text-7xl">Start with a feeling.</h2>
-            </div>
-            <p className="max-w-xl text-base leading-7 text-white/58 md:text-lg md:leading-8">
-              Choose a place for the way you want the day to feel. Quiet hills, ancient stone, wild mornings or salt-air evenings.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-5 lg:grid-cols-[1.45fr_.75fr]">
-            {featured && (
-              <a href={`/destinations/${featured.slug}`} className="luxury-feature-card group relative min-h-[620px] overflow-hidden rounded-[2.2rem]">
-                <img src={destinationImages[featured.slug] ?? destinationImages.sigiriya} alt={featured.name} className="absolute inset-0 h-full w-full object-cover transition duration-[1400ms] group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#06100d] via-transparent to-transparent" />
-                <div className="absolute left-6 right-6 top-6 flex items-center justify-between sm:left-8 sm:right-8">
-                  <span className="luxury-chip">01 · FEATURED DESTINATION</span>
-                  <button
-                    onClick={(event) => { event.preventDefault(); toggleSaved(featured.slug); }}
-                    className="luxury-save"
-                  >
-                    {saved.includes(featured.slug) ? "♥ Saved" : "♡ Save"}
-                  </button>
-                </div>
-                <div className="absolute bottom-7 left-6 right-6 sm:bottom-9 sm:left-8 sm:right-8">
-                  <p className="luxury-kicker text-[#d8b875]">{featured.region}</p>
-                  <h3 className="mt-3 luxury-display text-5xl sm:text-6xl">{featured.name}</h3>
-                  <p className="mt-3 max-w-2xl text-sm leading-7 text-white/68 sm:text-base">{featured.summary}</p>
-                  <div className="mt-6 inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[.18em] text-white/80">Explore destination <span className="luxury-circle-arrow">↗</span></div>
-                </div>
-              </a>
-            )}
-
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
-              {supporting.map((destination, index) => (
-                <a key={destination.id} href={`/destinations/${destination.slug}`} className="luxury-mini-card group relative min-h-[145px] overflow-hidden rounded-[1.65rem]">
-                  <img src={destinationImages[destination.slug] ?? destinationImages.kandy} alt={destination.name} className="absolute inset-0 h-full w-full object-cover transition duration-1000 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#07120f]/92 via-[#07120f]/55 to-[#07120f]/5" />
-                  <div className="relative flex min-h-[145px] items-end justify-between p-5">
-                    <div>
-                      <p className="luxury-kicker text-[#d8b875]">0{index + 2} · {destination.region}</p>
-                      <h3 className="mt-2 luxury-serif text-2xl">{destination.name}</h3>
-                    </div>
-                    <span className="text-white/65 transition-transform group-hover:translate-x-1">↗</span>
-                  </div>
-                </a>
-              ))}
+          <div className="grid gap-10 lg:grid-cols-[280px_1fr] lg:items-end">
+            <div><p className="text-[10px] font-black uppercase tracking-[.25em] text-[#a27a31]">Featured escapes</p><h2 className="mt-3 font-serif text-4xl leading-none sm:text-5xl">Handpicked<br/>journeys.</h2><p className="mt-5 text-sm leading-7 text-[#5f695f]">Curated routes for curious travelers. Move through ancient cities, tea country, coastlines and wild places.</p><a href="/plan" className="mt-6 inline-flex text-[10px] font-black uppercase tracking-[.18em] text-[#7b5d24]">Explore all trips →</a></div>
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {journeyCards.map((item, index) => <a key={item.id} href={`/destinations/${item.slug}`} className="group relative min-h-[330px] overflow-hidden rounded-[1.6rem] bg-[#0f211a]"><img src={destinationImages[item.slug] ?? destinationImages.sigiriya} alt={item.name} className="absolute inset-0 h-full w-full object-cover transition duration-1000 group-hover:scale-105"/><div className="absolute inset-0 bg-gradient-to-t from-[#081510] via-[#081510]/25 to-transparent"/><div className="absolute inset-x-4 bottom-4 text-white"><div className="flex items-center justify-between text-[9px] font-bold uppercase tracking-[.17em] text-[#e4c57f]"><span>0{index + 1}</span><span>{item.region}</span></div><h3 className="mt-3 font-serif text-2xl">{item.name}</h3><p className="mt-1 text-xs text-white/65">{index === 0 ? "Ancient kingdom" : index === 1 ? "Tea trails & train rides" : index === 2 ? "Wildlife safari" : "Coastal bliss"}</p><div className="mt-4 text-xs text-white/75">Explore ↗</div></div></a>)}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="luxury-section border-y border-white/7 bg-[#0d211a] px-5 py-24 sm:px-8 md:py-32">
-        <div className="mx-auto max-w-7xl">
-          <div className="max-w-3xl">
-            <p className="luxury-kicker text-[#d8b875]">TRAVEL FOR THE WAY IT FEELS</p>
-            <h2 className="luxury-display mt-4 text-5xl md:text-7xl">Less checklist.<br />More connection.</h2>
-            <p className="mt-6 max-w-2xl text-base leading-7 text-white/58 md:text-lg md:leading-8">Our experiences are built around how you want Sri Lanka to feel — not simply what you can fit into a day.</p>
-          </div>
+      <section className="relative overflow-hidden bg-[#0b221a] px-6 py-20 text-white sm:px-8 lg:px-10 lg:py-24"><img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=2000&q=88" alt="Sri Lankan mountains" className="absolute inset-0 h-full w-full object-cover opacity-45"/><div className="absolute inset-0 bg-[#081911]/65"/><div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[300px_1fr] lg:items-center"><div><p className="text-[10px] font-black uppercase tracking-[.24em] text-[#d9b972]">Explore by experience</p><h2 className="mt-3 font-serif text-4xl leading-tight">Find your<br/>kind of Sri Lanka.</h2><p className="mt-5 text-sm leading-7 text-white/65">Whether it’s adventure, culture, nature or slow days, choose what moves you.</p><a href="/experiences" className="mt-6 inline-flex text-[10px] font-black uppercase tracking-[.18em] text-[#e1c27c]">Explore experiences →</a></div><div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">{categories.map((name, i) => <a key={name} href={`/experiences?category=${encodeURIComponent(name)}`} className="rounded-[1.5rem] border border-white/12 bg-white/[.045] p-5 text-center backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/[.08]"><div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[#d9b972]/60 text-xl text-[#e7c985]">{experienceIcons[name] ?? "✦"}</div><div className="mt-4 text-[11px] font-bold uppercase tracking-[.14em]">{name}</div></a>)}</div></div></section>
 
-          <div className="mt-14 grid gap-5 md:grid-cols-2">
-            {experiences.slice(0, 4).map((experience, index) => (
-              <a key={experience.id} href={`/plan?interest=${encodeURIComponent(experience.category ?? "")}`} className="luxury-experience-card group overflow-hidden rounded-[2rem] border border-white/8 bg-white/[.03]">
-                <div className="relative h-64 overflow-hidden">
-                  <img src={experienceImages[experience.slug] ?? experienceImages.wildlife} alt={experience.name} className="h-full w-full object-cover transition duration-[1100ms] group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d211a] via-transparent to-transparent" />
-                  <div className="absolute left-5 top-5 luxury-chip">0{index + 1}</div>
-                </div>
-                <div className="p-7">
-                  <p className="luxury-kicker text-[#d8b875]">{experience.category ?? "Experience"}</p>
-                  <div className="mt-2 flex items-start justify-between gap-4">
-                    <h3 className="luxury-serif text-3xl">{experience.name}</h3>
-                    <span className="luxury-circle-arrow shrink-0">↗</span>
-                  </div>
-                  <p className="mt-4 text-sm leading-7 text-white/56">{experience.summary}</p>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section className="px-6 py-20 sm:px-8 lg:px-10 lg:py-28"><div className="mx-auto max-w-7xl"><div className="flex flex-col justify-between gap-8 border-b border-[#17251f]/12 pb-9 md:flex-row md:items-end"><div><p className="text-[10px] font-black uppercase tracking-[.25em] text-[#a27a31]">Discover our destinations</p><h2 className="mt-3 max-w-2xl font-serif text-4xl leading-[.95] sm:text-5xl">Explore Sri Lanka’s<br/>most loved places.</h2></div><div className="max-w-sm text-sm leading-7 text-[#677168]">From misty mountains to golden beaches, every destination tells a story. <a href="/destinations" className="mt-3 inline-flex text-[10px] font-black uppercase tracking-[.18em] text-[#7b5d24]">View all destinations →</a></div></div><div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{featured && <a href={`/destinations/${featured.slug}`} className="group relative min-h-[360px] overflow-hidden rounded-[1.7rem] bg-[#0e2019]"><img src={destinationImages[featured.slug] ?? "/hero-home.jpg"} alt={featured.name} className="absolute inset-0 h-full w-full object-cover transition duration-1000 group-hover:scale-105"/><div className="absolute inset-0 bg-gradient-to-t from-[#07120f] via-transparent to-transparent"/><div className="absolute inset-x-5 bottom-5 text-white"><p className="text-[9px] font-black uppercase tracking-[.2em] text-[#e4c57f]">Culture & heritage</p><h3 className="mt-2 font-serif text-3xl">{featured.name}</h3><p className="mt-1 text-xs text-white/65">{featured.region}</p></div></a>}{destinationCards.map((item) => <a key={item.id} href={`/destinations/${item.slug}`} className="group relative min-h-[360px] overflow-hidden rounded-[1.7rem] bg-[#0e2019]"><img src={destinationImages[item.slug] ?? destinationImages.ella} alt={item.name} className="absolute inset-0 h-full w-full object-cover transition duration-1000 group-hover:scale-105"/><div className="absolute inset-0 bg-gradient-to-t from-[#07120f] via-[#07120f]/10 to-transparent"/><button onClick={(event) => { event.preventDefault(); toggleSaved(item.slug); }} className="absolute right-4 top-4 rounded-full border border-white/20 bg-black/25 px-3 py-2 text-[10px] font-bold text-white backdrop-blur-md">{saved.includes(item.slug) ? "♥" : "♡"}</button><div className="absolute inset-x-5 bottom-5 text-white"><p className="text-[9px] font-black uppercase tracking-[.2em] text-[#e4c57f]">{item.region}</p><h3 className="mt-2 font-serif text-3xl">{item.name}</h3><p className="mt-1 text-xs text-white/60">Explore ↗</p></div></a>)}</div></div></section>
 
-      <section id="map" className="luxury-section bg-[#07120f] px-5 py-24 sm:px-8 md:py-32">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-            <div>
-              <p className="luxury-kicker text-[#d8b875]">THE ISLAND AT A GLANCE</p>
-              <h2 className="luxury-display mt-4 text-5xl md:text-7xl">See where you could go.</h2>
-            </div>
-            <a href="https://www.openstreetmap.org/?mlat=7.8731&mlon=80.7718#map=8/7.8731/80.7718" target="_blank" rel="noreferrer" className="text-xs font-bold uppercase tracking-[.18em] text-white/60 hover:text-white">Open full map ↗</a>
-          </div>
+      <section className="relative overflow-hidden bg-[#142b22] px-6 py-20 text-white sm:px-8 lg:px-10 lg:py-24"><div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(217,185,114,.15),transparent_25%),radial-gradient(circle_at_80%_80%,rgba(87,142,111,.14),transparent_30%)]"/><div className="relative mx-auto max-w-7xl"><div className="grid gap-10 lg:grid-cols-[1fr_1.35fr]"><div><p className="text-[10px] font-black uppercase tracking-[.25em] text-[#d9b972]">Travel stories</p><h2 className="mt-3 font-serif text-5xl leading-[.92]">Real people.<br/>True stories.</h2><p className="mt-5 max-w-sm text-sm leading-7 text-white/65">Discover how Sri Lanka changes lives, one journey at a time.</p><a href="/stories" className="mt-6 inline-flex text-[10px] font-black uppercase tracking-[.18em] text-[#e4c57f]">Explore stories →</a></div><div className="grid gap-4 sm:grid-cols-3">{visibleStories.map((story, index) => <article key={story.id} className="rounded-[1.5rem] bg-[#f4efe5] p-5 text-[#17251f] shadow-2xl"><div className="flex items-center gap-3"><div className="h-9 w-9 overflow-hidden rounded-full bg-[#d9b972]"><img src={storyImages[index]} alt="" className="h-full w-full object-cover"/></div><div><p className="text-[8px] font-black uppercase tracking-[.18em] text-[#88703b]">{story.category}</p><p className="text-[10px] text-[#7a827a]">DiscoverLanka traveler</p></div></div><p className="mt-6 font-serif text-xl leading-tight">“{story.excerpt.replace(/[“”]/g, "").slice(0, 125)}”</p><div className="mt-5 text-[#bb8b2d]">★★★★★</div></article>)}</div></div></div></section>
 
-          <div className="luxury-map-shell mt-12 overflow-hidden rounded-[2.2rem] border border-white/10 bg-[#10211b] p-2">
-            <div className="overflow-hidden rounded-[1.8rem]">
-              <InteractiveMap destinations={mapDestinations} />
-            </div>
-            <div className="grid gap-2 p-3 sm:grid-cols-2 lg:grid-cols-4">
-              {destinations.slice(0, 8).map((destination) => (
-                <a key={destination.id} href={`/destinations/${destination.slug}`} className="luxury-map-link">{destination.name}<span>↗</span></a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <section className="relative overflow-hidden bg-[#0b2018] px-6 py-10 text-white sm:px-8 lg:px-10"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2200&q=88" alt="Sri Lankan mountain horizon" className="absolute inset-0 h-full w-full object-cover opacity-55"/><div className="absolute inset-0 bg-[#07140f]/55"/><div className="relative mx-auto flex max-w-7xl flex-col gap-8 py-12 md:flex-row md:items-center md:justify-between"><div><p className="text-[10px] font-black uppercase tracking-[.24em] text-[#d9b972]">Your next journey</p><h2 className="mt-2 font-serif text-4xl">Ready to explore Sri Lanka?</h2><p className="mt-2 text-sm text-white/65">Build a trip that feels uniquely yours.</p></div><a href="/plan" className="rounded-full bg-[#e3bd78] px-7 py-4 text-[11px] font-black uppercase tracking-[.15em] text-[#102018]">Build My Trip ↗</a></div></section>
 
-      <section className="luxury-section bg-[#081811] px-5 py-24 sm:px-8 md:py-32">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-            <div>
-              <p className="luxury-kicker text-[#d8b875]">FROM THE JOURNAL</p>
-              <h2 className="luxury-display mt-4 text-5xl md:text-7xl">Go beyond the guidebook.</h2>
-            </div>
-            <a href="/stories" className="text-xs font-bold uppercase tracking-[.18em] text-white/60 hover:text-white">See all stories →</a>
-          </div>
+      <section id="map" className="bg-[#f4efe5] px-6 py-20 sm:px-8 lg:px-10 lg:py-24"><div className="mx-auto max-w-7xl"><div className="flex flex-col justify-between gap-8 md:flex-row md:items-end"><div><p className="text-[10px] font-black uppercase tracking-[.25em] text-[#a27a31]">The island at a glance</p><h2 className="mt-3 font-serif text-4xl sm:text-5xl">See where you could go.</h2></div><a href="https://www.openstreetmap.org/?mlat=7.8731&mlon=80.7718#map=8/7.8731/80.7718" target="_blank" rel="noreferrer" className="text-[10px] font-black uppercase tracking-[.18em] text-[#7b5d24]">Open full map ↗</a></div><div className="mt-10 overflow-hidden rounded-[2rem] border border-[#17251f]/10 bg-[#11261e] p-2"><div className="overflow-hidden rounded-[1.6rem]"><InteractiveMap destinations={mapDestinations} /></div></div></div></section>
 
-          <div className="mt-14 grid gap-5 lg:grid-cols-3">
-            {stories.slice(0, 3).map((story, index) => (
-              <a key={story.id} href={`/stories/${story.slug}`} className="group overflow-hidden rounded-[2rem] border border-white/8 bg-white/[.03]">
-                <div className="relative h-72 overflow-hidden">
-                  <img src={storyImages[index % storyImages.length]} alt={story.title} className="h-full w-full object-cover transition duration-[1100ms] group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#081811] via-transparent to-transparent" />
-                  <p className="absolute bottom-5 left-5 luxury-kicker text-[#d8b875]">{story.category || "Sri Lanka"}</p>
-                </div>
-                <div className="p-7">
-                  <h3 className="luxury-serif text-3xl leading-tight">{story.title}</h3>
-                  <p className="mt-4 text-sm leading-7 text-white/55">{story.excerpt}</p>
-                  <span className="mt-6 inline-flex text-xs font-bold uppercase tracking-[.18em] text-white/68 group-hover:text-white">Read story →</span>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="luxury-section relative overflow-hidden border-t border-white/8 bg-[#d7c49a] px-5 py-28 text-[#102018] sm:px-8 md:py-36">
-        <div className="absolute inset-0 opacity-15 [background-image:radial-gradient(circle_at_20%_20%,#fff,transparent_28%),radial-gradient(circle_at_80%_70%,#fff,transparent_28%)]" />
-        <div className="relative mx-auto max-w-5xl text-center">
-          <p className="luxury-kicker !text-[#715a2f]">YOUR NEXT CHAPTER</p>
-          <h2 className="luxury-display mt-4 text-5xl md:text-7xl">Make the trip feel like yours.</h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[#4f564e] md:text-lg md:leading-8">A beautiful route is only the beginning. Build a Sri Lankan journey around your own rhythm.</p>
-          <a href="/plan" className="mt-9 inline-flex items-center gap-3 rounded-full bg-[#102018] px-7 py-4 text-sm font-bold text-[#f4efe6] shadow-xl shadow-black/10 transition hover:-translate-y-0.5">Build My Trip <span>↗</span></a>
-        </div>
-      </section>
-
-      <footer className="bg-[#050d0a] px-5 py-16 sm:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col gap-10 border-b border-white/8 pb-10 md:flex-row md:items-end md:justify-between">
-            <div>
-              <div className="brand-mark text-2xl">Discover<span>Lanka</span></div>
-              <p className="mt-3 max-w-sm text-sm leading-6 text-white/45">Discover Sri Lanka. Plan Your Journey.</p>
-            </div>
-            <div className="flex flex-wrap gap-x-6 gap-y-3 text-xs font-semibold uppercase tracking-[.18em] text-white/45">
-              <a href="/search" className="hover:text-white">Search</a>
-              <a href="/experiences" className="hover:text-white">Experiences</a>
-              <a href="/stories" className="hover:text-white">Stories</a>
-              <a href="/plan" className="hover:text-white">Plan</a>
-              <a href="/my-trip" className="hover:text-white">My Trip</a>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3 pt-7 text-[10px] uppercase tracking-[.2em] text-white/30 sm:flex-row sm:justify-between">
-            <span>DiscoverLanka · Sri Lanka</span>
-            <span>{saved.length} saved {saved.length === 1 ? "place" : "places"}</span>
-          </div>
-        </div>
-      </footer>
+      <footer className="bg-[#07140f] px-6 py-14 text-white sm:px-8 lg:px-10"><div className="mx-auto max-w-7xl"><div className="grid gap-10 border-b border-white/10 pb-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]"><div><div className="font-serif text-3xl">Discover<span className="text-[#d9b972]">Lanka</span></div><p className="mt-3 max-w-sm text-sm leading-7 text-white/45">Discover Sri Lanka. Plan your journey.</p></div><div><p className="text-[9px] font-black uppercase tracking-[.2em] text-[#d9b972]">Quick links</p><div className="mt-4 grid gap-2 text-sm text-white/60"><a href="#discover">Discover</a><a href="/experiences">Experiences</a><a href="/stories">Stories</a><a href="/plan">Plan</a><a href="/my-trip">My Trip</a></div></div><div><p className="text-[9px] font-black uppercase tracking-[.2em] text-[#d9b972]">Support</p><div className="mt-4 grid gap-2 text-sm text-white/60"><a href="/search">Search</a><a href="/account">Account</a><a href="/">Privacy</a></div></div><div><p className="text-[9px] font-black uppercase tracking-[.2em] text-[#d9b972]">Explore</p><div className="mt-4 grid gap-2 text-sm text-white/60"><a href="/destinations">Destinations</a><a href="#map">Map</a><a href="/stories">Journal</a></div></div></div><div className="flex flex-col gap-3 pt-7 text-[9px] uppercase tracking-[.18em] text-white/25 sm:flex-row sm:justify-between"><span>DiscoverLanka · Sri Lanka</span><span>Curated for the way you travel</span></div></div></footer>
     </main>
   );
 }
