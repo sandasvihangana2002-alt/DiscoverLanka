@@ -1,0 +1,1 @@
+The supplied Kandy hero image is stored locally at /mnt/data/hero-home.jpg and must be committed as public/hero-home.jpg using the binary blob API.
