@@ -1,1 +1,0 @@
-Hero assets are maintained here.
