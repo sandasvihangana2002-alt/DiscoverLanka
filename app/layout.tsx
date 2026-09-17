@@ -55,10 +55,9 @@ body.luxury-site .text-white\/20,body.luxury-site .text-white\/25,body.luxury-si
 body.luxury-site .text-white\/40,body.luxury-site .text-white\/45,body.luxury-site .text-white\/50{color:rgba(244,239,230,.68)!important}
 body.luxury-site .premium-muted{color:rgba(244,239,230,.68)!important}
 
-/* Hero image: one direct local layer, no legacy override/fallback can hide it. */
-body.luxury-site main.home-rebuild #top > img{display:block!important;visibility:visible!important;opacity:1!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;z-index:0!important}
+/* Hero image: render the single local asset above legacy styling without changing the hero's child layout. */
 body.luxury-site main.home-rebuild #top{position:relative!important;overflow:hidden!important}
-body.luxury-site main.home-rebuild #top > div{position:relative;z-index:1}
+body.luxury-site main.home-rebuild #top > img{display:block!important;visibility:visible!important;opacity:1!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;z-index:0!important}
 
 @media(prefers-reduced-motion:reduce){body.luxury-site *,body.luxury-site *::before,body.luxury-site *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 `;
