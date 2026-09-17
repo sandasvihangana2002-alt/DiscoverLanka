@@ -5,7 +5,6 @@ import "./luxury-motion.css";
 import "./luxury-v2.css";
 import "./luxury-nextlevel.css";
 import LuxuryInteractions from "@/components/LuxuryInteractions";
-import HeroImageFix from "@/components/HeroImageFix";
 
 const siteUrl = "https://discover-lanka.vercel.app";
 const defaultTitle = "DiscoverLanka | Sri Lanka Travel Guide & Trip Planner";
@@ -59,5 +58,5 @@ body.luxury-site .premium-muted{color:rgba(244,239,230,.68)!important}
 `;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className="antialiased luxury-site"><style dangerouslySetInnerHTML={{ __html: luxuryCss }} /><LuxuryInteractions /><HeroImageFix />{children}</body></html>;
+  return <html lang="en"><body className="antialiased luxury-site"><style dangerouslySetInnerHTML={{ __html: luxuryCss }} /><LuxuryInteractions />{children}</body></html>;
 }
