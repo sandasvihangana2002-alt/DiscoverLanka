@@ -51,6 +51,16 @@ const destinationImages: Record<string, string> = {
   knuckles: "https://images.unsplash.com/photo-1590123221594-8c5d2c5f3f44?auto=format&fit=crop&w=1800&q=90",
   polonnaruwa: "https://images.unsplash.com/photo-1588258524675-c7f1e3e8d5d8?auto=format&fit=crop&w=1800&q=90",
   sinharaja: "https://images.unsplash.com/photo-1557008075-7f2c5efa4cfd?auto=format&fit=crop&w=1800&q=90",
+  nilaveli: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=90",
+  pasikuda: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=90",
+  batticaloa: "https://images.unsplash.com/photo-1494783367193-149034c05e8f?auto=format&fit=crop&w=1800&q=90",
+  mannar: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=90",
+  wilpattu: "https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=1800&q=90",
+  mihintale: "https://images.unsplash.com/photo-1564760055775-d63b17a55c44?auto=format&fit=crop&w=1800&q=90",
+  yapahuwa: "https://images.unsplash.com/photo-1588598198321-9735fd5246b8?auto=format&fit=crop&w=1800&q=90",
+  riverston: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=90",
+  haputale: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1800&q=90",
+  "delft-island": "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1800&q=90",
 };
 
 const experienceImages: Record<string, string> = {
@@ -125,7 +135,7 @@ export default function Home() {
     destinations.find((d) => d.slug === "yala"),
     destinations.find((d) => d.slug === "mirissa"),
   ].filter(Boolean) as Destination[];
-  const destinationCards = destinations.filter((d) => d.slug !== featured?.slug).slice(0, 16);
+  const destinationCards = destinations.filter((d) => d.slug !== featured?.slug).slice(0, 24);
 
   const categories = ["Adventure", "Culture", "Nature", "Wellness", "Food"];
   const experienceCards = categories.map((name) => experiences.find((e) => e.category?.toLowerCase() === name.toLowerCase()) ?? experiences.find((e) => e.name.toLowerCase().includes(name.toLowerCase()))).filter(Boolean) as Experience[];
