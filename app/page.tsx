@@ -160,35 +160,6 @@ export default function Home() {
 
       <section className="border-b border-[#1b3028]/10 bg-[#f4efe5] px-6 py-10 sm:px-8 lg:px-10"><div className="mx-auto max-w-7xl"><SeasonalIntelligence /></div></section>
 
-      <section className="home-explore px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-xl">
-              <div className="home-explore-kicker"><span>◆</span><p>Begin your journey</p></div>
-              <h2 className="mt-4 font-serif text-4xl leading-none text-white sm:text-5xl">Explore Sri Lanka,<br/><span>your way.</span></h2>
-              <p className="mt-5 max-w-lg text-sm leading-7 text-white/60 sm:text-base">From living traditions to hidden coastlines, start with the part of the island that calls to you.</p>
-            </div>
-            <p className="hidden pb-2 text-[9px] font-black uppercase tracking-[.22em] text-[#d8b875]/70 lg:block">Four ways into the island</p>
-          </div>
-          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {label:"Destinations",title:"Places worth remembering",text:"Kandy, Ella, Galle, Sigiriya & more.",href:"#discover",mark:"01"},
-              {label:"Culture",title:"Stories, rituals & heritage",text:"Meet the traditions that shape the island.",href:"#experiences",mark:"02"},
-              {label:"Experiences",title:"Do more than sightseeing",text:"Adventure, food, nature & slow travel.",href:"/experiences",mark:"03"},
-              {label:"Stay",title:"Rest with character",text:"Find a base that fits your journey.",href:"/plan",mark:"04"},
-            ].map((item) => (
-              <a key={item.label} href={item.href} className="home-explore-card group">
-                <div className="home-explore-card-top"><span>{item.mark}</span><b>↗</b></div>
-                <div className="home-explore-icon" aria-hidden="true">◇</div>
-                <p className="mt-7 text-[9px] font-black uppercase tracking-[.2em] text-[#d8b875]">{item.label}</p>
-                <h3 className="mt-2 font-serif text-[1.55rem] leading-[1.05] text-white">{item.title}</h3>
-                <p className="mt-3 text-xs leading-5 text-white/48">{item.text}</p>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section id="discover" className="px-6 py-20 sm:px-8 lg:px-10 lg:py-28">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 lg:grid-cols-[280px_1fr] lg:items-end">
