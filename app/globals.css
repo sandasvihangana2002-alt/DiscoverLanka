@@ -299,7 +299,7 @@ main header.fixed > div {
 
 /* Kandyan-luxury hero finish: cinematic vignette, restrained ornament and motion. */
 .home-hero { isolation:isolate; }
-.home-hero-image { filter:saturate(.86) contrast(1.05); }
+.home-hero-image { opacity:.88; filter:saturate(.82) contrast(1.02); }
 .home-hero-vignette {
   background:
     linear-gradient(90deg,rgba(3,10,7,.80) 0%,rgba(5,15,11,.52) 31%,rgba(5,16,13,.10) 67%,rgba(5,16,13,.22) 100%),
