@@ -525,6 +525,7 @@ main header.fixed > div {
 .home-kandyan-number { position:absolute; top:19px; right:20px; color:rgba(226,194,125,.52); font-size:.52rem; font-weight:800; letter-spacing:.16em; }
 .home-kandyan-icon { display:flex; width:58px; height:58px; align-items:center; justify-content:center; border:1px solid rgba(226,194,125,.50); border-radius:13px 13px 20px 20px; color:#e5c77f; font-size:1.12rem; transform:rotate(45deg); box-shadow:0 0 0 5px rgba(216,184,117,.035); transition:transform .35s ease,background .35s ease; }
 .home-kandyan-icon::first-letter { transform:rotate(-45deg); }
+.home-kandyan-icon svg { transform:rotate(-45deg); }
 .home-kandyan-card:hover .home-kandyan-icon { transform:rotate(45deg) translate(2px,-2px); background:rgba(216,184,117,.08); }
 .home-kandyan-name { margin-top:24px; color:#f5efe5; font-size:.66rem; font-weight:800; text-transform:uppercase; letter-spacing:.17em; }
 .home-kandyan-line { width:32px; height:1px; margin-top:13px; background:linear-gradient(90deg,transparent,#d8b875,transparent); transition:width .35s ease; }
