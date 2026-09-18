@@ -855,3 +855,19 @@ main header.fixed > div {
   background:rgba(244,239,229,.10);
   box-shadow:0 10px 30px rgba(23,56,45,.16), inset 0 0 0 1px rgba(23,56,45,.06);
 }
+
+
+/* Travel Stories heading: clean text treatment, no frame. */
+.home-travel-stories .home-travel-heading {
+  display:block;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  color:#17382d !important;
+  text-shadow:none;
+}
+.home-travel-stories .home-travel-heading-accent {
+  color:#17382d !important;
+}
