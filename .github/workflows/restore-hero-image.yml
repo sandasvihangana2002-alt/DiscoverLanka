@@ -1,4 +1,4 @@
-name: Restore uploaded hero image
+name: Restore exact Kandy hero image
 
 on:
   push:
@@ -9,36 +9,45 @@ permissions:
 
 jobs:
   restore:
-    if: ${{ !contains(github.event.head_commit.message, 'restore uploaded hero image') }}
+    if: ${{ !contains(github.event.head_commit.message, 'restore exact Kandy hero image') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Restore uploaded hero image
+      - name: Restore binary hero image
         run: |
           set -euo pipefail
-          test -f hero-upload/part01.txt
-          cat hero-upload/part*.txt | tr -d '\n\r ' | base64 --decode > public/hero-home.jpg
+          test -f public/hero-kandy-real.b64
+          tr -d '\n\r ' < public/hero-kandy-real.b64 | base64 --decode > public/hero-home.jpg
           file public/hero-home.jpg
           identify public/hero-home.jpg
 
       - name: Remove temporary hero staging files
         run: |
-          rm -f hero-upload/part*.txt
+          rm -f \
+            public/hero-kandy-real.b64 \
+            public/hero-kandy-full.b64 \
+            public/hero-kandy-optimized.txt \
+            public/hero-home-data.txt \
+            public/hero-home-fixed.jpg \
+            public/hero-home-repair.txt \
+            public/hero-home.bin
+          rm -f hero-upload/part01.txt hero-upload/part02.txt
           rmdir hero-upload 2>/dev/null || true
+          rm -f public/hero/.keep public/hero/.noop public/hero/README.txt public/hero/kandy-lake.tmp public/hero/kandy-lake.jpg
 
-      - name: Commit uploaded hero image
+      - name: Commit verified hero image
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/hero-home.jpg
-          git add -u hero-upload || true
+          git add -u public hero-upload || true
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
           fi
-          git commit -m "fix: restore uploaded hero image"
+          git commit -m "fix: restore exact Kandy hero image"
           git push
