@@ -187,7 +187,7 @@ export default function Home() {
           </div>
           <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {journeyCards.map((item, index) => <a key={item.id} href={`/destinations/${item.slug}`} className="group relative min-h-[440px] overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#102019] shadow-[0_24px_80px_rgba(0,0,0,.24)]">
-              <img src={destinationImages[item.slug] ?? destinationImages.sigiriya} alt={item.name} className="absolute inset-0 h-full w-full object-cover transition duration-[1400ms] group-hover:scale-105" />
+              <img src={destinationImages[item.slug] ?? destinationImages.sigiriya} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover transition duration-[1400ms] group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#06100c] via-[#06100c]/30 to-[#06100c]/5" />
               
               <div className="absolute inset-x-5 bottom-5"><div className="h-px w-10 bg-[#d9b972] transition-all duration-500 group-hover:w-16" /><h3 className="mt-2 font-serif text-3xl tracking-[-.02em] text-white sm:text-4xl">{item.name}</h3><p className="mt-2 max-w-[18rem] text-xs leading-5 text-white/60">{item.summary}</p><div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-[9px] font-black uppercase tracking-[.18em] text-white/60"><span>Discover place</span><span className="text-[#e3c681] transition-transform group-hover:translate-x-1">↗</span></div></div>
