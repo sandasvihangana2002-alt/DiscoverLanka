@@ -125,17 +125,21 @@ export default function Home() {
     <main className="home-rebuild min-h-screen bg-[#f4efe5] text-[#17251f]">
       <header className="home-nav fixed inset-x-0 top-0 z-50 px-4 py-5 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-[#d9b972]/25 bg-[#07140f]/52 px-5 py-3.5 text-white shadow-[0_18px_60px_rgba(0,0,0,.24)] backdrop-blur-2xl sm:px-7">
-          <a href="#top" className="font-serif text-xl tracking-[-.03em] sm:text-2xl">Discover<span className="text-[#d9b972]">Lanka</span></a>
-          <nav className="hidden items-center gap-8 text-[10px] font-black uppercase tracking-[.17em] text-white/70 lg:flex">
-            <a href="#discover">Discover</a><a href="/experiences">Experiences</a><a href="/stories">Stories</a><a href="/plan">Plan</a><a href="#map">Map</a><a href="/my-trip">My Trip</a>
+          <a href="#top" className="home-brand group flex items-center gap-2.5" aria-label="DiscoverLanka home">
+            <span className="home-brand-mark" aria-hidden="true">◈</span>
+            <span className="font-serif text-xl tracking-[-.03em] sm:text-2xl">Discover<span className="text-[#d9b972]">Lanka</span></span>
+          </a>
+          <nav className="hidden items-center gap-8 text-[10px] font-black uppercase tracking-[.17em] text-white/70 lg:flex" aria-label="Primary navigation">
+            <a className="home-nav-link" href="#discover">Discover</a><a className="home-nav-link" href="/experiences">Experiences</a><a className="home-nav-link" href="/stories">Stories</a><a className="home-nav-link" href="/plan">Plan</a><a className="home-nav-link" href="#map">Map</a><a className="home-nav-link" href="/my-trip">My Trip</a>
           </nav>
           <div className="flex items-center gap-2">
-            <a href="/search" className="hidden h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-sm sm:inline-flex">⌕</a>
-            <a href="/plan" className="hidden rounded-full bg-[#e3bd78] px-5 py-3 text-[11px] font-black uppercase tracking-[.12em] text-[#102018] sm:inline-flex">Build My Trip ↗</a>
+            <a href="/search" className="hidden h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-sm sm:inline-flex" aria-label="Search">⌕</a>
+            <a href="/plan" className="home-trip-cta hidden rounded-full bg-[#e3bd78] px-5 py-3 text-[11px] font-black uppercase tracking-[.12em] text-[#102018] sm:inline-flex">Build My Trip ↗</a>
             <button onClick={() => setMenuOpen((v) => !v)} className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-lg lg:hidden" aria-label="Toggle navigation">{menuOpen ? "×" : "☰"}</button>
           </div>
         </div>
-        {menuOpen && <div className="mx-auto mt-2 grid max-w-7xl gap-1 rounded-3xl border border-white/10 bg-[#10251f]/95 p-3 text-white backdrop-blur-xl lg:hidden"><a className="rounded-2xl px-4 py-3" href="#discover">Discover</a><a className="rounded-2xl px-4 py-3" href="/experiences">Experiences</a><a className="rounded-2xl px-4 py-3" href="/stories">Stories</a><a className="rounded-2xl px-4 py-3" href="/plan">Plan</a><a className="rounded-2xl px-4 py-3" href="#map">Map</a><a className="rounded-2xl px-4 py-3" href="/my-trip">My Trip</a></div>}
+        <div className="home-nav-ornament" aria-hidden="true"><span>◆</span><i></i><span>◆</span></div>
+        {menuOpen && <div className="home-mobile-menu mx-auto mt-2 grid max-w-7xl gap-1 rounded-3xl border border-white/10 bg-[#10251f]/95 p-3 text-white backdrop-blur-xl lg:hidden"><a className="rounded-2xl px-4 py-3" href="#discover">Discover</a><a className="rounded-2xl px-4 py-3" href="/experiences">Experiences</a><a className="rounded-2xl px-4 py-3" href="/stories">Stories</a><a className="rounded-2xl px-4 py-3" href="/plan">Plan</a><a className="rounded-2xl px-4 py-3" href="#map">Map</a><a className="rounded-2xl px-4 py-3" href="/my-trip">My Trip</a></div>}
       </header>
 
       <section id="top" className="relative min-h-[100svh] overflow-hidden bg-[#0a1712]">
