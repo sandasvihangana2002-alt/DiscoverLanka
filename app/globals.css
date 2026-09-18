@@ -226,3 +226,73 @@ main header.fixed > div {
   html { scroll-behavior:auto; }
   *,*::before,*::after { transition:none !important; animation:none !important; }
 }
+
+/* Kandyan-inspired home navigation details. Keep the ornament restrained and premium. */
+.home-nav { position:relative; }
+.home-brand { color:#f8f3ea; }
+.home-brand-mark {
+  display:inline-flex;
+  width:25px;
+  height:25px;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(216,184,117,.46);
+  border-radius:7px 7px 11px 11px;
+  color:#d8b875;
+  font-size:.66rem;
+  line-height:1;
+  transform:rotate(45deg);
+  box-shadow:inset 0 0 0 1px rgba(216,184,117,.08);
+}
+.home-brand-mark::first-letter { transform:rotate(-45deg); }
+.home-nav-link {
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  min-height:28px;
+  color:rgba(255,255,255,.70);
+}
+.home-nav-link::after {
+  content:"";
+  position:absolute;
+  left:50%;
+  right:50%;
+  bottom:-6px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#d8b875,transparent);
+  transition:left .25s ease,right .25s ease;
+}
+.home-nav-link:hover,
+.home-nav-link:focus-visible { color:#fff; }
+.home-nav-link:hover::after,
+.home-nav-link:focus-visible::after { left:5px; right:5px; }
+.home-trip-cta { box-shadow:0 10px 28px rgba(216,184,117,.18); }
+.home-trip-cta:hover { transform:translateY(-1px); box-shadow:0 14px 34px rgba(216,184,117,.27); }
+.home-nav-ornament {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:min(420px,44vw);
+  margin:7px auto 0;
+  color:rgba(216,184,117,.70);
+  pointer-events:none;
+}
+.home-nav-ornament i {
+  display:block;
+  flex:1;
+  max-width:170px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(216,184,117,.44),transparent);
+}
+.home-nav-ornament span { font-size:.42rem; line-height:1; }
+.home-mobile-menu { box-shadow:0 24px 70px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.04); }
+.home-mobile-menu a:hover,
+.home-mobile-menu a:focus-visible {
+  background:rgba(216,184,117,.08);
+  color:#f4ead7;
+}
+@media (max-width:640px) {
+  .home-nav-ornament { width:min(280px,66vw); margin-top:6px; }
+  .home-nav-ornament i { max-width:110px; }
+}
