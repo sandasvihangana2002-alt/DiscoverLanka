@@ -122,10 +122,7 @@ export default function Home() {
     });
   }
 
-  const mapDestinations = useMemo(
-    () => destinations.map((d) => ({ ...d, latitude: d.latitude ?? 7.8731, longitude: d.longitude ?? 80.7718 })),
-    [destinations]
-  );
+  const mapDestinations = useMemo(() => destinations.filter((d) => typeof d.latitude === "number" && typeof d.longitude === "number" && Number.isFinite(d.latitude) && Number.isFinite(d.longitude)), [destinations]);
 
   const featured = destinations.find((d) => d.slug === "kandy") ?? destinations[0];
   const featuredJourney = destinations.find((d) => d.slug === "sigiriya") ?? destinations[1];
