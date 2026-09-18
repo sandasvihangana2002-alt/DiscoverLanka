@@ -2,7 +2,7 @@
 
 import "leaflet/dist/leaflet.css";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 
@@ -36,9 +36,10 @@ const resultIcon = L.divIcon({
 function MapFocus({ place }: { place: SearchPlace | null }) {
   const map = useMap();
 
-  if (place) {
-    map.flyTo([place.lat, place.lon], 12, { duration: 1.15 });
-  }
+  useEffect(() => {
+    if (!place) return;
+    map.flyTo([place.lat, place.lon], 13, { duration: 1.15 });
+  }, [map, place]);
 
   return null;
 }
