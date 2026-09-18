@@ -657,3 +657,22 @@ main header.fixed > div {
 .discover-location-reset:hover {
   background:#ece5d9;
 }
+
+
+/* Map search input: preserve the forest-green hero palette even when global form styles apply. */
+.home-rebuild .luxury-map-search-input {
+  color:#10251f !important;
+  -webkit-text-fill-color:#10251f !important;
+  caret-color:#9b762f !important;
+  font-weight:700;
+}
+.home-rebuild .luxury-map-search-input::placeholder {
+  color:#547066 !important;
+  opacity:1 !important;
+}
+.discover-location-card-clickable {
+  cursor:pointer;
+}
+.discover-location-card-clickable:hover .discover-location-title {
+  color:#8c6a2b;
+}
