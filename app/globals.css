@@ -830,3 +830,12 @@ main header.fixed > div {
 .home-travel-stories article > div p:last-child { color:#64736b !important; }
 .home-travel-stories article > p { color:#173027 !important; }
 .home-travel-stories article > div:last-child { color:#b48732 !important; }
+
+
+/* Refined Travel Stories typography palette. */
+.home-travel-stories .home-travel-kicker { color:#e0bd72 !important; text-shadow:0 2px 10px rgba(0,0,0,.24); }
+.home-travel-stories .home-travel-heading { color:#f8f2e8 !important; letter-spacing:-.045em; text-shadow:0 3px 18px rgba(0,0,0,.24); }
+.home-travel-stories .home-travel-heading-accent { color:#e5c47d !important; }
+.home-travel-stories .home-travel-copy { color:#d4cdbf !important; }
+.home-travel-stories .home-travel-link { color:#f0d18d !important; transition:color .25s ease, transform .25s ease; }
+.home-travel-stories .home-travel-link:hover { color:#ffe2a5 !important; transform:translateX(3px); }
