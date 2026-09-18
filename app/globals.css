@@ -817,3 +817,16 @@ main header.fixed > div {
   .discover-nearby-card { min-width:132px; }
 }
 
+
+
+/* Travel Stories readability: brighter editorial type on the deep green panel. */
+.home-travel-stories > div.relative { position:relative; z-index:1; }
+.home-travel-stories > div.relative > div > div:first-child h2 { color:#f7f1e7; text-shadow:0 3px 18px rgba(0,0,0,.22); }
+.home-travel-stories > div.relative > div > div:first-child > p { color:rgba(255,250,241,.78) !important; }
+.home-travel-stories > div.relative > div > div:first-child > a { color:#f0d18d !important; text-shadow:0 2px 10px rgba(0,0,0,.20); }
+.home-travel-stories > div:first-child { opacity:.9; }
+.home-travel-stories article { background:#f8f3e9 !important; color:#173027 !important; }
+.home-travel-stories article > div p:first-child { color:#8d682b !important; }
+.home-travel-stories article > div p:last-child { color:#64736b !important; }
+.home-travel-stories article > p { color:#173027 !important; }
+.home-travel-stories article > div:last-child { color:#b48732 !important; }
