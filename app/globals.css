@@ -440,3 +440,66 @@ main header.fixed > div {
   .home-explore { padding-top:62px; padding-bottom:62px; }
   .home-explore-card { min-height:230px; }
 }
+
+
+/* Final home-page rebuild finish: align the remaining sections with the hero/editorial language. */
+.home-rebuild > section:not(.home-hero):not(#discover) {
+  position:relative;
+}
+.home-rebuild > section:nth-of-type(3) {
+  border-top:1px solid rgba(216,184,117,.08);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.home-rebuild > section:nth-of-type(4) {
+  background:
+    radial-gradient(circle at 8% 0%,rgba(216,184,117,.07),transparent 24%),
+    linear-gradient(180deg,#f4efe5 0%,#eee7d9 100%) !important;
+}
+.home-rebuild > section:nth-of-type(4) > div {
+  position:relative;
+}
+.home-rebuild > section:nth-of-type(4) h2 {
+  color:#18251f;
+}
+.home-rebuild > section:nth-of-type(4) a.group {
+  border:1px solid rgba(23,37,31,.10);
+  box-shadow:0 18px 55px rgba(23,37,31,.12);
+}
+.home-rebuild > section:nth-of-type(4) a.group:hover {
+  transform:translateY(-4px);
+  box-shadow:0 25px 70px rgba(23,37,31,.18);
+}
+.home-rebuild > section:nth-of-type(5) {
+  border-top:1px solid rgba(216,184,117,.10);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.home-rebuild > section:nth-of-type(5) article {
+  border:1px solid rgba(23,37,31,.08);
+  box-shadow:0 18px 55px rgba(0,0,0,.18);
+}
+.home-rebuild > section:nth-of-type(5) article:hover {
+  transform:translateY(-3px);
+}
+.home-rebuild > section:nth-of-type(6) {
+  border-top:1px solid rgba(216,184,117,.14);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.home-rebuild > section:nth-of-type(6) a {
+  box-shadow:0 14px 42px rgba(0,0,0,.20);
+}
+.home-rebuild > section:nth-of-type(7) {
+  border-top:1px solid rgba(23,37,31,.08);
+}
+.home-rebuild > section:nth-of-type(7) .overflow-hidden.rounded-\[2rem\] {
+  box-shadow:0 26px 80px rgba(7,18,14,.18);
+}
+.home-rebuild footer a:hover {
+  color:#e3c681;
+  transform:translateX(2px);
+}
+@media (max-width:640px) {
+  .home-rebuild > section:nth-of-type(4) a.group,
+  .home-rebuild > section:nth-of-type(5) article {
+    transform:none;
+  }
+}
