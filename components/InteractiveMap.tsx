@@ -3,7 +3,7 @@
 import "leaflet/dist/leaflet.css";
 
 import { useEffect, useMemo, useState } from "react";
-import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 
 type Destination = {
@@ -28,9 +28,9 @@ const sriLankaCenter: [number, number] = [7.8731, 80.7718];
 
 const resultIcon = L.divIcon({
   className: "discover-map-pin",
-  html: '<span class="discover-map-pin-core"></span><span class="discover-map-pin-ring"></span>',
-  iconSize: [30, 30],
-  iconAnchor: [15, 15],
+  html: '<span class="discover-map-pin-core"></span><span class="discover-map-pin-pulse"></span>',
+  iconSize: [42, 42],
+  iconAnchor: [21, 21],
 });
 
 function MapFocus({ place }: { place: SearchPlace | null }) {
@@ -150,7 +150,28 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
         />
         <MapFocus place={searchedPlace} />
         {searchedPlace && (
-          <Marker position={[searchedPlace.lat, searchedPlace.lon]} icon={resultIcon} />
+          <Marker position={[searchedPlace.lat, searchedPlace.lon]} icon={resultIcon}>
+            <Popup closeButton={false} className="discover-location-popup" offset={[0, -6]}>
+              <div className="discover-location-card">
+                <div className="discover-location-kicker">LOCATION FOUND</div>
+                <div className="discover-location-title">{searchedPlace.name}</div>
+                <div className="discover-location-address">{searchedPlace.displayName}</div>
+                <div className="discover-location-actions">
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${searchedPlace.lat},${searchedPlace.lon}`)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="discover-location-google"
+                  >
+                    Open in Google Maps ↗
+                  </a>
+                  <button type="button" onClick={resetMap} className="discover-location-reset">
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </Popup>
+          </Marker>
         )}
       </MapContainer>
 
@@ -174,7 +195,7 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search a location in Sri Lanka..."
-              className="h-11 min-w-0 flex-1 bg-transparent px-1 text-sm font-medium text-[#17251f] outline-none placeholder:text-[#7a827a]"
+              className="h-11 min-w-0 flex-1 bg-transparent px-1 text-sm font-semibold text-[#10251f] caret-[#9b762f] outline-none placeholder:text-[#547066]"
             />
 
             <button
@@ -199,30 +220,7 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
             Search a place to reveal its exact point on the map.
           </p>
 
-          {searchedPlace && (
-            <div className="mt-4 border-t border-white/10 pt-3">
-              <p className="text-[9px] font-black uppercase tracking-[.18em] text-[#d9b972]">Located</p>
-              <p className="mt-1 text-sm font-semibold text-white">{searchedPlace.name}</p>
-              <p className="mt-1 max-w-[300px] text-[10px] leading-4 text-white/45">{searchedPlace.displayName}</p>
-              <div className="mt-3 flex items-center gap-2">
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${searchedPlace.lat},${searchedPlace.lon}`)}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full bg-[#e3bd78] px-4 py-2 text-[9px] font-black uppercase tracking-[.14em] text-[#102018]"
-                >
-                  Open in Google Maps ↗
-                </a>
-                <button
-                  type="button"
-                  onClick={resetMap}
-                  className="rounded-full border border-white/12 px-4 py-2 text-[9px] font-black uppercase tracking-[.14em] text-white/60"
-                >
-                  Reset
-                </button>
-              </div>
-            </div>
-          )}
+          {searchedPlace && <p className="mt-3 border-t border-white/10 pt-3 text-[10px] font-semibold text-white/45">Location pinned on the map.</p>}
         </div>
       </div>
 
