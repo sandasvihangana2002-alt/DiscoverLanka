@@ -839,3 +839,8 @@ main header.fixed > div {
 .home-travel-stories .home-travel-copy { color:#d4cdbf !important; }
 .home-travel-stories .home-travel-link { color:#f0d18d !important; transition:color .25s ease, transform .25s ease; }
 .home-travel-stories .home-travel-link:hover { color:#ffe2a5 !important; transform:translateX(3px); }
+
+
+/* Travel Stories requested dark-green accents. */
+.home-travel-stories .home-travel-kicker { color:#17382d !important; text-shadow:none; }
+.home-travel-stories .home-travel-copy { color:#23473b !important; }
