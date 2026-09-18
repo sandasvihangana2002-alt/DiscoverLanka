@@ -3,6 +3,7 @@
 import "leaflet/dist/leaflet.css";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 
@@ -22,6 +23,7 @@ type SearchPlace = {
   lat: number;
   lon: number;
   type?: string;
+  slug?: string;
 };
 
 const sriLankaCenter: [number, number] = [7.8731, 80.7718];
@@ -36,6 +38,7 @@ const resultIcon = L.divIcon({
 function SearchResultMarker({ place, onReset }: { place: SearchPlace; onReset: () => void }) {
   const markerRef = useRef<L.Marker | null>(null);
   const map = useMap();
+  const router = useRouter();
 
   useEffect(() => {
     map.flyTo([place.lat, place.lon], 13, { duration: 1.15 });
@@ -48,7 +51,20 @@ function SearchResultMarker({ place, onReset }: { place: SearchPlace; onReset: (
   return (
     <Marker ref={markerRef} position={[place.lat, place.lon]} icon={resultIcon}>
       <Popup closeButton={false} className="discover-location-popup" offset={[0, -6]}>
-        <div className="discover-location-card">
+        <div
+          className={`discover-location-card ${place.slug ? "discover-location-card-clickable" : ""}`}
+          onClick={() => {
+            if (place.slug) router.push(`/destinations/${place.slug}`);
+          }}
+          role={place.slug ? "link" : undefined}
+          tabIndex={place.slug ? 0 : undefined}
+          onKeyDown={(event) => {
+            if (place.slug && (event.key === "Enter" || event.key === " ")) {
+              event.preventDefault();
+              router.push(`/destinations/${place.slug}`);
+            }
+          }}
+        >
           <div className="discover-location-kicker">LOCATION FOUND</div>
           <div className="discover-location-title">{place.name}</div>
           <div className="discover-location-address">{place.displayName}</div>
@@ -112,6 +128,7 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
           lat: localMatch.latitude as number,
           lon: localMatch.longitude as number,
           type: "destination",
+          slug: localMatch.slug,
         });
         return;
       }
@@ -198,7 +215,7 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search a location in Sri Lanka..."
-              className="h-11 min-w-0 flex-1 bg-transparent px-1 text-sm font-semibold text-[#10251f] caret-[#9b762f] outline-none placeholder:text-[#547066]"
+              className="luxury-map-search-input h-11 min-w-0 flex-1 bg-transparent px-1 text-sm font-semibold outline-none"
             />
 
             <button
