@@ -2,7 +2,7 @@
 
 import "leaflet/dist/leaflet.css";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 
@@ -42,6 +42,44 @@ function MapFocus({ place }: { place: SearchPlace | null }) {
   }, [map, place]);
 
   return null;
+}
+
+function SearchResultMarker({ place, onReset }: { place: SearchPlace; onReset: () => void }) {
+  const markerRef = useRef<L.Marker | null>(null);
+  const map = useMap();
+
+  useEffect(() => {
+    map.flyTo([place.lat, place.lon], 13, { duration: 1.15 });
+    const timer = window.setTimeout(() => {
+      markerRef.current?.openPopup();
+    }, 850);
+    return () => window.clearTimeout(timer);
+  }, [map, place]);
+
+  return (
+    <Marker ref={markerRef} position={[place.lat, place.lon]} icon={resultIcon}>
+      <Popup closeButton={false} className="discover-location-popup" offset={[0, -6]}>
+        <div className="discover-location-card">
+          <div className="discover-location-kicker">LOCATION FOUND</div>
+          <div className="discover-location-title">{place.name}</div>
+          <div className="discover-location-address">{place.displayName}</div>
+          <div className="discover-location-actions">
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.lat},${place.lon}`)}`}
+              target="_blank"
+              rel="noreferrer"
+              className="discover-location-google"
+            >
+              Open in Google Maps ↗
+            </a>
+            <button type="button" onClick={onReset} className="discover-location-reset">
+              Reset
+            </button>
+          </div>
+        </div>
+      </Popup>
+    </Marker>
+  );
 }
 
 export default function InteractiveMap({ destinations }: { destinations: Destination[] }) {
@@ -149,30 +187,7 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <MapFocus place={searchedPlace} />
-        {searchedPlace && (
-          <Marker position={[searchedPlace.lat, searchedPlace.lon]} icon={resultIcon}>
-            <Popup closeButton={false} className="discover-location-popup" offset={[0, -6]}>
-              <div className="discover-location-card">
-                <div className="discover-location-kicker">LOCATION FOUND</div>
-                <div className="discover-location-title">{searchedPlace.name}</div>
-                <div className="discover-location-address">{searchedPlace.displayName}</div>
-                <div className="discover-location-actions">
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${searchedPlace.lat},${searchedPlace.lon}`)}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="discover-location-google"
-                  >
-                    Open in Google Maps ↗
-                  </a>
-                  <button type="button" onClick={resetMap} className="discover-location-reset">
-                    Reset
-                  </button>
-                </div>
-              </div>
-            </Popup>
-          </Marker>
-        )}
+        {searchedPlace && <SearchResultMarker place={searchedPlace} onReset={resetMap} />}
       </MapContainer>
 
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,14,.05),transparent_38%,rgba(7,18,14,.10))]" />
