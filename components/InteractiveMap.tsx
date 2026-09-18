@@ -26,6 +26,10 @@ type SearchPlace = {
   slug?: string;
 };
 
+type MapCategory = "All" | "Beaches" | "Culture" | "Mountains" | "Wildlife" | "Nature";
+
+const categories: MapCategory[] = ["All", "Beaches", "Culture", "Mountains", "Wildlife", "Nature"];
+
 const sriLankaCenter: [number, number] = [7.8731, 80.7718];
 
 const resultIcon = L.divIcon({
@@ -35,53 +39,134 @@ const resultIcon = L.divIcon({
   iconAnchor: [21, 21],
 });
 
+function getDestinationCategories(destination: Destination): MapCategory[] {
+  const haystack = `${destination.slug} ${destination.name} ${destination.region}`.toLowerCase();
+  const result: MapCategory[] = [];
+
+  if (/mirissa|galle|hikkaduwa|bentota|trinco|nilaveli|pasikuda|arugam-bay|kalpitiya|batticaloa|mannar|delft-island/.test(haystack)) {
+    result.push("Beaches");
+  }
+  if (/kandy|sigiriya|dambulla|anuradhapura|polonnaruwa|mihintale|yapahuwa|jaffna/.test(haystack)) {
+    result.push("Culture");
+  }
+  if (/ella|nuwara-eliya|horton-plains|adams-peak|haputale|knuckles|riverston|kitulgala/.test(haystack)) {
+    result.push("Mountains");
+  }
+  if (/yala|udawalawe|wilpattu|sinharaja/.test(haystack)) {
+    result.push("Wildlife");
+  }
+  if (!result.length || /sinharaja|knuckles|horton-plains|kitulgala|riverston/.test(haystack)) {
+    result.push("Nature");
+  }
+
+  return Array.from(new Set(result));
+}
+
+function distanceKm(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const earthRadius = 6371;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) ** 2;
+  return earthRadius * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function LocationCard({
+  title,
+  address,
+  kicker = "LOCATION FOUND",
+  slug,
+  onReset,
+}: {
+  title: string;
+  address: string;
+  kicker?: string;
+  slug?: string;
+  onReset?: () => void;
+}) {
+  const router = useRouter();
+
+  return (
+    <div
+      className={`discover-location-card ${slug ? "discover-location-card-clickable" : ""}`}
+      onClick={() => {
+        if (slug) router.push(`/destinations/${slug}`);
+      }}
+      role={slug ? "link" : undefined}
+      tabIndex={slug ? 0 : undefined}
+      onKeyDown={(event) => {
+        if (slug && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          router.push(`/destinations/${slug}`);
+        }
+      }}
+    >
+      <div className="discover-location-kicker">{kicker}</div>
+      <div className="discover-location-title">{title}</div>
+      <div className="discover-location-address">{address}</div>
+      <div className="discover-location-actions">
+        <a
+          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
+          target="_blank"
+          rel="noreferrer"
+          className="discover-location-google"
+          onClick={(event) => event.stopPropagation()}
+        >
+          Open in Google Maps ↗
+        </a>
+        {onReset && (
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              onReset();
+            }}
+            className="discover-location-reset"
+          >
+            Reset
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function SearchResultMarker({ place, onReset }: { place: SearchPlace; onReset: () => void }) {
   const markerRef = useRef<L.Marker | null>(null);
   const map = useMap();
-  const router = useRouter();
 
   useEffect(() => {
     map.flyTo([place.lat, place.lon], 13, { duration: 1.15 });
-    const timer = window.setTimeout(() => {
-      markerRef.current?.openPopup();
-    }, 850);
+    const timer = window.setTimeout(() => markerRef.current?.openPopup(), 850);
     return () => window.clearTimeout(timer);
   }, [map, place]);
 
   return (
     <Marker ref={markerRef} position={[place.lat, place.lon]} icon={resultIcon}>
       <Popup closeButton={false} className="discover-location-popup" offset={[0, -6]}>
-        <div
-          className={`discover-location-card ${place.slug ? "discover-location-card-clickable" : ""}`}
-          onClick={() => {
-            if (place.slug) router.push(`/destinations/${place.slug}`);
-          }}
-          role={place.slug ? "link" : undefined}
-          tabIndex={place.slug ? 0 : undefined}
-          onKeyDown={(event) => {
-            if (place.slug && (event.key === "Enter" || event.key === " ")) {
-              event.preventDefault();
-              router.push(`/destinations/${place.slug}`);
-            }
-          }}
-        >
-          <div className="discover-location-kicker">LOCATION FOUND</div>
-          <div className="discover-location-title">{place.name}</div>
-          <div className="discover-location-address">{place.displayName}</div>
-          <div className="discover-location-actions">
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.lat},${place.lon}`)}`}
-              target="_blank"
-              rel="noreferrer"
-              className="discover-location-google"
-            >
-              Open in Google Maps ↗
-            </a>
-            <button type="button" onClick={onReset} className="discover-location-reset">
-              Reset
-            </button>
-          </div>
-        </div>
+        <LocationCard
+          title={place.name}
+          address={place.displayName}
+          onReset={onReset}
+        />
+      </Popup>
+    </Marker>
+  );
+}
+
+function DestinationMarker({ destination, distance }: { destination: Destination; distance?: number }) {
+  return (
+    <Marker position={[destination.latitude as number, destination.longitude as number]} icon={resultIcon}>
+      <Popup closeButton={false} className="discover-location-popup" offset={[0, -6]}>
+        <LocationCard
+          title={destination.name}
+          address={`${destination.region}, Sri Lanka${typeof distance === "number" ? ` · ${distance.toFixed(1)} km away` : ""}`}
+          kicker="DISCOVERLANKA PLACE"
+          slug={destination.slug}
+        />
       </Popup>
     </Marker>
   );
@@ -92,18 +177,65 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
   const [searchedPlace, setSearchedPlace] = useState<SearchPlace | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<MapCategory>("All");
 
   const localPlaces = useMemo(
     () =>
       destinations.filter(
-        (d) =>
-          typeof d.latitude === "number" &&
-          typeof d.longitude === "number" &&
-          Number.isFinite(d.latitude) &&
-          Number.isFinite(d.longitude)
+        (destination) =>
+          typeof destination.latitude === "number" &&
+          typeof destination.longitude === "number" &&
+          Number.isFinite(destination.latitude) &&
+          Number.isFinite(destination.longitude)
       ),
     [destinations]
   );
+
+  const suggestions = useMemo(() => {
+    const term = query.trim().toLowerCase();
+    if (!term) return [];
+
+    return localPlaces
+      .map((destination) => ({ destination, categories: getDestinationCategories(destination) }))
+      .filter(({ destination, categories: destinationCategories }) => {
+        const matchesText =
+          destination.name.toLowerCase().includes(term) ||
+          destination.region.toLowerCase().includes(term);
+        const matchesCategory = selectedCategory === "All" || destinationCategories.includes(selectedCategory);
+        return matchesText && matchesCategory;
+      })
+      .sort((a, b) => {
+        const aExact = a.destination.name.toLowerCase() === term ? 0 : 1;
+        const bExact = b.destination.name.toLowerCase() === term ? 0 : 1;
+        return aExact - bExact;
+      })
+      .slice(0, 6);
+  }, [localPlaces, query, selectedCategory]);
+
+  const nearbyPlaces = useMemo(() => {
+    if (!searchedPlace) return [];
+
+    return localPlaces
+      .map((destination) => ({
+        destination,
+        distance: distanceKm(
+          searchedPlace.lat,
+          searchedPlace.lon,
+          destination.latitude as number,
+          destination.longitude as number
+        ),
+        categories: getDestinationCategories(destination),
+      }))
+      .filter(({ destination, distance, categories: destinationCategories }) => {
+        const notSamePlace = destination.slug !== searchedPlace.slug;
+        const withinRange = distance <= 70;
+        const matchesCategory =
+          selectedCategory === "All" || destinationCategories.includes(selectedCategory);
+        return notSamePlace && withinRange && matchesCategory;
+      })
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 6);
+  }, [localPlaces, searchedPlace, selectedCategory]);
 
   async function searchLocation(rawQuery: string) {
     const term = rawQuery.trim();
@@ -115,16 +247,18 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
 
     try {
       const localMatch = localPlaces.find(
-        (d) =>
-          d.name.toLowerCase() === term.toLowerCase() ||
-          d.region.toLowerCase() === term.toLowerCase() ||
-          d.name.toLowerCase().includes(term.toLowerCase())
+        (destination) =>
+          destination.name.toLowerCase() === term.toLowerCase() ||
+          destination.region.toLowerCase() === term.toLowerCase() ||
+          destination.name.toLowerCase().includes(term.toLowerCase())
       );
 
       if (localMatch) {
         setSearchedPlace({
           name: localMatch.name,
-          displayName: localMatch.region ? `${localMatch.name}, ${localMatch.region}, Sri Lanka` : `${localMatch.name}, Sri Lanka`,
+          displayName: localMatch.region
+            ? `${localMatch.name}, ${localMatch.region}, Sri Lanka`
+            : `${localMatch.name}, Sri Lanka`,
           lat: localMatch.latitude as number,
           lon: localMatch.longitude as number,
           type: "destination",
@@ -136,9 +270,7 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=1&countrycodes=lk&q=${encodeURIComponent(term)}`,
         {
-          headers: {
-            Accept: "application/json",
-          },
+          headers: { Accept: "application/json" },
         }
       );
 
@@ -175,6 +307,7 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
     setQuery("");
     setSearchedPlace(null);
     setMessage("");
+    setSelectedCategory("All");
   }
 
   return (
@@ -189,10 +322,19 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
         className="absolute inset-0 h-full w-full"
       >
         <TileLayer
-          attribution='&copy; OpenStreetMap contributors'
+          attribution="&copy; OpenStreetMap contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+
         {searchedPlace && <SearchResultMarker place={searchedPlace} onReset={resetMap} />}
+
+        {nearbyPlaces.map(({ destination, distance }) => (
+          <DestinationMarker
+            key={destination.id}
+            destination={destination}
+            distance={distance}
+          />
+        ))}
       </MapContainer>
 
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,14,.05),transparent_38%,rgba(7,18,14,.10))]" />
@@ -227,20 +369,95 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
             </button>
           </form>
 
-          {message && (
-            <p className="px-3 pb-1 pt-2 text-[11px] text-[#8a5d44]">{message}</p>
+          {query.trim() && suggestions.length > 0 && !searchedPlace && (
+            <div className="discover-map-suggestions mt-2 border-t border-[#10251f]/10 pt-2">
+              <p className="px-2 pb-1 text-[8px] font-black uppercase tracking-[.2em] text-[#8a6b35]">
+                Suggested destinations
+              </p>
+              <div className="grid gap-1 sm:grid-cols-2">
+                {suggestions.map(({ destination }) => (
+                  <button
+                    key={destination.id}
+                    type="button"
+                    className="discover-map-suggestion"
+                    onClick={() => {
+                      setQuery(destination.name);
+                      void searchLocation(destination.name);
+                    }}
+                  >
+                    <span>
+                      <strong>{destination.name}</strong>
+                      <small>{destination.region}</small>
+                    </span>
+                    <span>↗</span>
+                  </button>
+                ))}
+              </div>
+            </div>
           )}
+
+          <div className="discover-map-filters mt-2 flex gap-1.5 overflow-x-auto border-t border-[#10251f]/10 pt-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setSelectedCategory(category)}
+                className={`discover-map-filter ${selectedCategory === category ? "is-active" : ""}`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {message && <p className="px-3 pb-1 pt-2 text-[11px] text-[#8a5d44]">{message}</p>}
         </div>
       </div>
 
-      <div className="absolute bottom-4 left-4 z-[500] sm:bottom-5 sm:left-5">
+      <div className="absolute bottom-4 left-4 z-[500] max-w-[min(100%-2rem,560px)] sm:bottom-5 sm:left-5">
         <div className="rounded-[1.4rem] border border-white/20 bg-[#0b1c15]/90 p-4 text-white shadow-[0_18px_55px_rgba(0,0,0,.20)] backdrop-blur-xl">
-          <p className="text-[9px] font-black uppercase tracking-[.22em] text-[#d9b972]">Explore the island</p>
-          <p className="mt-1 max-w-[280px] text-xs leading-5 text-white/55">
-            Search a place to reveal its exact point on the map.
-          </p>
+          <div className="flex items-center justify-between gap-5">
+            <div>
+              <p className="text-[9px] font-black uppercase tracking-[.22em] text-[#d9b972]">
+                {searchedPlace ? "Nearby discoveries" : "Explore the island"}
+              </p>
+              <p className="mt-1 max-w-[300px] text-xs leading-5 text-white/55">
+                {searchedPlace
+                  ? `Places within 70 km of ${searchedPlace.name}.`
+                  : "Search a place to reveal its exact point and nearby destinations."}
+              </p>
+            </div>
+            {searchedPlace && (
+              <button
+                type="button"
+                onClick={resetMap}
+                className="shrink-0 rounded-full border border-white/15 px-3 py-2 text-[8px] font-black uppercase tracking-[.15em] text-white/65 hover:bg-white/10"
+              >
+                Clear
+              </button>
+            )}
+          </div>
 
-          {searchedPlace && <p className="mt-3 border-t border-white/10 pt-3 text-[10px] font-semibold text-white/45">Location pinned on the map.</p>}
+          {searchedPlace && (
+            <div className="discover-nearby-list mt-3 flex max-w-full gap-2 overflow-x-auto pb-1">
+              {nearbyPlaces.length ? (
+                nearbyPlaces.map(({ destination, distance }) => (
+                  <a
+                    key={destination.id}
+                    href={`/destinations/${destination.slug}`}
+                    className="discover-nearby-card"
+                  >
+                    <span className="discover-nearby-distance">{distance.toFixed(1)} km</span>
+                    <strong>{destination.name}</strong>
+                    <small>{destination.region}</small>
+                  </a>
+                ))
+              ) : (
+                <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[10px] text-white/50">
+                  No nearby destinations match this filter yet.
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -254,8 +471,8 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
         >
           ↺
         </button>
-        <div className="rounded-full border border-white/15 bg-[#0b1c15]/88 px-3 py-2 text-[9px] font-black uppercase tracking-[.15em] text-white/55 shadow-lg backdrop-blur-xl">
-          Search to locate
+        <div className="hidden rounded-full border border-white/15 bg-[#0b1c15]/88 px-3 py-2 text-[9px] font-black uppercase tracking-[.15em] text-white/55 shadow-lg backdrop-blur-xl sm:block">
+          {selectedCategory === "All" ? "Search to locate" : selectedCategory}
         </div>
       </div>
     </div>
