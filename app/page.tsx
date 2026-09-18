@@ -123,10 +123,10 @@ export default function Home() {
 
   return (
     <main className="home-rebuild min-h-screen bg-[#f4efe5] text-[#17251f]">
-      <header className="home-nav fixed inset-x-0 top-0 z-50 px-4 py-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/20 bg-[#10251f]/75 px-5 py-3 text-white backdrop-blur-xl sm:px-7">
-          <a href="#top" className="font-serif text-xl tracking-tight sm:text-2xl">Discover<span className="text-[#d9b972]">Lanka</span></a>
-          <nav className="hidden items-center gap-7 text-xs font-semibold uppercase tracking-[.14em] text-white/75 lg:flex">
+      <header className="home-nav fixed inset-x-0 top-0 z-50 px-4 py-5 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-[#d9b972]/25 bg-[#07140f]/52 px-5 py-3.5 text-white shadow-[0_18px_60px_rgba(0,0,0,.24)] backdrop-blur-2xl sm:px-7">
+          <a href="#top" className="font-serif text-xl tracking-[-.03em] sm:text-2xl">Discover<span className="text-[#d9b972]">Lanka</span></a>
+          <nav className="hidden items-center gap-8 text-[10px] font-black uppercase tracking-[.17em] text-white/70 lg:flex">
             <a href="#discover">Discover</a><a href="/experiences">Experiences</a><a href="/stories">Stories</a><a href="/plan">Plan</a><a href="#map">Map</a><a href="/my-trip">My Trip</a>
           </nav>
           <div className="flex items-center gap-2">
@@ -138,15 +138,15 @@ export default function Home() {
         {menuOpen && <div className="mx-auto mt-2 grid max-w-7xl gap-1 rounded-3xl border border-white/10 bg-[#10251f]/95 p-3 text-white backdrop-blur-xl lg:hidden"><a className="rounded-2xl px-4 py-3" href="#discover">Discover</a><a className="rounded-2xl px-4 py-3" href="/experiences">Experiences</a><a className="rounded-2xl px-4 py-3" href="/stories">Stories</a><a className="rounded-2xl px-4 py-3" href="/plan">Plan</a><a className="rounded-2xl px-4 py-3" href="#map">Map</a><a className="rounded-2xl px-4 py-3" href="/my-trip">My Trip</a></div>}
       </header>
 
-      <section id="top" className="relative min-h-[92svh] overflow-hidden bg-[#0a1712]">
-        <img src="/hero-home.jpg" alt="Kandy Lake and Sri Dalada Maligawa, Sri Lanka" className="absolute inset-0 h-full w-full object-cover object-center" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,14,11,.64)_0%,rgba(7,20,16,.30)_44%,rgba(5,16,13,.02)_78%)]" />
-        <div className="relative mx-auto flex min-h-[92svh] max-w-7xl items-end px-6 pb-12 pt-32 sm:px-8 sm:pb-16 lg:px-10 lg:pb-20">
-          <div className="max-w-3xl text-white">
-            <p className="mb-5 text-[10px] font-black uppercase tracking-[.28em] text-[#e5c47b]">Sri Lanka · curated for you</p>
-            <h1 className="font-serif text-[4.3rem] leading-[.86] tracking-[-.045em] sm:text-7xl md:text-8xl lg:text-[7rem]">Discover Sri Lanka.<br/><span className="text-[#efcf87]">Feel the journey.</span></h1>
-            <p className="mt-7 max-w-xl text-sm leading-7 text-white/80 sm:text-base sm:leading-8">Beautiful places, thoughtful experiences and a trip shaped around your time, taste and pace.</p>
-            <div className="mt-8 flex flex-wrap gap-3"><a href="/plan" className="rounded-full bg-[#e3bd78] px-6 py-3.5 text-[11px] font-black uppercase tracking-[.14em] text-[#102018]">Build My Trip ↗</a><a href="#discover" className="rounded-full border border-white/30 bg-white/5 px-6 py-3.5 text-[11px] font-black uppercase tracking-[.14em] text-white backdrop-blur-md">Explore the island</a></div>
+      <section id="top" className="relative min-h-[100svh] overflow-hidden bg-[#0a1712]">
+        <img src="/hero-home.jpg" alt="Kandyan dancer and traditional Sri Lankan mask" className="absolute inset-0 h-full w-full object-cover object-[center_42%] transition-transform duration-[1800ms] scale-[1.015]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,12,9,.72)_0%,rgba(7,18,14,.46)_35%,rgba(5,16,13,.10)_72%,rgba(5,16,13,.18)_100%)]" />
+        <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-end px-6 pb-12 pt-32 sm:px-8 sm:pb-16 lg:px-10 lg:pb-20">
+          <div className="max-w-2xl text-white">
+            <div className="mb-5 inline-flex items-center gap-3 rounded-full border border-[#e5c47b]/35 bg-black/20 px-4 py-2 backdrop-blur-md"><span className="h-1.5 w-1.5 rounded-full bg-[#e5c47b]"/><p className="text-[9px] font-black uppercase tracking-[.28em] text-[#e5c47b]">Kandy · Sri Lanka</p></div>
+            <h1 className="font-serif text-[4.2rem] leading-[.86] tracking-[-.05em] sm:text-7xl md:text-8xl lg:text-[6.8rem]">Discover Sri Lanka.<br/><span className="text-[#efcf87]">Feel the heritage.</span></h1>
+            <p className="mt-7 max-w-lg text-sm leading-7 text-white/80 sm:text-base sm:leading-8">Step into an island where ancient traditions, living culture and unforgettable landscapes meet.</p>
+            <div className="mt-8 flex flex-wrap gap-3"><a href="/plan" className="rounded-full bg-[#e3bd78] px-6 py-3.5 text-[11px] font-black uppercase tracking-[.14em] text-[#102018] shadow-[0_14px_40px_rgba(0,0,0,.18)]">Build My Trip ↗</a><a href="#discover" className="rounded-full border border-white/28 bg-black/10 px-6 py-3.5 text-[11px] font-black uppercase tracking-[.14em] text-white backdrop-blur-md">Explore the island</a></div>
             <div className="mt-10 flex flex-wrap gap-7 border-t border-white/20 pt-5 text-[9px] font-bold uppercase tracking-[.2em] text-white/60"><span>Handpicked destinations</span><span>Local experiences</span><span>Season-aware planning</span></div>
           </div>
         </div>
