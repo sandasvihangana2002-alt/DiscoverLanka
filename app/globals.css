@@ -888,14 +888,3 @@ main header.fixed > div {
   color:#17382d !important;
   text-shadow:none !important;
 }
-
-
-/* Final Travel Stories text color: replace prior accent colors with dark green. */
-.home-travel-stories .home-travel-kicker {
-  color:#17382d !important;
-  text-shadow:none !important;
-}
-.home-travel-stories .home-travel-copy {
-  color:#17382d !important;
-  text-shadow:none !important;
-}
