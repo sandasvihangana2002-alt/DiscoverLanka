@@ -178,13 +178,23 @@ export default function Home() {
         <a href="#discover" className="home-hero-scroll absolute bottom-7 right-6 hidden items-center gap-3 text-white/60 lg:flex" aria-label="Scroll to discover"><span>Explore</span><i></i><b>↓</b></a>
       </section>
 
-      <section id="discover" className="px-6 py-20 sm:px-8 lg:px-10 lg:py-28">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-[280px_1fr] lg:items-end">
-            <div><p className="text-[10px] font-black uppercase tracking-[.25em] text-[#a27a31]">Featured escapes</p><h2 className="mt-3 font-serif text-4xl leading-none sm:text-5xl">Handpicked<br/>journeys.</h2><p className="mt-5 text-sm leading-7 text-[#5f695f]">Curated routes for curious travelers. Move through ancient cities, tea country, coastlines and wild places.</p><a href="/plan" className="mt-6 inline-flex text-[10px] font-black uppercase tracking-[.18em] text-[#7b5d24]">Explore all trips →</a></div>
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              {journeyCards.map((item, index) => <a key={item.id} href={`/destinations/${item.slug}`} className="group relative min-h-[330px] overflow-hidden rounded-[1.6rem] bg-[#0f211a]"><img src={destinationImages[item.slug] ?? destinationImages.sigiriya} alt={item.name} className="absolute inset-0 h-full w-full object-cover transition duration-1000 group-hover:scale-105"/><div className="absolute inset-0 bg-gradient-to-t from-[#081510] via-[#081510]/25 to-transparent"/><div className="absolute inset-x-4 bottom-4 text-white"><div className="flex items-center justify-between text-[9px] font-bold uppercase tracking-[.17em] text-[#e4c57f]"><span>0{index + 1}</span><span>{item.region}</span></div><h3 className="mt-3 font-serif text-2xl">{item.name}</h3><p className="mt-1 text-xs text-white/65">{index === 0 ? "Ancient kingdom" : index === 1 ? "Tea trails & train rides" : index === 2 ? "Wildlife safari" : "Coastal bliss"}</p><div className="mt-4 text-xs text-white/75">Explore ↗</div></div></a>)}
+      <section id="discover" className="relative overflow-hidden bg-[#0a1712] px-6 py-24 text-[#f4efe6] sm:px-8 lg:px-10 lg:py-32">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(216,184,117,.10),transparent_26%),radial-gradient(circle_at_88%_70%,rgba(62,112,88,.13),transparent_32%)]" aria-hidden="true" />
+        <div className="relative mx-auto max-w-7xl">
+          <div className="flex flex-col justify-between gap-8 border-b border-white/10 pb-10 lg:flex-row lg:items-end">
+            <div className="max-w-2xl">
+              <div className="flex items-center gap-3 text-[#d9b972]"><span className="h-px w-10 bg-[#d9b972]/70" /><p className="text-[10px] font-black uppercase tracking-[.28em]">The Discover Edit</p></div>
+              <h2 className="mt-5 font-serif text-5xl leading-[.9] tracking-[-.04em] sm:text-6xl lg:text-7xl">Journeys with<br/><span className="text-[#d9b972]">a sense of place.</span></h2>
             </div>
+            <div className="max-w-md lg:pb-1"><p className="text-sm leading-7 text-white/60">A considered collection of Sri Lanka’s landscapes, heritage and quiet escapes — chosen for travelers who want to experience the island, not simply pass through it.</p><a href="/destinations" className="mt-6 inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[.2em] text-[#e3c681]">View the full collection <span>↗</span></a></div>
+          </div>
+          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {journeyCards.map((item, index) => <a key={item.id} href={`/destinations/${item.slug}`} className="group relative min-h-[440px] overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#102019] shadow-[0_24px_80px_rgba(0,0,0,.24)]">
+              <img src={destinationImages[item.slug] ?? destinationImages.sigiriya} alt={item.name} className="absolute inset-0 h-full w-full object-cover transition duration-[1400ms] group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#06100c] via-[#06100c]/30 to-[#06100c]/5" />
+              <div className="absolute left-5 right-5 top-5 flex items-center justify-between text-[9px] font-black uppercase tracking-[.2em]"><span className="rounded-full border border-white/15 bg-black/20 px-3 py-1.5 text-[#e3c681] backdrop-blur-md">0{index + 1}</span><span className="text-white/55">{item.region}</span></div>
+              <div className="absolute inset-x-5 bottom-5"><div className="h-px w-10 bg-[#d9b972] transition-all duration-500 group-hover:w-16" /><p className="mt-4 text-[9px] font-black uppercase tracking-[.22em] text-[#d9b972]">{index === 0 ? "Ancient kingdom" : index === 1 ? "Tea country" : index === 2 ? "Wild frontier" : "Indian Ocean"}</p><h3 className="mt-2 font-serif text-3xl tracking-[-.02em] text-white sm:text-4xl">{item.name}</h3><p className="mt-2 max-w-[18rem] text-xs leading-5 text-white/60">{item.summary}</p><div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-[9px] font-black uppercase tracking-[.18em] text-white/60"><span>Discover place</span><span className="text-[#e3c681] transition-transform group-hover:translate-x-1">↗</span></div></div>
+            </a>)}
           </div>
         </div>
       </section>
