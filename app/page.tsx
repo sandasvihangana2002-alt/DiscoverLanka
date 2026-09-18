@@ -161,7 +161,7 @@ export default function Home() {
       </header>
 
       <section id="top" className="home-hero relative min-h-[100svh] overflow-hidden bg-[#0a1712]">
-        <img src="https://traveltalks.esky.pl/wp-content/uploads/2024/05/Swiatynia-Zeba-w-Kandy-Sri-Lanka-%C2%A9-Shutterstock.jpg" alt="Sri Dalada Maligawa in Kandy, Sri Lanka" className="home-hero-image absolute inset-0 h-full w-full object-cover object-[center_42%] transition-transform duration-[1800ms] scale-[1.015]" />
+        <img src="https://media.cntraveller.com/photos/611beb6d628f4910ed1020a7/16:9/w_1920%2Cc_limit/sri-lanka-sh-conde-nast-traveller-27jul20-1129567869.jpg" alt="Sri Dalada Maligawa in Kandy, Sri Lanka" className="home-hero-image absolute inset-0 h-full w-full object-cover object-[center_42%] transition-transform duration-[1800ms] scale-[1.015]" />
         <div className="home-hero-vignette absolute inset-0" aria-hidden="true" />
         <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-end px-6 pb-14 pt-32 sm:px-8 sm:pb-18 lg:px-10 lg:pb-24">
           <div className="max-w-2xl text-white">
