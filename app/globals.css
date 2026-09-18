@@ -296,3 +296,49 @@ main header.fixed > div {
   .home-nav-ornament { width:min(280px,66vw); margin-top:6px; }
   .home-nav-ornament i { max-width:110px; }
 }
+
+/* Kandyan-luxury hero finish: cinematic vignette, restrained ornament and motion. */
+.home-hero { isolation:isolate; }
+.home-hero-image { filter:saturate(.86) contrast(1.05); }
+.home-hero-vignette {
+  background:
+    linear-gradient(90deg,rgba(3,10,7,.80) 0%,rgba(5,15,11,.52) 31%,rgba(5,16,13,.10) 67%,rgba(5,16,13,.22) 100%),
+    linear-gradient(180deg,rgba(2,8,6,.35) 0%,transparent 20%,transparent 72%,rgba(2,8,6,.72) 100%);
+  z-index:0;
+}
+.home-hero > div.relative { z-index:1; }
+.home-hero-rule { color:rgba(239,207,135,.68); }
+.home-hero-rule span {
+  display:block;
+  width:34px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#d8b875);
+}
+.home-hero-rule p {
+  margin:0;
+  font-size:.58rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.24em;
+}
+.home-hero-dot { box-shadow:0 0 0 4px rgba(229,196,123,.08),0 0 18px rgba(229,196,123,.28); }
+.home-hero-primary:hover { transform:translateY(-2px); box-shadow:0 18px 48px rgba(216,184,117,.24); }
+.home-hero-secondary:hover { background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.40); transform:translateY(-2px); }
+.home-hero-scroll { z-index:2; text-transform:uppercase; font-size:.56rem; font-weight:800; letter-spacing:.24em; }
+.home-hero-scroll i { width:34px; height:1px; background:linear-gradient(90deg,transparent,rgba(216,184,117,.65)); }
+.home-hero-scroll b {
+  display:inline-flex;
+  width:28px;
+  height:28px;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(216,184,117,.38);
+  border-radius:50%;
+  color:#d8b875;
+  font-size:.75rem;
+  font-weight:500;
+}
+@media (max-width:640px) {
+  .home-hero-vignette { background:linear-gradient(180deg,rgba(2,8,6,.40) 0%,rgba(3,10,7,.40) 28%,rgba(3,10,7,.78) 76%,rgba(2,8,6,.88) 100%); }
+  .home-hero-rule p { font-size:.54rem; }
+}
