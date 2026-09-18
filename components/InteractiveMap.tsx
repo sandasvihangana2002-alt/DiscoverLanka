@@ -33,17 +33,6 @@ const resultIcon = L.divIcon({
   iconAnchor: [21, 21],
 });
 
-function MapFocus({ place }: { place: SearchPlace | null }) {
-  const map = useMap();
-
-  useEffect(() => {
-    if (!place) return;
-    map.flyTo([place.lat, place.lon], 13, { duration: 1.15 });
-  }, [map, place]);
-
-  return null;
-}
-
 function SearchResultMarker({ place, onReset }: { place: SearchPlace; onReset: () => void }) {
   const markerRef = useRef<L.Marker | null>(null);
   const map = useMap();
@@ -186,7 +175,6 @@ export default function InteractiveMap({ destinations }: { destinations: Destina
           attribution='&copy; OpenStreetMap contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <MapFocus place={searchedPlace} />
         {searchedPlace && <SearchResultMarker place={searchedPlace} onReset={resetMap} />}
       </MapContainer>
 
