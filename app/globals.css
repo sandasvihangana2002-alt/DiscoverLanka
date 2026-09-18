@@ -342,3 +342,101 @@ main header.fixed > div {
   .home-hero-vignette { background:linear-gradient(180deg,rgba(2,8,6,.40) 0%,rgba(3,10,7,.40) 28%,rgba(3,10,7,.78) 76%,rgba(2,8,6,.88) 100%); }
   .home-hero-rule p { font-size:.54rem; }
 }
+
+/* Quick Explore: a restrained Kandyan-inspired bridge from hero into the journey. */
+.home-explore {
+  background:
+    radial-gradient(circle at 12% 20%,rgba(216,184,117,.07),transparent 24%),
+    linear-gradient(180deg,#0a1914 0%,#08130f 100%);
+  border-top:1px solid rgba(216,184,117,.10);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.home-explore-kicker {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:rgba(216,184,117,.76);
+}
+.home-explore-kicker span { font-size:.45rem; }
+.home-explore-kicker p {
+  margin:0;
+  font-size:.58rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.25em;
+}
+.home-explore h2 span { color:#d8b875; }
+.home-explore-card {
+  position:relative;
+  min-height:258px;
+  overflow:hidden;
+  padding:22px;
+  border:1px solid rgba(216,184,117,.14);
+  border-radius:24px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025)),
+    radial-gradient(circle at 90% 0%,rgba(216,184,117,.08),transparent 42%);
+  box-shadow:0 18px 52px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.045);
+  transition:transform .3s ease,border-color .3s ease,background .3s ease;
+}
+.home-explore-card::after {
+  content:"";
+  position:absolute;
+  right:-48px;
+  bottom:-52px;
+  width:150px;
+  height:150px;
+  border:1px solid rgba(216,184,117,.10);
+  border-radius:50%;
+}
+.home-explore-card:hover {
+  transform:translateY(-5px);
+  border-color:rgba(216,184,117,.34);
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.032)),
+    radial-gradient(circle at 90% 0%,rgba(216,184,117,.12),transparent 46%);
+}
+.home-explore-card-top {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  color:rgba(216,184,117,.48);
+  font-size:.57rem;
+  font-weight:800;
+  letter-spacing:.18em;
+}
+.home-explore-card-top b {
+  display:inline-flex;
+  width:28px;
+  height:28px;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(216,184,117,.18);
+  border-radius:50%;
+  color:rgba(216,184,117,.78);
+  font-size:.72rem;
+  font-weight:500;
+  transition:transform .3s ease,background .3s ease;
+}
+.home-explore-card:hover .home-explore-card-top b {
+  transform:translate(2px,-2px);
+  background:rgba(216,184,117,.08);
+}
+.home-explore-icon {
+  display:flex;
+  width:46px;
+  height:46px;
+  align-items:center;
+  justify-content:center;
+  margin-top:12px;
+  border:1px solid rgba(216,184,117,.22);
+  border-radius:12px 12px 18px 18px;
+  color:#d8b875;
+  font-size:1.05rem;
+  transform:rotate(45deg);
+}
+.home-explore-icon::first-letter { transform:rotate(-45deg); }
+@media (max-width:640px) {
+  .home-explore { padding-top:62px; padding-bottom:62px; }
+  .home-explore-card { min-height:230px; }
+}
