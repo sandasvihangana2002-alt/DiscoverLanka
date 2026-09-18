@@ -881,3 +881,10 @@ main header.fixed > div {
 .home-travel-stories .home-travel-copy {
   color:#17382d !important;
 }
+
+
+/* Final override for Travel Stories label: dark green with sufficient selector specificity. */
+.home-travel-stories > div.relative > div > div:first-child > .home-travel-kicker {
+  color:#17382d !important;
+  text-shadow:none !important;
+}
