@@ -165,7 +165,6 @@ export default function Home() {
         <div className="home-hero-vignette absolute inset-0" aria-hidden="true" />
         <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-end px-6 pb-14 pt-32 sm:px-8 sm:pb-18 lg:px-10 lg:pb-24">
           <div className="max-w-2xl text-white">
-            <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-[#e5c47b]/35 bg-black/20 px-4 py-2 backdrop-blur-md"><span className="home-hero-dot h-1.5 w-1.5 rounded-full bg-[#e5c47b]"/><p className="text-[9px] font-black uppercase tracking-[.28em] text-[#e5c47b]">Kandy · Sri Lanka</p></div>
             <div className="home-hero-rule mb-5 flex items-center gap-3"><span></span><p>Island of living heritage</p></div>
             <h1 className="font-serif text-[4.2rem] leading-[.86] tracking-[-.05em] sm:text-7xl md:text-8xl lg:text-[6.8rem]">Discover Sri Lanka.<br/><span className="text-[#efcf87]">Feel the heritage.</span></h1>
             <p className="mt-7 max-w-lg text-sm leading-7 text-white/80 sm:text-base sm:leading-8">Step into an island where ancient traditions, living culture and unforgettable landscapes meet.</p>
