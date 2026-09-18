@@ -844,3 +844,14 @@ main header.fixed > div {
 /* Travel Stories requested dark-green accents. */
 .home-travel-stories .home-travel-kicker { color:#17382d !important; text-shadow:none; }
 .home-travel-stories .home-travel-copy { color:#23473b !important; }
+
+
+/* Travel Stories heading frame. */
+.home-travel-stories .home-travel-heading {
+  display:inline-block;
+  padding:18px 22px 20px;
+  border:1.5px solid #17382d;
+  border-radius:16px;
+  background:rgba(244,239,229,.10);
+  box-shadow:0 10px 30px rgba(23,56,45,.16), inset 0 0 0 1px rgba(23,56,45,.06);
+}
