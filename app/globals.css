@@ -629,18 +629,25 @@ main header.fixed > div {
   align-items:center;
   justify-content:center;
   min-height:38px;
-  padding:0 12px;
+  padding:0 14px;
   border-radius:999px;
-  background:#10251f;
-  color:#f7f2e8;
+  background:#d8b875 !important;
+  color:#10251f !important;
+  -webkit-text-fill-color:#10251f !important;
   font-size:9px;
   font-weight:900;
   letter-spacing:.12em;
   text-transform:uppercase;
   text-decoration:none;
+  border:1px solid rgba(16,37,31,.10);
+  box-shadow:0 8px 20px rgba(216,184,117,.20);
 }
 .discover-location-google:hover {
-  background:#18392f;
+  background:#e3c681 !important;
+  color:#0c1d17 !important;
+  -webkit-text-fill-color:#0c1d17 !important;
+  transform:translateY(-1px);
+  box-shadow:0 10px 24px rgba(216,184,117,.28);
 }
 .discover-location-reset {
   min-height:38px;
