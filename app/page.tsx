@@ -158,8 +158,6 @@ export default function Home() {
         <a href="#discover" className="home-hero-scroll absolute bottom-7 right-6 hidden items-center gap-3 text-white/60 lg:flex" aria-label="Scroll to discover"><span>Explore</span><i></i><b>↓</b></a>
       </section>
 
-      <section className="border-b border-[#1b3028]/10 bg-[#f4efe5] px-6 py-10 sm:px-8 lg:px-10"><div className="mx-auto max-w-7xl"><SeasonalIntelligence /></div></section>
-
       <section id="discover" className="px-6 py-20 sm:px-8 lg:px-10 lg:py-28">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 lg:grid-cols-[280px_1fr] lg:items-end">
