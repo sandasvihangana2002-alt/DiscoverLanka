@@ -871,3 +871,13 @@ main header.fixed > div {
 .home-travel-stories .home-travel-heading-accent {
   color:#17382d !important;
 }
+
+
+/* Travel Stories text: unified deep forest-green palette. */
+.home-travel-stories .home-travel-kicker {
+  color:#17382d !important;
+  text-shadow:none;
+}
+.home-travel-stories .home-travel-copy {
+  color:#17382d !important;
+}
