@@ -142,18 +142,20 @@ export default function Home() {
         {menuOpen && <div className="home-mobile-menu mx-auto mt-2 grid max-w-7xl gap-1 rounded-3xl border border-white/10 bg-[#10251f]/95 p-3 text-white backdrop-blur-xl lg:hidden"><a className="rounded-2xl px-4 py-3" href="#discover">Discover</a><a className="rounded-2xl px-4 py-3" href="/experiences">Experiences</a><a className="rounded-2xl px-4 py-3" href="/stories">Stories</a><a className="rounded-2xl px-4 py-3" href="/plan">Plan</a><a className="rounded-2xl px-4 py-3" href="#map">Map</a><a className="rounded-2xl px-4 py-3" href="/my-trip">My Trip</a></div>}
       </header>
 
-      <section id="top" className="relative min-h-[100svh] overflow-hidden bg-[#0a1712]">
-        <img src="/hero-home.jpg" alt="Kandyan dancer and traditional Sri Lankan mask" className="absolute inset-0 h-full w-full object-cover object-[center_42%] transition-transform duration-[1800ms] scale-[1.015]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,12,9,.72)_0%,rgba(7,18,14,.46)_35%,rgba(5,16,13,.10)_72%,rgba(5,16,13,.18)_100%)]" />
-        <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-end px-6 pb-12 pt-32 sm:px-8 sm:pb-16 lg:px-10 lg:pb-20">
+      <section id="top" className="home-hero relative min-h-[100svh] overflow-hidden bg-[#0a1712]">
+        <img src="/hero-home.jpg" alt="Kandyan dancer and traditional Sri Lankan mask" className="home-hero-image absolute inset-0 h-full w-full object-cover object-[center_42%] transition-transform duration-[1800ms] scale-[1.015]" />
+        <div className="home-hero-vignette absolute inset-0" aria-hidden="true" />
+        <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-end px-6 pb-14 pt-32 sm:px-8 sm:pb-18 lg:px-10 lg:pb-24">
           <div className="max-w-2xl text-white">
-            <div className="mb-5 inline-flex items-center gap-3 rounded-full border border-[#e5c47b]/35 bg-black/20 px-4 py-2 backdrop-blur-md"><span className="h-1.5 w-1.5 rounded-full bg-[#e5c47b]"/><p className="text-[9px] font-black uppercase tracking-[.28em] text-[#e5c47b]">Kandy · Sri Lanka</p></div>
+            <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-[#e5c47b]/35 bg-black/20 px-4 py-2 backdrop-blur-md"><span className="home-hero-dot h-1.5 w-1.5 rounded-full bg-[#e5c47b]"/><p className="text-[9px] font-black uppercase tracking-[.28em] text-[#e5c47b]">Kandy · Sri Lanka</p></div>
+            <div className="home-hero-rule mb-5 flex items-center gap-3"><span></span><p>Island of living heritage</p></div>
             <h1 className="font-serif text-[4.2rem] leading-[.86] tracking-[-.05em] sm:text-7xl md:text-8xl lg:text-[6.8rem]">Discover Sri Lanka.<br/><span className="text-[#efcf87]">Feel the heritage.</span></h1>
             <p className="mt-7 max-w-lg text-sm leading-7 text-white/80 sm:text-base sm:leading-8">Step into an island where ancient traditions, living culture and unforgettable landscapes meet.</p>
-            <div className="mt-8 flex flex-wrap gap-3"><a href="/plan" className="rounded-full bg-[#e3bd78] px-6 py-3.5 text-[11px] font-black uppercase tracking-[.14em] text-[#102018] shadow-[0_14px_40px_rgba(0,0,0,.18)]">Build My Trip ↗</a><a href="#discover" className="rounded-full border border-white/28 bg-black/10 px-6 py-3.5 text-[11px] font-black uppercase tracking-[.14em] text-white backdrop-blur-md">Explore the island</a></div>
-            <div className="mt-10 flex flex-wrap gap-7 border-t border-white/20 pt-5 text-[9px] font-bold uppercase tracking-[.2em] text-white/60"><span>Handpicked destinations</span><span>Local experiences</span><span>Season-aware planning</span></div>
+            <div className="mt-8 flex flex-wrap gap-3"><a href="/plan" className="home-hero-primary rounded-full bg-[#e3bd78] px-6 py-3.5 text-[11px] font-black uppercase tracking-[.14em] text-[#102018] shadow-[0_14px_40px_rgba(0,0,0,.18)]">Build My Trip ↗</a><a href="#discover" className="home-hero-secondary rounded-full border border-white/28 bg-black/10 px-6 py-3.5 text-[11px] font-black uppercase tracking-[.14em] text-white backdrop-blur-md">Explore the island</a></div>
+            <div className="mt-10 flex max-w-xl flex-wrap gap-7 border-t border-white/20 pt-5 text-[9px] font-bold uppercase tracking-[.2em] text-white/60"><span>Handpicked destinations</span><span>Local experiences</span><span>Season-aware planning</span></div>
           </div>
         </div>
+        <a href="#discover" className="home-hero-scroll absolute bottom-7 right-6 hidden items-center gap-3 text-white/60 lg:flex" aria-label="Scroll to discover"><span>Explore</span><i></i><b>↓</b></a>
       </section>
 
       <section className="border-b border-[#1b3028]/10 bg-[#f4efe5] px-6 py-10 sm:px-8 lg:px-10"><div className="mx-auto max-w-7xl"><SeasonalIntelligence /></div></section>
