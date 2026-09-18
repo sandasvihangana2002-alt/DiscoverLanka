@@ -683,3 +683,126 @@ main header.fixed > div {
 .discover-location-card-clickable:hover .discover-location-title {
   color:#8c6a2b;
 }
+
+/* Discover map controls: autocomplete, category filters and nearby discovery cards. */
+.discover-map-suggestions {
+  animation: discoverSuggestionIn .18s ease-out;
+}
+@keyframes discoverSuggestionIn {
+  from { opacity:0; transform:translateY(-4px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.discover-map-suggestion {
+  display:flex;
+  width:100%;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  border:1px solid rgba(16,37,31,.08);
+  border-radius:12px;
+  padding:9px 11px;
+  text-align:left;
+  background:rgba(16,37,31,.025);
+  color:#10251f;
+}
+.discover-map-suggestion:hover {
+  background:rgba(216,184,117,.13);
+  border-color:rgba(163,122,46,.18);
+}
+.discover-map-suggestion strong {
+  display:block;
+  font-size:11px;
+  font-weight:900;
+}
+.discover-map-suggestion small {
+  display:block;
+  margin-top:2px;
+  color:#68766f;
+  font-size:9px;
+}
+.discover-map-suggestion > span:last-child {
+  color:#a37a2e;
+  font-size:12px;
+}
+.discover-map-filters {
+  scrollbar-width:none;
+}
+.discover-map-filters::-webkit-scrollbar {
+  display:none;
+}
+.discover-map-filter {
+  flex:0 0 auto;
+  min-height:31px;
+  padding:0 11px;
+  border:1px solid rgba(16,37,31,.10);
+  border-radius:999px;
+  background:rgba(16,37,31,.025);
+  color:#5d6c64;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.discover-map-filter:hover {
+  color:#10251f;
+  background:rgba(216,184,117,.10);
+}
+.discover-map-filter.is-active {
+  background:#10251f;
+  color:#e7c98b;
+  border-color:#10251f;
+  box-shadow:0 6px 16px rgba(16,37,31,.15);
+}
+.discover-nearby-list {
+  scrollbar-width:none;
+}
+.discover-nearby-list::-webkit-scrollbar {
+  display:none;
+}
+.discover-nearby-card {
+  display:flex;
+  min-width:142px;
+  max-width:160px;
+  flex:0 0 auto;
+  flex-direction:column;
+  gap:3px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:14px;
+  padding:10px 11px;
+  background:rgba(255,255,255,.045);
+  color:#fff;
+  text-decoration:none;
+  transition:transform .2s ease,background .2s ease,border-color .2s ease;
+}
+.discover-nearby-card:hover {
+  transform:translateY(-2px);
+  background:rgba(216,184,117,.11);
+  border-color:rgba(216,184,117,.28);
+}
+.discover-nearby-card strong {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:16px;
+  line-height:1.05;
+}
+.discover-nearby-card small {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:rgba(255,255,255,.48);
+  font-size:9px;
+}
+.discover-nearby-distance {
+  color:#e3c681;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+@media (max-width:640px) {
+  .discover-map-filter { min-height:29px; padding:0 10px; font-size:7.5px; }
+  .discover-nearby-card { min-width:132px; }
+}
+
