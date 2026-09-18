@@ -163,7 +163,7 @@ export default function Home() {
       </header>
 
       <section id="top" className="home-hero relative min-h-[100svh] overflow-hidden bg-[#0a1712]">
-        <img src="/hero-home.jpg" alt="Kandyan dancer and traditional Sri Lankan mask" className="home-hero-image absolute inset-0 h-full w-full object-cover object-[center_42%] transition-transform duration-[1800ms] scale-[1.015]" />
+        <img src="https://i0.wp.com/blog.worldholidayvibes.com/wp-content/uploads/2024/07/Kandy-Dalada-Maligawa-World-Holiday-Vibes-Blog%E2%80%AF.jpg?fit=1200%2C680&ssl=1" alt="Sri Dalada Maligawa in Kandy, Sri Lanka" className="home-hero-image absolute inset-0 h-full w-full object-cover object-[center_42%] transition-transform duration-[1800ms] scale-[1.015]" />
         <div className="home-hero-vignette absolute inset-0" aria-hidden="true" />
         <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-end px-6 pb-14 pt-32 sm:px-8 sm:pb-18 lg:px-10 lg:pb-24">
           <div className="max-w-2xl text-white">
