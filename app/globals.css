@@ -926,3 +926,10 @@ main header.fixed > div {
   letter-spacing:.008em !important;
   line-height:1.5 !important;
 }
+
+
+/* Subtle soft-focus finish for the Amoera hero headline. */
+.home-hero h1 {
+  filter:blur(.18px);
+  text-shadow:0 2px 18px rgba(0,0,0,.22);
+}
