@@ -1104,3 +1104,14 @@ main header.fixed > div {
 .home-travel-stories .home-travel-kicker {
   font-size:10px !important;
 }
+
+
+/* Hero kicker: slightly larger for stronger hierarchy. */
+.home-hero-rule p {
+  font-size:12px !important;
+}
+@media (max-width:640px) {
+  .home-hero-rule p {
+    font-size:11px !important;
+  }
+}
