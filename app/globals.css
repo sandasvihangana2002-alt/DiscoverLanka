@@ -1257,46 +1257,41 @@ main header.fixed > div {
 }
 
 
-/* Destination card placement: balanced 7/5 then 5/7 editorial rhythm. */
+/* Destination cards: uniform editorial grid with equal-sized cards. */
 .destinations-page .luxury-focus-grid {
-  grid-template-columns:repeat(12,minmax(0,1fr));
-  grid-auto-flow:row;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1.35rem;
   align-items:stretch;
 }
-.destinations-page .luxury-focus-card {
-  min-height:380px;
-}
-.destinations-page .luxury-focus-card:nth-child(4n+1) {
-  grid-column:span 7;
-}
-.destinations-page .luxury-focus-card:nth-child(4n+2) {
-  grid-column:span 5;
-}
-.destinations-page .luxury-focus-card:nth-child(4n+3) {
-  grid-column:span 5;
-}
-.destinations-page .luxury-focus-card:nth-child(4n+4) {
-  grid-column:span 7;
-}
+.destinations-page .luxury-focus-card,
 .destinations-page .luxury-focus-card:nth-child(4n+1),
+.destinations-page .luxury-focus-card:nth-child(4n+2),
+.destinations-page .luxury-focus-card:nth-child(4n+3),
 .destinations-page .luxury-focus-card:nth-child(4n+4) {
-  min-height:420px;
+  grid-column:auto;
+  min-height:390px;
+  height:390px;
 }
 @media (max-width:900px) {
-  .destinations-page .luxury-focus-card:nth-child(n) {
-    grid-column:span 6;
+  .destinations-page .luxury-focus-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
   }
-  .destinations-page .luxury-focus-card:nth-child(4n+1),
-  .destinations-page .luxury-focus-card:nth-child(4n+4) {
-    min-height:390px;
+  .destinations-page .luxury-focus-card,
+  .destinations-page .luxury-focus-card:nth-child(n) {
+    grid-column:auto;
+    min-height:360px;
+    height:360px;
   }
 }
 @media (max-width:640px) {
   .destinations-page .luxury-focus-grid {
     grid-template-columns:1fr;
   }
+  .destinations-page .luxury-focus-card,
   .destinations-page .luxury-focus-card:nth-child(n) {
-    grid-column:1;
+    grid-column:auto;
     min-height:330px;
+    height:330px;
   }
 }
