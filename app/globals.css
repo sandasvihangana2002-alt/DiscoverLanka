@@ -1018,3 +1018,72 @@ main header.fixed > div {
 #discover h3 {
   font-family:"amoera","Amoera",sans-serif !important;
 }
+
+
+/* Final homepage type scale: balanced responsive sizing across every section. */
+.home-rebuild {
+  --home-body-size:clamp(1rem,.92rem + .18vw,1.08rem);
+  --home-body-leading:1.72;
+  --home-label-size:clamp(.62rem,.56rem + .08vw,.70rem);
+}
+
+.home-rebuild .home-hero .home-hero-lovato {
+  font-size:clamp(1.02rem,.92rem + .22vw,1.16rem) !important;
+  line-height:1.68 !important;
+}
+
+.home-rebuild #discover > div.relative > div > div:last-child > p,
+.home-rebuild #experiences p,
+.home-rebuild .home-travel-copy,
+.home-rebuild section p.mt-5,
+.home-rebuild section p.mt-2:not(.home-travel-stories article p),
+.home-rebuild #map p.mt-5,
+.home-rebuild .discover-nearby-card small {
+  font-size:var(--home-body-size) !important;
+  line-height:var(--home-body-leading) !important;
+}
+
+.home-rebuild #discover h3 {
+  font-size:clamp(2rem,1.65rem + 1vw,2.7rem) !important;
+  line-height:1 !important;
+}
+
+.home-rebuild .home-travel-stories article > p {
+  font-size:clamp(1.18rem,1rem + .3vw,1.38rem) !important;
+  line-height:1.22 !important;
+}
+
+.home-rebuild .home-travel-stories article > div p:first-child {
+  font-size:var(--home-label-size) !important;
+}
+.home-rebuild .home-travel-stories article > div p:last-child {
+  font-size:clamp(.74rem,.68rem + .08vw,.80rem) !important;
+}
+
+.home-rebuild .home-kandyan-name {
+  font-size:clamp(.74rem,.68rem + .08vw,.82rem) !important;
+}
+.home-rebuild .home-kandyan-number,
+.home-rebuild .home-kandyan-arrow {
+  font-size:clamp(.62rem,.57rem + .06vw,.68rem) !important;
+}
+
+.home-rebuild .home-hero-rule p,
+.home-rebuild .home-kandyan-kicker p,
+.home-rebuild .home-travel-kicker,
+.home-rebuild .home-travel-link,
+.home-rebuild .home-trip-cta,
+.home-rebuild .home-hero-primary,
+.home-rebuild .home-hero-secondary,
+.home-rebuild #discover > div.relative > div > div:last-child > a,
+.home-rebuild #map > div.relative > div > a {
+  font-size:var(--home-label-size) !important;
+}
+
+.home-rebuild > section:nth-of-type(5) > div.relative > div > div p.mt-2 {
+  font-size:clamp(.96rem,.88rem + .16vw,1.04rem) !important;
+}
+
+.home-rebuild .discover-nearby-card strong {
+  font-size:clamp(1.02rem,.94rem + .12vw,1.12rem) !important;
+}
