@@ -980,3 +980,11 @@ main header.fixed > div {
 #discover h3 + p + div {
   font-family:"Manfitte",Georgia,"Times New Roman",serif !important;
 }
+
+
+/* Discover location card descriptions: slightly larger for easier reading. */
+#discover .home-location-card-copy,
+#discover h3 + p {
+  font-size:1rem !important;
+  line-height:1.7 !important;
+}
