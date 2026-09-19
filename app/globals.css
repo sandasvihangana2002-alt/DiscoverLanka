@@ -1087,3 +1087,14 @@ main header.fixed > div {
 .home-rebuild .discover-nearby-card strong {
   font-size:clamp(1.02rem,.94rem + .12vw,1.12rem) !important;
 }
+
+
+/* Match hero kicker size to the Discover Edit label. */
+.home-hero-rule p {
+  font-size:10px !important;
+}
+@media (max-width:640px) {
+  .home-hero-rule p {
+    font-size:10px !important;
+  }
+}
