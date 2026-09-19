@@ -66,7 +66,7 @@ export default async function DestinationsPage(){
             <p className="destinations-card-meta luxury-section-eyebrow">{String(index+2).padStart(2,"0")} · {destination.region}</p>
             <h2 className="destinations-card-name mt-2 text-3xl tracking-tight">{destination.name}</h2>
             <p className="destinations-card-description mt-2 max-w-md text-sm leading-6 text-white/60">{destination.summary}</p>
-            <div className="mt-4 text-xs font-bold uppercase tracking-[.18em] text-white/72">Explore ↗</div>
+            <div className="destinations-card-actions mt-4 text-xs font-bold uppercase tracking-[.18em] text-white/72"><span>Explore destination ↗</span></div>
           </div>
         </a>)}
       </div>
