@@ -928,8 +928,9 @@ main header.fixed > div {
 }
 
 
-/* Subtle soft-focus finish for the Amoera hero headline. */
+/* Stronger bold finish for the Amoera hero headline. */
 .home-hero h1 {
-  filter:blur(.18px);
+  filter:none;
+  font-weight:700 !important;
   text-shadow:0 2px 18px rgba(0,0,0,.22);
 }
