@@ -1,5 +1,6 @@
 @import url("https://db.onlinewebfonts.com/c/f66fd00e24c6d38f78d7f903dc21d07d?family=Lovato-Demi");
 @import url("https://fonts.cdnfonts.com/css/amoera");
+@import url("https://fonts.cdnfonts.com/css/manfitte");
 @import "tailwindcss";
 
 :root {
@@ -943,4 +944,20 @@ main header.fixed > div {
   letter-spacing:-.018em !important;
   line-height:.94 !important;
   filter:none !important;
+}
+
+
+/* Homepage supporting/editorial copy: Manfitte. Main display headings remain Amoera. */
+.home-rebuild p,
+.home-rebuild .home-travel-copy {
+  font-family:"Manfitte",Georgia,"Times New Roman",serif !important;
+  font-weight:400 !important;
+  letter-spacing:.01em;
+}
+.home-rebuild .home-hero-rule p,
+.home-rebuild .home-kandyan-kicker p,
+.home-rebuild .home-kandyan-name,
+.home-rebuild .home-travel-kicker,
+.home-rebuild .home-travel-link {
+  font-family:"Manfitte",Georgia,"Times New Roman",serif !important;
 }
