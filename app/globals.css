@@ -1,5 +1,4 @@
 @import url("https://db.onlinewebfonts.com/c/f66fd00e24c6d38f78d7f903dc21d07d?family=Lovato-Demi");
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -910,12 +909,12 @@ main header.fixed > div {
 }
 
 
-/* Hero display: Trajan Pro first, with Cinzel as the web-safe Roman-inscription fallback. */
+/* Romania display typography for the main hero headline. */
 .home-hero h1 {
-  font-family:"Trajan Pro","Trajan",Cinzel,Georgia,"Times New Roman",serif !important;
-  font-weight:500 !important;
-  letter-spacing:-.025em !important;
-  line-height:.92 !important;
+  font-family:"Romania","Romania Regular",Georgia,"Times New Roman",serif !important;
+  font-weight:400 !important;
+  letter-spacing:-.018em !important;
+  line-height:.94 !important;
 }
 
 
