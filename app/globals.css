@@ -1098,3 +1098,9 @@ main header.fixed > div {
     font-size:10px !important;
   }
 }
+
+
+/* Keep Travel Stories kicker aligned with the 10px editorial labels. */
+.home-travel-stories .home-travel-kicker {
+  font-size:10px !important;
+}
