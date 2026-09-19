@@ -1172,3 +1172,16 @@ main header.fixed > div {
     line-height:1 !important;
   }
 }
+
+
+/* Destinations navbar: inherit the homepage's current sans-serif navigation style. */
+.destinations-page .home-brand {
+  font-family:inherit;
+}
+.destinations-page .home-brand .font-serif {
+  font-family:Georgia,"Times New Roman",serif !important;
+}
+.destinations-page .home-nav-link,
+.destinations-page .home-trip-cta {
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+}
