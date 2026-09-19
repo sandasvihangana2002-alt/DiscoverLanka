@@ -1115,3 +1115,60 @@ main header.fixed > div {
     font-size:11px !important;
   }
 }
+
+
+/* Destinations page typography: match the homepage luxury type system. */
+.destinations-page .destinations-brand,
+.destinations-page .destinations-card-name,
+.destinations-page .destinations-main-heading {
+  font-family:"amoera","Amoera",sans-serif !important;
+  font-weight:700 !important;
+  letter-spacing:-.018em !important;
+}
+.destinations-page .destinations-main-heading {
+  line-height:.94 !important;
+}
+.destinations-page p,
+.destinations-page .destinations-card-meta,
+.destinations-page .destinations-card-actions,
+.destinations-page nav a,
+.destinations-page .premium-button {
+  font-family:"Cormorant","Cormorant Garamond",Georgia,"Times New Roman",serif !important;
+}
+.destinations-page .destinations-intro,
+.destinations-page .destinations-card-description {
+  font-weight:400 !important;
+  letter-spacing:.01em !important;
+  line-height:1.7 !important;
+}
+.destinations-page .destinations-intro {
+  font-size:clamp(1rem,.94rem + .16vw,1.10rem) !important;
+}
+.destinations-page .destinations-card-description {
+  font-size:clamp(1rem,.94rem + .12vw,1.08rem) !important;
+}
+.destinations-page .destinations-card-meta {
+  font-size:clamp(.68rem,.62rem + .08vw,.76rem) !important;
+  font-weight:600 !important;
+  letter-spacing:.16em !important;
+  text-transform:uppercase;
+}
+.destinations-page .destinations-card-actions {
+  font-size:clamp(.68rem,.62rem + .08vw,.76rem) !important;
+  font-weight:700 !important;
+  letter-spacing:.14em !important;
+}
+.destinations-page > header > div {
+  min-height:58px;
+}
+.destinations-page .premium-button-gold {
+  font-family:"Cormorant","Cormorant Garamond",Georgia,"Times New Roman",serif !important;
+}
+@media (max-width:640px) {
+  .destinations-page .destinations-main-heading {
+    line-height:.98 !important;
+  }
+  .destinations-page .destinations-card-name {
+    line-height:1 !important;
+  }
+}
