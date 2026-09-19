@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { Compass, Landmark, Sparkles, Trees, UtensilsCrossed } from "lucide-react";
 import InteractiveMap from "@/components/InteractiveMapClient";
 import SeasonalIntelligence from "@/components/SeasonalIntelligence";
 
@@ -12,6 +13,13 @@ type Destination = {
   slug: string;
   latitude?: number;
   longitude?: number;
+};
+type Experience = {
+  id: string;
+  slug: string;
+  name: string;
+  category: string | null;
+  summary: string | null;
 };
 type Story = {
   id: string;
@@ -56,14 +64,31 @@ const destinationImages: Record<string, string> = {
   "delft-island": "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1800&q=90",
 };
 
+const experienceImages: Record<string, string> = {
+  adventure: "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1600&q=90",
+  culture: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=90",
+  nature: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=1600&q=90",
+  wellness: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1600&q=90",
+  food: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=1600&q=90",
+};
+
 const storyImages = [
   "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1500&q=88",
   "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=1500&q=88",
   "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1500&q=88",
 ];
 
+const experienceIcons = {
+  Adventure: Compass,
+  Culture: Landmark,
+  Nature: Trees,
+  Wellness: Sparkles,
+  Food: UtensilsCrossed,
+};
+
 export default function Home() {
   const [destinations, setDestinations] = useState<Destination[]>([]);
+  const [experiences, setExperiences] = useState<Experience[]>([]);
   const [stories, setStories] = useState<Story[]>([]);
   const [saved, setSaved] = useState<string[]>([]);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -71,10 +96,12 @@ export default function Home() {
   useEffect(() => {
     Promise.all([
       fetch("/api/destinations").then((r) => r.json()),
+      fetch("/api/experiences").then((r) => r.json()),
       fetch("/api/stories").then((r) => r.json()),
     ])
-      .then(([d, s]) => {
+      .then(([d, e, s]) => {
         setDestinations(d.destinations ?? []);
+        setExperiences(e.experiences ?? []);
         setStories(s.stories ?? []);
       })
       .catch(() => {});
@@ -162,12 +189,13 @@ export default function Home() {
               <img src={destinationImages[item.slug] ?? destinationImages.sigiriya} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover transition duration-[1400ms] group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#06100c] via-[#06100c]/30 to-[#06100c]/5" />
               
-              <div className="absolute inset-x-5 bottom-5"><div className="h-px w-10 bg-[#d9b972] transition-all duration-500 group-hover:w-16" /><h3 className="mt-2 font-serif text-3xl tracking-[-.02em] text-white sm:text-4xl">{item.name}</h3><p className="mt-2 max-w-[18rem] text-xs leading-5 text-white/60">{item.summary}</p><div className="mt-4 flex flex-wrap items-center gap-2"><span className="text-[8px] font-black uppercase tracking-[.18em] text-[#d9b972]">Experiences</span>{(destinationExperiences[item.slug] ?? []).map((experience) => <span key={experience} className="rounded-full border border-white/15 bg-white/8 px-2.5 py-1 text-[8px] font-bold uppercase tracking-[.12em] text-white/75 backdrop-blur-sm">{experience}</span>)}</div><div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-[9px] font-black uppercase tracking-[.18em] text-white/60"><span>Discover place</span><span className="text-[#e3c681] transition-transform group-hover:translate-x-1">↗</span></div></div>
+              <div className="absolute inset-x-5 bottom-5"><div className="h-px w-10 bg-[#d9b972] transition-all duration-500 group-hover:w-16" /><h3 className="mt-2 font-serif text-3xl tracking-[-.02em] text-white sm:text-4xl">{item.name}</h3><p className="mt-2 max-w-[18rem] text-xs leading-5 text-white/60">{item.summary}</p><div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-[9px] font-black uppercase tracking-[.18em] text-white/60"><span>Discover place</span><span className="text-[#e3c681] transition-transform group-hover:translate-x-1">↗</span></div></div>
             </a>)}
           </div>
         </div>
       </section>
 
+      <section id="experiences" className="home-kandyan-experiences relative overflow-hidden bg-[#0a1712] px-6 py-20 text-white sm:px-8 lg:px-10 lg:py-24"><img src="https://cdn.bunniktours.com.au/public/posts/images/Asia/Hero%20image%20-%20Sri%20Lanka%20Scenery%20-%20Annelieke%20Huijgens-feature.png" alt="Traditional Kandyan dance performance in Sri Lanka" className="absolute inset-0 h-full w-full object-cover object-center opacity-55"/><div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,13,10,.96)_0%,rgba(5,13,10,.80)_38%,rgba(5,13,10,.48)_100%)]"/><div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_78%_20%,rgba(216,184,117,.18),transparent_24%),radial-gradient(circle_at_30%_90%,rgba(107,33,33,.16),transparent_30%)]"/><div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[300px_1fr] lg:items-center"><div><div className="home-kandyan-kicker"><span>◆</span><p>Explore by experience</p><span>◆</span></div><h2 className="mt-4 font-serif text-4xl leading-[.98] tracking-[-.035em] sm:text-5xl">Find your<br/><span>kind of Sri Lanka.</span></h2><p className="mt-5 text-sm leading-7 text-white/65">From living heritage to wild landscapes and slow island days, choose the experience that feels like you.</p><a href="/experiences" className="home-kandyan-link mt-6 inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[.18em]">Explore experiences <span>↗</span></a></div><div className="home-kandyan-grid grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">{categories.map((name, i) => { const Icon = experienceIcons[name as keyof typeof experienceIcons] ?? Sparkles; return <a key={name} href={`/experiences?category=${encodeURIComponent(name)}`} className="home-kandyan-card group"><div className="home-kandyan-card-frame"><span className="home-kandyan-card-corner home-kandyan-card-corner-tl"/><span className="home-kandyan-card-corner home-kandyan-card-corner-br"/><span className="home-kandyan-number">0{i + 1}</span><div className="home-kandyan-icon"><Icon size={27} strokeWidth={1.7} aria-hidden="true"/></div><div className="home-kandyan-name">{name}</div><div className="home-kandyan-line"/><span className="home-kandyan-arrow">↗</span></div></a> })}</div></div></section>
 
       <section className="home-travel-stories relative overflow-hidden bg-[#142b22] px-6 py-20 text-white sm:px-8 lg:px-10 lg:py-24"><div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(217,185,114,.15),transparent_25%),radial-gradient(circle_at_80%_80%,rgba(87,142,111,.14),transparent_30%)]"/><div className="relative mx-auto max-w-7xl"><div className="grid gap-10 lg:grid-cols-[1fr_1.35fr]"><div><p className="home-travel-kicker text-[10px] font-black uppercase tracking-[.25em] text-[#17382d]">Travel stories</p><h2 className="home-travel-heading mt-3 font-serif text-5xl leading-[.92]"><span>Real people.</span><br/><span className="home-travel-heading-accent">True stories.</span></h2><p className="home-travel-copy mt-5 max-w-sm text-sm leading-7" style={{ color:"#17382d" }}>Discover how Sri Lanka changes lives, one journey at a time.</p><a href="/stories" className="home-travel-link mt-6 inline-flex text-[10px] font-black uppercase tracking-[.18em]">Explore stories →</a></div><div className="grid gap-4 sm:grid-cols-3">{visibleStories.map((story, index) => <article key={story.id} className="rounded-[1.5rem] bg-[#f4efe5] p-5 text-[#17251f] shadow-2xl"><div className="flex items-center gap-3"><div className="h-9 w-9 overflow-hidden rounded-full bg-[#d9b972]"><img src={storyImages[index]} alt="" className="h-full w-full object-cover"/></div><div><p className="text-[8px] font-black uppercase tracking-[.18em] text-[#88703b]">{story.category}</p><p className="text-[10px] text-[#7a827a]">DiscoverLanka traveler</p></div></div><p className="mt-6 font-serif text-xl leading-tight">“{story.excerpt.replace(/[“”]/g, "").slice(0, 125)}”</p><div className="mt-5 text-[#bb8b2d]">★★★★★</div></article>)}</div></div></div></section>
 
