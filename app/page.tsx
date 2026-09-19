@@ -167,7 +167,7 @@ export default function Home() {
           <div className="max-w-2xl text-white">
             <div className="home-hero-rule mb-5 flex items-center gap-3"><span></span><p>Island of living heritage</p></div>
             <h1 className="font-serif text-[4.2rem] leading-[.86] tracking-[-.05em] sm:text-7xl md:text-8xl lg:text-[6.8rem]">Discover Sri Lanka.<br/><span className="text-[#efcf87]">Feel the heritage.</span></h1>
-            <p className="mt-7 max-w-lg text-sm leading-7 text-white/80 sm:text-base sm:leading-8">Step into an island where ancient traditions, living culture and unforgettable landscapes meet.</p>
+            <p className="home-hero-charlegone mt-7 max-w-lg text-sm leading-7 text-white/80 sm:text-base sm:leading-8">Step into an island where ancient traditions, living culture and unforgettable landscapes meet.</p>
             <div className="mt-8 flex flex-wrap gap-3"><a href="/plan" className="home-hero-primary rounded-full bg-[#e3bd78] px-6 py-3.5 text-[11px] font-black uppercase tracking-[.14em] text-[#102018] shadow-[0_14px_40px_rgba(0,0,0,.18)]">Build My Trip ↗</a><a href="#discover" className="home-hero-secondary rounded-full border border-white/28 bg-black/10 px-6 py-3.5 text-[11px] font-black uppercase tracking-[.14em] text-white backdrop-blur-md">Explore the island</a></div>
             <div className="mt-10 flex max-w-xl flex-wrap gap-7 border-t border-white/20 pt-5 text-[9px] font-bold uppercase tracking-[.2em] text-white/60"><span>Handpicked destinations</span><span>Local experiences</span><span>Season-aware planning</span></div>
           </div>
