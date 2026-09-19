@@ -71,7 +71,7 @@ export default async function DestinationsPage(){
       <div className="luxury-focus-grid">
         {rest.map((destination,index)=><a key={destination.id} href={`/destinations/${destination.slug}`} className={`luxury-focus-card group ${index===0?"col-span-7":"col-span-5"}`}>
           <img src={images[destination.slug]??images.ella} alt={destination.name} className="absolute inset-0 h-full w-full object-cover" loading="lazy"/>
-          <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
+          <div className="destinations-glass-info absolute inset-x-4 bottom-4 p-5 sm:inset-x-5 sm:bottom-5 sm:p-6">
             <p className="destinations-card-meta luxury-section-eyebrow">{String(index+2).padStart(2,"0")} · {destination.region}</p>
             <h2 className="destinations-card-name mt-2 text-3xl tracking-tight">{destination.name}</h2>
             <p className="destinations-card-description mt-2 max-w-md text-sm leading-6 text-white/60">{destination.summary}</p>
