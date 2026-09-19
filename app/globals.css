@@ -1,3 +1,4 @@
+@import url("https://db.onlinewebfonts.com/c/f66fd00e24c6d38f78d7f903dc21d07d?family=Lovato-Demi");
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
@@ -918,10 +919,10 @@ main header.fixed > div {
 }
 
 
-/* Gilroy-style clean modern typography for hero supporting copy. */
-.home-hero .home-hero-gilroy {
-  font-family:"Gilroy","Avenir Next","Montserrat","Helvetica Neue",Arial,sans-serif !important;
+/* Lovato Demi editorial typography for hero supporting copy. */
+.home-hero .home-hero-lovato {
+  font-family:"Lovato-Demi","Lovato Demi",Georgia,"Times New Roman",serif !important;
   font-weight:400 !important;
-  letter-spacing:.005em !important;
-  line-height:1.65 !important;
+  letter-spacing:.008em !important;
+  line-height:1.5 !important;
 }
