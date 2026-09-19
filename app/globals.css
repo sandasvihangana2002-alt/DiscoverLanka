@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -905,4 +906,13 @@ main header.fixed > div {
 .home-travel-stories .home-travel-copy {
   color:#17382d !important;
   text-shadow:none !important;
+}
+
+
+/* Hero display: Trajan Pro first, with Cinzel as the web-safe Roman-inscription fallback. */
+.home-hero h1 {
+  font-family:"Trajan Pro","Trajan",Cinzel,Georgia,"Times New Roman",serif !important;
+  font-weight:500 !important;
+  letter-spacing:-.025em !important;
+  line-height:.92 !important;
 }
