@@ -988,3 +988,10 @@ main header.fixed > div {
   font-size:1rem !important;
   line-height:1.7 !important;
 }
+
+
+/* Homepage supporting text scale: slightly larger for readability; main h1/h2 headings stay unchanged. */
+.home-rebuild > section p:not(.home-hero-rule p):not(.home-kandyan-kicker p):not(.home-travel-kicker):not(.home-kandyan-name):not(.home-travel-stories article p) {
+  font-size:clamp(.96rem,.88rem + .18vw,1.05rem);
+  line-height:1.72;
+}
