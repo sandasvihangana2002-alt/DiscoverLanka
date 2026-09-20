@@ -51,7 +51,8 @@ async function getDestinations(){
 export default async function DestinationsPage(){
   const destinations=await getDestinations().catch(()=>[]);
 
-  return <style>{`
+  return <>
+    <style>{`
 .destination-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;align-items:start}
 .destination-travel-card{position:relative;display:block;overflow:hidden;border:1px solid rgba(255,255,255,.09);border-radius:28px;background:#f5f0e6;color:#10251f;box-shadow:0 20px 55px rgba(0,0,0,.20);transition:transform .38s cubic-bezier(.2,.8,.2,1),box-shadow .38s ease,border-color .3s ease}
 .destination-travel-card:hover{transform:translateY(-8px);box-shadow:0 34px 80px rgba(0,0,0,.30);border-color:rgba(216,184,117,.42)}
@@ -160,5 +161,6 @@ export default async function DestinationsPage(){
         })}
       </div>
     </section>
-  </main>;
+  </main>
+  </>;
 }
