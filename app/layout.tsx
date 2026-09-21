@@ -8,7 +8,7 @@ import LuxuryInteractions from "@/components/LuxuryInteractions";
 
 const siteUrl = "https://discover-lanka.vercel.app";
 const defaultTitle = "DiscoverLanka | Sri Lanka Travel Guide & Trip Planner";
-const defaultDescription = "Discover Sri Lanka through curated destinations, local experiences and stories, then build a trip around your interests, time and budget.";
+const defaultDescription = "Discover Sri Lanka through curated destinations and stories, then build a trip around your interests, time and budget.";
 const defaultOgImage = "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=1600&q=88";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: { default: defaultTitle, template: "%s | DiscoverLanka" },
   description: defaultDescription,
   applicationName: "DiscoverLanka",
-  keywords: ["Sri Lanka travel", "Sri Lanka travel guide", "Sri Lanka trip planner", "Sri Lanka destinations", "Sri Lanka experiences", "Sri Lanka itinerary"],
+  keywords: ["Sri Lanka travel", "Sri Lanka travel guide", "Sri Lanka trip planner", "Sri Lanka destinations", "Sri Lanka itinerary"],
   alternates: { canonical: "/" },
   openGraph: {
     title: defaultTitle,
