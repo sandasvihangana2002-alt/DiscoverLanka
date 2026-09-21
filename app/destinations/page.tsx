@@ -96,7 +96,7 @@ export default async function DestinationsPage(){
 .destination-travel-card:hover .destination-heart{background:rgba(216,184,117,.18);transform:scale(1.06)}
 .destination-card-number{position:absolute;right:17px;bottom:15px;color:rgba(255,255,255,.58);font:700 10px/1 Inter,system-ui,sans-serif;letter-spacing:.16em}
 .destination-card-body{position:relative;margin:-24px 14px 14px;padding:25px 22px 18px;border-radius:22px;background:linear-gradient(145deg,#fbf8f1,#eee7d9);box-shadow:0 12px 30px rgba(0,0,0,.12);z-index:2}
-.destination-card-title{margin:0;color:#10251f !important;font-family:"amoera","Amoera",Georgia,serif;font-size:clamp(2rem,1.5rem + 1vw,2.7rem);font-weight:700;letter-spacing:-.018em;line-height:.98}
+.destination-card-title{margin:0;color:#10251f !important;font-family:"amoera","Amoera",Georgia,serif;font-size:clamp(2rem,1.5rem + 1vw,2.7rem);font-weight:700;letter-spacing:-.018em;line-height:.94;filter:none}
 .destination-card-copy{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;margin:9px 0 0;color:#607169;font-family:"Cormorant","Cormorant Garamond",Georgia,serif;font-size:1.08rem;line-height:1.42}
 .destination-card-arrow{display:flex;width:34px;height:34px;flex:0 0 auto;align-items:center;justify-content:center;border:1px solid rgba(16,37,31,.12);border-radius:50%;color:#17382d;font:600 16px/1 Inter,system-ui,sans-serif;transition:transform .25s ease,background .25s ease}
 .destination-travel-card:hover .destination-card-arrow{transform:translate(2px,-2px);background:rgba(216,184,117,.16)}
