@@ -86,7 +86,7 @@ export default async function DestinationsPage(){
 .destination-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;align-items:start}
 .destination-travel-card{position:relative;display:block;overflow:hidden;border:1px solid rgba(255,255,255,.09);border-radius:28px;background:#f5f0e6;color:#10251f;box-shadow:0 20px 55px rgba(0,0,0,.20);transition:transform .38s cubic-bezier(.2,.8,.2,1),box-shadow .38s ease,border-color .3s ease}
 .destination-travel-card:hover{transform:translateY(-8px);box-shadow:0 34px 80px rgba(0,0,0,.30);border-color:rgba(216,184,117,.42)}
-.destination-card-image-wrap{position:relative;height:270px;overflow:hidden;background:#16382f}
+.destination-card-image-wrap{position:relative;height:360px;overflow:hidden;background:#16382f}
 .destination-card-image{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.75,.2,1),filter .5s ease}
 .destination-travel-card:hover .destination-card-image{transform:scale(1.07);filter:saturate(1.06) contrast(1.03)}
 .destination-card-image-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,10,7,.34),transparent 45%,rgba(3,10,7,.62))}
@@ -95,38 +95,26 @@ export default async function DestinationsPage(){
 .destination-heart{display:flex;width:36px;height:36px;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.22);border-radius:50%;background:rgba(7,18,14,.34);font-size:20px;line-height:1;backdrop-filter:blur(12px);transition:background .25s ease,transform .25s ease}
 .destination-travel-card:hover .destination-heart{background:rgba(216,184,117,.18);transform:scale(1.06)}
 .destination-card-number{position:absolute;right:17px;bottom:15px;color:rgba(255,255,255,.58);font:700 10px/1 Inter,system-ui,sans-serif;letter-spacing:.16em}
-.destination-card-body{position:relative;margin:-18px 10px 10px;padding:21px 18px 16px;border-radius:22px;background:linear-gradient(145deg,#fbf8f1,#eee7d9);box-shadow:0 12px 30px rgba(0,0,0,.12);z-index:2}
-.destination-card-title{margin:0;color:#10251f !important;font-family:"amoera","Amoera",Georgia,serif;font-size:clamp(1.65rem,1.25rem + .65vw,2.15rem);font-weight:700;letter-spacing:-.018em;line-height:.98}
-.destination-card-copy{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;margin:9px 0 0;color:#607169;font-family:"Cormorant","Cormorant Garamond",Georgia,serif;font-size:1.02rem;line-height:1.42}
+.destination-card-body{position:relative;margin:-24px 14px 14px;padding:25px 22px 18px;border-radius:22px;background:linear-gradient(145deg,#fbf8f1,#eee7d9);box-shadow:0 12px 30px rgba(0,0,0,.12);z-index:2}
+.destination-card-title{margin:0;color:#10251f !important;font-family:"amoera","Amoera",Georgia,serif;font-size:clamp(2rem,1.5rem + 1vw,2.7rem);font-weight:700;letter-spacing:-.018em;line-height:.98}
+.destination-card-copy{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;margin:9px 0 0;color:#607169;font-family:"Cormorant","Cormorant Garamond",Georgia,serif;font-size:1.08rem;line-height:1.42}
 .destination-card-arrow{display:flex;width:34px;height:34px;flex:0 0 auto;align-items:center;justify-content:center;border:1px solid rgba(16,37,31,.12);border-radius:50%;color:#17382d;font:600 16px/1 Inter,system-ui,sans-serif;transition:transform .25s ease,background .25s ease}
 .destination-travel-card:hover .destination-card-arrow{transform:translate(2px,-2px);background:rgba(216,184,117,.16)}
 .destination-card-meta-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:16px;padding-top:12px;border-top:1px solid rgba(16,37,31,.10);color:#718078;font:800 9px/1.2 Inter,system-ui,sans-serif;letter-spacing:.09em;text-transform:uppercase}
 .destination-rating{display:inline-flex;align-items:center;gap:5px;color:#66766d}
 .destination-rating b{color:#bd8f36;font-size:11px}
 
-/* Step 2: only the first card is being tested as the featured design. */
-.destination-card-grid>.destination-travel-card:first-child{grid-column:span 2}
-.destination-card-grid>.destination-travel-card:first-child .destination-card-image-wrap{height:360px}
-.destination-card-grid>.destination-travel-card:first-child .destination-card-body{margin:-24px 14px 14px;padding:25px 22px 18px}
-.destination-card-grid>.destination-travel-card:first-child .destination-card-title{font-size:clamp(2rem,1.5rem + 1vw,2.7rem)}
-.destination-card-grid>.destination-travel-card:first-child .destination-card-copy{font-size:1.08rem}
-
 @media(max-width:1100px){
   .destination-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .destination-card-grid>.destination-travel-card:first-child{grid-column:span 2}
 }
 @media(max-width:820px){
   .destination-card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-  .destination-card-image-wrap{height:250px}
-  .destination-card-grid>.destination-travel-card:first-child{grid-column:span 2}
-  .destination-card-grid>.destination-travel-card:first-child .destination-card-image-wrap{height:300px}
+  .destination-card-image-wrap{height:320px}
 }
 @media(max-width:560px){
   .destination-card-grid{grid-template-columns:1fr;gap:18px}
   .destination-card-image-wrap{height:300px}
   .destination-card-body{margin:-20px 9px 9px;padding:22px 19px 17px}
-  .destination-card-grid>.destination-travel-card:first-child{grid-column:span 1}
-  .destination-card-grid>.destination-travel-card:first-child .destination-card-image-wrap{height:300px}
 }
 `}</style>
     </main>
