@@ -26,7 +26,8 @@ const images:Record<string,string>={
   trincomalee:"https://images.unsplash.com/photo-1694869248690-2956574b7032?auto=format&fit=crop&w=1600&q=88",
   "arugam-bay":"https://yalu.travel/content/images/2025/08/yalulife_arugam_bay_surfing.jpg",
   jaffna:"https://images.unsplash.com/photo-1725773682183-f0c885081ce5?auto=format&fit=crop&w=1600&q=88",
-  udawalawe:"https://advantiko.com/wp-content/uploads/2020/06/udawalawe-national-park2.jpg"
+  udawalawe:"https://advantiko.com/wp-content/uploads/2020/06/udawalawe-national-park2.jpg",
+  "adams-peak":"https://commons.wikimedia.org/wiki/Special:FilePath/Sri%20Padaya%20-%20Adam%27s%20peak.jpg"
 };
 
 function fallbackImage(slug:string,index:number){
