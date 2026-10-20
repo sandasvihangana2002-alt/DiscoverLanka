@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 type Destination={id:string;slug:string;name:string;region:string;summary:string;best_time:string;latitude:number;longitude:number;review_count:number};
-type Props={destinations:Destination[];images:Record<string,string>;fallbackImage:(slug:string,index:number)=>string};
-export default function DestinationCinematic({destinations,images,fallbackImage}:Props){
+type Props={destinations:Destination[];images:Record<string,string>};
+function fallbackImage(slug:string,index:number){return `https://loremflickr.com/1800/1200/sri-lanka,${encodeURIComponent(slug)}?lock=${index+100}`;}
+export default function DestinationCinematic({destinations,images}:Props){
  const [selected,setSelected]=useState(0); const [transitioning,setTransitioning]=useState(false); const d=destinations[selected]; const hero=images[d.slug]??fallbackImage(d.slug,selected);
  useEffect(()=>{const onKey=(e:KeyboardEvent)=>{if(e.key==="ArrowRight") changeDestination((selected+1)%destinations.length); if(e.key==="ArrowLeft") changeDestination((selected-1+destinations.length)%destinations.length)}; window.addEventListener("keydown",onKey); return()=>window.removeEventListener("keydown",onKey)},[selected,destinations.length]);
  function changeDestination(index:number){if(index===selected||transitioning)return; setTransitioning(true); window.setTimeout(()=>{setSelected(index); window.setTimeout(()=>setTransitioning(false),80)},260)}
