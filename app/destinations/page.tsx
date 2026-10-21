@@ -96,12 +96,14 @@ export default async function DestinationsPage(){
 .destination-heart{display:flex;width:36px;height:36px;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.22);border-radius:50%;background:rgba(7,18,14,.34);font-size:20px;line-height:1;backdrop-filter:blur(12px);transition:background .25s ease,transform .25s ease}
 .destination-travel-card:hover .destination-heart{background:rgba(216,184,117,.18);transform:scale(1.06)}
 .destination-card-number{position:absolute;right:17px;bottom:15px;color:rgba(255,255,255,.58);font:700 10px/1 Inter,system-ui,sans-serif;letter-spacing:.16em}
-.destination-card-body{position:relative;min-height:174px;margin:-24px 14px 14px;padding:25px 22px 20px;border-radius:22px;background:linear-gradient(145deg,#fbf8f1,#eee7d9);box-shadow:0 12px 30px rgba(0,0,0,.12);z-index:2}
-.destination-card-title{margin:0;color:#10251f !important;font-family:"amoera","Amoera",sans-serif !important;font-size:clamp(1.75rem,1.48rem + .62vw,2.3rem);font-weight:700;letter-spacing:-.018em;line-height:1.02;overflow-wrap:anywhere}
-.destination-card-copy{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;margin:9px 0 0;color:#607169;font-family:"Cormorant","Cormorant Garamond",Georgia,serif;font-size:1.08rem;line-height:1.42}
-.destination-card-arrow{display:flex;width:34px;height:34px;flex:0 0 auto;align-items:center;justify-content:center;border:1px solid rgba(16,37,31,.12);border-radius:50%;color:#17382d;font:600 16px/1 Inter,system-ui,sans-serif;transition:transform .25s ease,background .25s ease}
+.destination-card-body{position:relative;min-height:190px;min-width:0;margin:-24px 14px 14px;padding:25px 22px 20px;border-radius:22px;background:linear-gradient(145deg,#fbf8f1,#eee7d9);box-shadow:0 12px 30px rgba(0,0,0,.12);z-index:2}
+.destination-card-body>div:first-child{min-width:0}
+.destination-card-title{margin:0;max-width:100%;color:#10251f !important;font-family:"amoera","Amoera",Georgia,serif !important;font-size:clamp(1.45rem,1.2rem + .7vw,2.15rem);font-weight:700;letter-spacing:-.018em;line-height:1.14;overflow-wrap:break-word;word-break:normal;text-wrap:pretty}
+.destination-card-copy{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;margin:10px 0 0;color:#52665d;font-family:"Cormorant Garamond","Cormorant",Georgia,serif;font-size:clamp(1.05rem,1rem + .2vw,1.18rem);font-weight:500;line-height:1.5;overflow-wrap:break-word;word-break:normal}
+.destination-card-arrow{display:flex;width:32px;height:32px;flex:0 0 auto;align-items:center;justify-content:center;border:1px solid rgba(16,37,31,.12);border-radius:50%;color:#17382d;font:600 16px/1 Inter,system-ui,sans-serif;transition:transform .25s ease,background .25s ease}
 .destination-travel-card:hover .destination-card-arrow{transform:translate(2px,-2px);background:rgba(216,184,117,.16)}
-.destination-card-meta-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:16px;padding-top:12px;border-top:1px solid rgba(16,37,31,.10);color:#718078;font:800 9px/1.2 Inter,system-ui,sans-serif;letter-spacing:.09em;text-transform:uppercase}
+.destination-card-meta-row{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;margin-top:16px;padding-top:12px;border-top:1px solid rgba(16,37,31,.10);color:#586b62;font:800 9px/1.5 Inter,system-ui,sans-serif;letter-spacing:.07em;text-transform:uppercase}
+.destination-card-meta-row>span{min-width:0;overflow-wrap:anywhere}
 .destination-rating{display:inline-flex;align-items:center;gap:5px;color:#66766d}
 .destination-rating b{color:#bd8f36;font-size:11px}
 
@@ -115,7 +117,9 @@ export default async function DestinationsPage(){
 @media(max-width:560px){
   .destination-card-grid{grid-template-columns:1fr;gap:18px}
   .destination-card-image-wrap{height:300px}
-  .destination-card-body{margin:-20px 9px 9px;padding:22px 19px 17px}
+  .destination-card-body{min-height:0;margin:-20px 9px 9px;padding:22px 19px 17px}
+  .destination-card-title{font-size:clamp(1.5rem,7vw,2rem)}
+  .destination-card-meta-row{font-size:8px;letter-spacing:.05em}
 }
 `}</style>
     </main>
